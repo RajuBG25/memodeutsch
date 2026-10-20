@@ -1,0 +1,10 @@
+{
+  "name": "MemoDeutsch — German Vocabulary Coach",
+  "short_name": "MemoDeutsch",
+  "description": "Evidence-based 235-word German vocabulary trainer for iPhone",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#F2F2F7",
+  "theme_color": "#007AFF",
+  "orientation": "portrait-primary"
+}

@@ -1,0 +1,1054 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="MemoDeutsch" />
+  <link rel="manifest" href="./manifest.json" />
+  <title>MemoDeutsch — Evidence-Based German Coach</title>
+  <style>
+    :root {
+      --bg: #F2F2F7;
+      --card: #FFFFFF;
+      --card-secondary: #F9F9FB;
+      --text: #1C1C1E;
+      --text-secondary: #6C6C70;
+      --text-muted: #8E8E93;
+      --border: rgba(60, 60, 67, 0.12);
+      --primary: #007AFF;
+      --primary-soft: rgba(0, 122, 255, 0.12);
+      --success: #34C759;
+      --success-soft: rgba(52, 199, 89, 0.14);
+      --warning: #FF9500;
+      --warning-soft: rgba(255, 149, 0, 0.15);
+      --danger: #FF3B30;
+      --danger-soft: rgba(255, 59, 48, 0.14);
+      --purple: #5856D6;
+      --purple-soft: rgba(88, 86, 214, 0.12);
+      --der-color: #007AFF;
+      --die-color: #FF2D55;
+      --das-color: #34C759;
+      --nav-bg: rgba(255, 255, 255, 0.88);
+      --shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+      --radius-lg: 16px;
+      --radius-md: 12px;
+      --radius-sm: 8px;
+    }
+
+    html.dark {
+      --bg: #000000;
+      --card: #1C1C1E;
+      --card-secondary: #2C2C2E;
+      --text: #F2F2F7;
+      --text-secondary: #AEAEB2;
+      --text-muted: #8E8E93;
+      --border: rgba(235, 235, 245, 0.14);
+      --primary: #0A84FF;
+      --primary-soft: rgba(10, 132, 255, 0.18);
+      --success: #30D158;
+      --success-soft: rgba(48, 209, 88, 0.18);
+      --warning: #FF9F0A;
+      --warning-soft: rgba(255, 159, 10, 0.18);
+      --danger: #FF453A;
+      --danger-soft: rgba(255, 69, 58, 0.18);
+      --purple: #5E5CE6;
+      --purple-soft: rgba(94, 92, 230, 0.2);
+      --nav-bg: rgba(28, 28, 30, 0.88);
+      --shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+    }
+
+    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+    body {
+      margin: 0; padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Segoe UI", Roboto, sans-serif;
+      background-color: var(--bg); color: var(--text);
+      -webkit-font-smoothing: antialiased;
+      padding-top: env(safe-area-inset-top);
+      padding-bottom: calc(82px + env(safe-area-inset-bottom));
+      min-height: 100vh; overflow-x: hidden;
+    }
+
+    .app-shell { max-width: 480px; margin: 0 auto; padding: 14px 16px 28px; }
+    .top-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; padding: 4px 2px; }
+    .app-title { font-size: 1.4rem; font-weight: 700; letter-spacing: -0.02em; margin: 0; }
+    .app-subtitle { font-size: 0.78rem; color: var(--text-secondary); margin-top: 2px; }
+    .icon-btn {
+      background: var(--card); border: 1px solid var(--border); color: var(--text);
+      width: 40px; height: 40px; border-radius: 50%;
+      display: inline-flex; align-items: center; justify-content: center;
+      font-size: 1.1rem; cursor: pointer; box-shadow: var(--shadow);
+    }
+
+    .card {
+      background: var(--card); border-radius: var(--radius-lg);
+      padding: 18px; margin-bottom: 14px;
+      box-shadow: var(--shadow); border: 1px solid var(--border);
+    }
+    .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+    .section-title { font-size: 1.05rem; font-weight: 600; margin: 0; }
+    .badge { display: inline-flex; align-items: center; padding: 4px 9px; border-radius: 999px; font-size: 0.74rem; font-weight: 600; }
+    .badge-primary { background: var(--primary-soft); color: var(--primary); }
+    .badge-success { background: var(--success-soft); color: var(--success); }
+    .badge-warning { background: var(--warning-soft); color: var(--warning); }
+    .badge-danger { background: var(--danger-soft); color: var(--danger); }
+    .badge-purple { background: var(--purple-soft); color: var(--purple); }
+
+    .art-der { color: var(--der-color); font-weight: 700; }
+    .art-die { color: var(--die-color); font-weight: 700; }
+    .art-das { color: var(--das-color); font-weight: 700; }
+
+    .stat-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 14px; }
+    .stat-grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 14px; }
+    .stat-box { background: var(--card-secondary); border-radius: var(--radius-md); padding: 12px 10px; text-align: center; border: 1px solid var(--border); }
+    .stat-val { font-size: 1.35rem; font-weight: 700; line-height: 1.15; }
+    .stat-lbl { font-size: 0.72rem; color: var(--text-secondary); margin-top: 4px; font-weight: 500; }
+
+    .btn {
+      width: 100%; min-height: 50px; border-radius: var(--radius-md); border: none;
+      font-size: 1rem; font-weight: 600; cursor: pointer;
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      transition: transform 0.1s ease; padding: 12px 16px;
+    }
+    .btn:active { transform: scale(0.985); }
+    .btn-primary { background: var(--primary); color: #FFFFFF; }
+    .btn-secondary { background: var(--card-secondary); color: var(--text); border: 1px solid var(--border); }
+    .btn-purple { background: var(--purple); color: #FFFFFF; }
+    .btn-danger { background: var(--danger-soft); color: var(--danger); }
+    .btn-sm { min-height: 38px; padding: 8px 12px; font-size: 0.86rem; width: auto; }
+
+    .pill-selector { display: flex; gap: 8px; margin-bottom: 14px; }
+    .pill-option {
+      flex: 1; padding: 10px 8px; border-radius: var(--radius-sm);
+      background: var(--card-secondary); border: 1px solid var(--border);
+      text-align: center; font-size: 0.83rem; font-weight: 600; cursor: pointer; color: var(--text-secondary);
+    }
+    .pill-option.active { background: var(--primary-soft); border-color: var(--primary); color: var(--primary); }
+
+    .progress-track { width: 100%; height: 6px; background: var(--card-secondary); border-radius: 999px; overflow: hidden; margin-bottom: 14px; }
+    .progress-fill { height: 100%; background: var(--primary); transition: width 0.25s ease; }
+    .prompt-word { font-size: 1.85rem; font-weight: 700; text-align: center; margin: 16px 0 8px; letter-spacing: -0.02em; line-height: 1.25; }
+    .prompt-sub { text-align: center; color: var(--text-secondary); font-size: 0.92rem; margin-bottom: 18px; }
+
+    .text-input {
+      width: 100%; min-height: 50px; border-radius: var(--radius-md);
+      border: 1.5px solid var(--border); background: var(--card-secondary); color: var(--text);
+      font-size: 1.1rem; padding: 12px 14px; outline: none; margin-bottom: 12px; -webkit-appearance: none;
+    }
+    .text-input:focus { border-color: var(--primary); background: var(--card); }
+
+    .choice-grid { display: flex; flex-direction: column; gap: 10px; margin-bottom: 12px; }
+    .choice-btn {
+      width: 100%; min-height: 50px; text-align: left; padding: 12px 16px;
+      border-radius: var(--radius-md); background: var(--card-secondary); border: 1.5px solid var(--border);
+      color: var(--text); font-size: 1rem; font-weight: 500; cursor: pointer;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .article-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 12px; }
+    .article-btn { min-height: 58px; border-radius: var(--radius-md); border: 1.5px solid var(--border); background: var(--card-secondary); font-size: 1.2rem; font-weight: 700; cursor: pointer; }
+
+    .confidence-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 12px; }
+    .conf-btn {
+      padding: 12px 6px; border-radius: var(--radius-md); border: 1px solid var(--border);
+      background: var(--card-secondary); color: var(--text); font-size: 0.82rem; font-weight: 600;
+      cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 4px;
+    }
+    .conf-btn span.emoji { font-size: 1.35rem; }
+
+    .mnemonic-box {
+      background: var(--purple-soft); border-left: 4px solid var(--purple);
+      padding: 12px 14px; border-radius: var(--radius-sm); margin-top: 12px; font-size: 0.88rem; line-height: 1.45;
+    }
+
+    .heatmap-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(34px, 1fr)); gap: 5px; margin-top: 10px; }
+    .heat-cell {
+      aspect-ratio: 1; border-radius: 6px; display: flex; align-items: center; justify-content: center;
+      font-size: 0.68rem; font-weight: 700; cursor: pointer; user-select: none; border: 1px solid var(--border);
+    }
+    .heat-new { background: var(--card-secondary); color: var(--text-muted); }
+    .heat-strong { background: var(--success-soft); color: var(--success); border-color: var(--success); }
+    .heat-dev { background: var(--warning-soft); color: var(--warning); border-color: var(--warning); }
+    .heat-weak { background: rgba(255, 149, 0, 0.28); color: #D97706; }
+    .heat-forgot { background: var(--danger-soft); color: var(--danger); border-color: var(--danger); }
+
+    .vocab-item { padding: 12px 0; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; gap: 10px; cursor: pointer; }
+    .vocab-item:last-child { border-bottom: none; }
+
+    .modal-backdrop { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.5); display: none; align-items: flex-end; justify-content: center; z-index: 200; }
+    .modal-backdrop.open { display: flex; }
+    .modal-sheet { background: var(--card); width: 100%; max-width: 480px; border-radius: 22px 22px 0 0; padding: 20px 18px calc(24px + env(safe-area-inset-bottom)); max-height: 86vh; overflow-y: auto; }
+
+    .bottom-nav {
+      position: fixed; bottom: 0; left: 0; right: 0; background: var(--nav-bg);
+      backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
+      border-top: 1px solid var(--border); display: flex; justify-content: space-around;
+      padding: 6px 4px calc(6px + env(safe-area-inset-bottom)); z-index: 100;
+    }
+    .nav-item { flex: 1; border: none; background: transparent; color: var(--text-muted); display: flex; flex-direction: column; align-items: center; gap: 3px; font-size: 0.68rem; font-weight: 600; padding: 4px 0; cursor: pointer; }
+    .nav-item.active { color: var(--primary); }
+    .nav-icon { font-size: 1.25rem; line-height: 1; }
+    .view-section { display: none; }
+    .view-section.active { display: block; }
+    .audio-pill { display: inline-flex; align-items: center; gap: 5px; padding: 6px 12px; border-radius: 999px; background: var(--primary-soft); color: var(--primary); border: none; font-size: 0.82rem; font-weight: 600; cursor: pointer; }
+  </style>
+</head>
+<body>
+
+<div class="app-shell">
+  <header class="top-bar">
+    <div>
+      <h1 class="app-title">MemoDeutsch</h1>
+      <div class="app-subtitle">Adaptive Long-Term Retention Coach · 235 Words</div>
+    </div>
+    <button class="icon-btn" onclick="toggleTheme()" aria-label="Toggle Dark Mode" id="theme-btn">🌙</button>
+  </header>
+
+  <!-- VIEW 1: HOME -->
+  <section id="view-home" class="view-section active">
+    <div class="card">
+      <div class="card-header">
+        <h2 class="section-title">Today's Review</h2>
+        <span class="badge badge-primary" id="home-streak-badge">🔥 0 Day Streak</span>
+      </div>
+
+      <div class="stat-grid-4">
+        <div class="stat-box">
+          <div class="stat-val" style="color: var(--primary);" id="stat-due">0</div>
+          <div class="stat-lbl">Due Now</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-val" style="color: var(--purple);" id="stat-new">0</div>
+          <div class="stat-lbl">Unseen</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-val" style="color: var(--danger);" id="stat-difficult">0</div>
+          <div class="stat-lbl">Difficult</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-val" style="color: var(--success);" id="stat-mastered">0</div>
+          <div class="stat-lbl">Mastered</div>
+        </div>
+      </div>
+
+      <div style="font-size: 0.8rem; font-weight: 600; color: var(--text-secondary); margin-bottom: 6px;">
+        MICRO-LEARNING SESSION LENGTH
+      </div>
+      <div class="pill-selector">
+        <div class="pill-option" onclick="setSessionSize(10, this)">5 Min (10)</div>
+        <div class="pill-option active" onclick="setSessionSize(18, this)">10 Min (18)</div>
+        <div class="pill-option" onclick="setSessionSize(28, this)">15 Min (28)</div>
+      </div>
+
+      <button class="btn btn-primary" onclick="startAdaptiveSession('standard')">
+        START TODAY'S REVIEW
+      </button>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px;">
+        <button class="btn btn-secondary" onclick="startAdaptiveSession('rapid')">⚡ Rapid Fire</button>
+        <button class="btn btn-purple" onclick="startAdaptiveSession('deep')">🧠 Deep Memory</button>
+      </div>
+      <div style="margin-top: 10px;">
+        <button class="btn btn-secondary" onclick="startAdaptiveSession('articles')">
+          🎯 German Article Lab (der / die / das)
+        </button>
+      </div>
+    </div>
+
+    <!-- Friend Challenge & Share Card -->
+    <div class="card">
+      <div class="card-header">
+        <h3 class="section-title">🤝 Study with a Friend</h3>
+        <span class="badge badge-purple">Peer Challenge</span>
+      </div>
+      <p style="font-size: 0.84rem; color: var(--text-secondary); margin: 0 0 12px; line-height: 1.45;">
+        Challenge a friend on 10 tough German words or share this app via WhatsApp / iMessage.
+      </p>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+        <button class="btn btn-secondary" onclick="createFriendChallenge()">📤 Send 10-Word Quiz</button>
+        <button class="btn btn-secondary" onclick="promptAcceptChallenge()">📥 Enter Friend Code</button>
+      </div>
+      <button class="btn btn-primary" style="margin-top: 10px; background: var(--success);" onclick="shareAppWithFriend()">
+        📲 Share App Link with Friend
+      </button>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <h3 class="section-title">Coach Status & Retention Focus</h3>
+        <span class="badge badge-success" id="home-retention-Est">Est. Retention: --%</span>
+      </div>
+      <p style="font-size: 0.86rem; color: var(--text-secondary); margin: 0; line-height: 1.45;" id="coach-advice-text">
+        Welcome! Your 235 vocabulary entries are loaded locally.
+      </p>
+    </div>
+  </section>
+
+  <!-- VIEW 2: ACTIVE TRAINER SESSION -->
+  <section id="view-session" class="view-section">
+    <div class="card">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+        <button class="btn btn-secondary btn-sm" onclick="endSessionEarly()">✕ End</button>
+        <span class="badge badge-primary" id="session-mode-label">Mixed Retrieval</span>
+        <span style="font-size: 0.82rem; font-weight: 600; color: var(--text-secondary);" id="session-counter">1 / 18</span>
+      </div>
+      <div class="progress-track">
+        <div class="progress-fill" id="session-progress-bar" style="width: 5%;"></div>
+      </div>
+      <div id="question-stage"></div>
+      <div id="feedback-stage" style="display: none;"></div>
+    </div>
+  </section>
+
+  <!-- VIEW 3: PROGRESS & HEATMAP -->
+  <section id="view-progress" class="view-section">
+    <div class="card">
+      <div class="card-header">
+        <h2 class="section-title">Retention Analytics</h2>
+        <span class="badge badge-primary">DSR Model</span>
+      </div>
+      <div class="stat-grid">
+        <div class="stat-box"><div class="stat-val" id="prog-7d">--%</div><div class="stat-lbl">7-Day Retention</div></div>
+        <div class="stat-box"><div class="stat-val" id="prog-30d">--%</div><div class="stat-lbl">30-Day Projection</div></div>
+        <div class="stat-box"><div class="stat-val" id="prog-art-acc">--%</div><div class="stat-lbl">Article Accuracy</div></div>
+        <div class="stat-box"><div class="stat-val" id="prog-prod-acc">--%</div><div class="stat-lbl">EN → DE Recall</div></div>
+        <div class="stat-box"><div class="stat-val" id="prog-rec-acc">--%</div><div class="stat-lbl">DE → EN Recall</div></div>
+        <div class="stat-box"><div class="stat-val" id="prog-false-conf">0</div><div class="stat-lbl">False Confidence</div></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><h2 class="section-title">235-Word Memory Heatmap</h2></div>
+      <div style="display: flex; gap: 10px; font-size: 0.74rem; color: var(--text-secondary); margin-bottom: 8px; flex-wrap: wrap;">
+        <span>🟢 Strong</span><span>🟡 Developing</span><span>🟠 Weak</span><span>🔴 Forgotten</span><span>⚪ Unseen</span>
+      </div>
+      <div class="heatmap-grid" id="heatmap-container"></div>
+    </div>
+  </section>
+
+  <!-- VIEW 4: DIFFICULT WORDS -->
+  <section id="view-difficult" class="view-section">
+    <div class="card">
+      <div class="card-header">
+        <h2 class="section-title">Words I Keep Forgetting</h2>
+        <button class="btn btn-purple btn-sm" onclick="startAdaptiveSession('deep')">Train Deeply</button>
+      </div>
+      <div id="difficult-list-container"></div>
+    </div>
+  </section>
+
+  <!-- VIEW 5: VOCABULARY EXPLORER -->
+  <section id="view-vocab" class="view-section">
+    <div class="card">
+      <div class="card-header">
+        <h2 class="section-title">Authoritative Vocabulary (235)</h2>
+        <span class="badge badge-primary" id="vocab-count-badge">235 items</span>
+      </div>
+      <input type="search" id="vocab-search" class="text-input" placeholder="Search German, English, or #number..." oninput="renderVocabList()" style="margin-bottom: 10px;" />
+      <div class="pill-selector" style="margin-bottom: 10px;">
+        <div class="pill-option active" onclick="setVocabFilter('all', this)">All (235)</div>
+        <div class="pill-option" onclick="setVocabFilter('nouns', this)">der/die/das</div>
+        <div class="pill-option" onclick="setVocabFilter('flagged', this)">PDF Notes</div>
+      </div>
+      <div id="vocab-list-container"></div>
+    </div>
+  </section>
+
+  <!-- VIEW 6: SETTINGS -->
+  <section id="view-settings" class="view-section">
+    <div class="card">
+      <h2 class="section-title" style="margin-bottom: 10px;">Data Privacy & Offline Backup</h2>
+      <p style="font-size: 0.84rem; color: var(--text-secondary); line-height: 1.45;">
+        Progress is saved privately on each person's iPhone. Sharing the app link never overwrites your personal memory history.
+      </p>
+      <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 14px;">
+        <button class="btn btn-primary" onclick="exportProgressJSON()">⬇️ Export Progress Backup (JSON)</button>
+        <label class="btn btn-secondary" style="margin: 0;">
+          ⬆️ Import Progress Backup (JSON)
+          <input type="file" accept=".json" style="display: none;" onchange="importProgressJSON(event)" />
+        </label>
+        <button class="btn btn-danger" onclick="resetAllProgress()">🗑️ Reset Learning Progress</button>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- WORD DETAIL SHEET -->
+<div class="modal-backdrop" id="word-modal" onclick="closeWordModal()">
+  <div class="modal-sheet" onclick="event.stopPropagation()">
+    <div id="word-modal-content"></div>
+  </div>
+</div>
+
+<!-- BOTTOM NAV -->
+<nav class="bottom-nav">
+  <button class="nav-item active" onclick="switchView('home', this)"><span class="nav-icon">🏠</span><span>Today</span></button>
+  <button class="nav-item" onclick="switchView('progress', this)"><span class="nav-icon">📊</span><span>Heatmap</span></button>
+  <button class="nav-item" onclick="switchView('difficult', this)"><span class="nav-icon">🧠</span><span>Difficult</span></button>
+  <button class="nav-item" onclick="switchView('vocab', this)"><span class="nav-icon">📖</span><span>235 Words</span></button>
+  <button class="nav-item" onclick="switchView('settings', this)"><span class="nav-icon">⚙️</span><span>Settings</span></button>
+</nav>
+
+<script>
+const RAW_VOCAB = [
+  [1,"die","Kenntnis","knowledge"],[2,"der","Schüler","student / pupil"],[3,"die","Abwäsche","washing up / dishes"],[4,"die","Ziele","goals"],[5,"der","Lärm","noise"],[6,"die","Aussichten","prospects/outlook"],[7,"die","Beziehung","relationship"],[8,"die","Strecke","distance / route"],[9,"der","Nachbar","neighbor"],[10,"der","Anfänger","beginner"],[11,"die","Gründe","reasons"],[12,"das","Konto","account"],[13,"das","Studienfach","field of study"],[14,"der","Dank","thanks"],[15,"","benötigen","to need/ require"],[16,"","gerne","gladly / like to"],[17,"das","Klima","climate"],[18,"das","Zeugnis","certificate / report card"],[19,"der","Pol","pole"],[20,"","tragen","to carry / wear"],[21,"","wohnen","to live / reside"],[22,"die","Regel","rule"],[23,"der","Anteil","share/proportion"],[24,"die","Auswirkungen","effects/impacts"],[25,"","allgemein","general/generally"],[26,"","ungenügend","insufficient / inadequate"],[27,"der","Bereich","area / field"],[28,"","wiederholen","to repeat"],[29,"der","Zivildienst","civilian service"],[30,"die","Dozentin","female lecturer"],[31,"","kochen","to cook"],[32,"der","Beitrag","contribution/post"],[33,"die","Chancen","chances/opportunities"],[34,"","gründen","to found/ establish"],[35,"","verbessern","to improve"],[36,"","aufnehmen","to record / take in / accept"],[37,"","aussuchen","to choose / select"],[38,"","nachholen","to catch up / make up"],[39,"","berechnen","to calculate"],[40,"","gefangen","caught/trapped"],[41,"","fühlen","to feel"],[42,"die","Erklärung","explanation"],[43,"","besprechen","to discuss"],[44,"","verspäten","to be delayed"],[45,"die","Krawatte","tie"],[46,"","begrüßt","greets/welcomed"],[47,"die","Übernachtungsmöglichkeit","overnight accommodation"],[48,"","gratuliere","I congratulate / congratulations"],[49,"","durch","through"],[50,"das","Dorf","village"],[51,"der","Hauptschulabschluss","lower secondary school certificate"],[52,"der","Volksschulabschluss","primary/elementary school leaving certificate"],[53,"das","Abitur","university entrance qualification"],[54,"der","Realschulabschluss","intermediate secondary school certificate"],[55,"die","Hauptschule","lower secondary school"],[56,"","wollen","to want"],[57,"die","Jugendsprache","youth language"],[58,"die","Schulpflicht","compulsory schooling"],[59,"","mindestens","at least"],[60,"die","Grundschule","primary school"],[61,"","ausräumen","to clear out / empty"],[62,"","ausmachen","to turn off / arrange"],[63,"das","Licht","light"],[64,"","duschen","to shower"],[65,"die","Feier","party / celebration"],[66,"","sauber","clean"],[67,"","putzen","to clean"],[68,"","abwaschen","to wash up"],[69,"","ziehen","to pull / move"],[70,"","meistens","mostly"],[71,"","aushalten","to tolerate / endure"],[72,"","streiten","to argue"],[73,"","zeigen","to show"],[74,"","aufpassen","to pay attention / take care"],[75,"","anbieten","to offer"],[76,"die","Pünktlichkeit","punctuality"],[77,"die","Höflichkeit","politeness"],[78,"","lächeln","to smile"],[79,"","nachfragen","to ask again/inquire"],[80,"","kennenlernen","to get to know"],[81,"die","Erfahrungen","experiences"],[82,"die","Verwandten","relatives"],[83,"das","Ganze","the whole / entirety"],[84,"","furchtbar","terrible/awful"],[85,"die","Möglichkeiten","possibilities/options"],[86,"","ärgerlich","annoying/angry"],[87,"das","Heimweh","homesickness"],[88,"","vergehen","to pass (time)"],[89,"","beeilen","to hurry"],[90,"das","Wechselgeld","change (money)"],[91,"der","Militärdienst","military service"],[92,"","stimmt","is correct / that's right"],[93,"","sprechen","to speak"],[94,"die","Sprache","language"],[95,"","zuschauen","to watch/look on"],[96,"die","Rezeption","reception"],
+  [97,"was","was","what","PDF_NOTE: Source PDF repeats 'was' in the Article column; treated as pronoun."],
+  [98,"wer","wer","who","PDF_NOTE: Source PDF repeats 'wer' in the Article column; treated as pronoun."],
+  [99,"die","Mitarbeiter","employees / staff"],[100,"der","Handwerker","craftsperson/ tradesperson"],[101,"der","Maurer","bricklayer/mason"],[102,"die","Kantine","canteen / cafeteria"],[103,"die","Mensa","university cafeteria"],[104,"","spinnen","to spin / be crazy"],[105,"die","Spinne","spider"],[106,"der","Vorschlag","suggestion"],[107,"die","Nachbarin","female neighbor"],[108,"die","Überstunden","overtime"],[109,"die","Montage","assembly/installation work"],[110,"der","Monteur","technician/fitter"],
+  [111,"traurig","traurig","sad","PDF_NOTE: Source PDF repeats 'traurig' in the Article column; treated as adjective."],
+  [112,"","dazu","to that / about that / in addition"],[113,"","genug","enough"],[114,"","wieder","again"],[115,"","geschenkt","given as a gift/free"],[116,"","erklärt","explained"],[117,"die","Halskette","necklace"],[118,"","anziehen","to put on/ get dressed"],[119,"","besonders","especially / particularly"],[120,"","werfen","to throw"],[121,"","darauf","on it/ onto it / about it"],[122,"das","Pferd","horse"],[123,"der","Bleistift","pencil"],[124,"","begrüße","I greet/welcome"],[125,"","zeige","I show"],[126,"","erzähle","I tell / I narrate"],[127,"","fruchtbar","fertile/fruitful"],[128,"","gut geht","is going well"],[129,"die","Familienfeier","family celebration / family party"],[130,"die","Bevölkerung","population"],[131,"die","Blume","flower"],[132,"der","Brief","letter"],
+  [133,"der/die","Cousin / Cousine","cousin","PDF_NOTE: Dual masculine/feminine entry."],
+  [134,"die","Ehe","marriage"],[135,"die","Erinnerung","memory / reminder"],[136,"die","Ferien","holidays/vacation"],[137,"die","Geburt","birth"],[138,"der","Haushalt","household"],[139,"der","Hund","dog"],[140,"die","Krankenschwester","nurse"],[141,"die","Leute","people"],[142,"das","Lied","song"],[143,"die","Mama","mum/mom"],[144,"die","Mitteilung","message/notification"],[145,"die","Mitternacht","midnight"],[146,"der","Osten","east"],[147,"","Ostern","Easter"],[148,"das","Osterfest","Easter festival"],
+  [149,"der/die","Rentner/in","retired person / pensioner","PDF_NOTE: Dual masculine/feminine entry."],
+  [150,"der","Rest","rest/ remainder"],[151,"der","Ring","ring"],[152,"die","Schließung","closure/closing"],[153,"die","Schokolade","chocolate"],[154,"das","Schiff","ship"],[155,"","Silvester","New Year's Eve"],[156,"das","Standesamt","registry office / civil registry office"],[157,"die","Trauung","wedding ceremony"],[158,"die","Überraschung","surprise"],[159,"die","Wand","wall"],[160,"","Weihnachten","Christmas"],[161,"das","Weihnachtsfest","Christmas celebration"],[162,"der","Westen","west"],[163,"die","Zukunft","future"],[164,"","annehmen","to accept / assume"],[165,"","sich bedanken","to thank / express thanks"],[166,"","bestehen","to exist/pass / consist"],[167,"","bringen","to bring"],[168,"","dazugehören","to belong to it"],[169,"","meinen","to mean/think"],[170,"","riechen","to smell"],[171,"","schenken","to give as a gift"],[172,"","übernachten","to stay overnight"],[173,"","weggehen","to leave / go away"],[174,"","zusammenleben","to live together"],[175,"","alleinerziehend","single-parent / raising a child alone"],[176,"","wem","to whom"],[177,"","wen","whom"],[178,"","wie lange","how long"],[179,"","wie oft","how often"],[180,"","dick","thick / fat"],[181,"","hoch","high / tall"],[182,"","feucht","damp/humid"],[183,"","bunt","colorful"],[184,"","weich","soft"],[185,"","hart","hard"],[186,"","sichersten","safest/most certain"],[187,"","wertvoll","valuable"],[188,"","ruhiger","quieter / calmer"],[189,"","wenigsten","least/fewest"],[190,"","feinsten","finest / most delicate"],[191,"","tapfersten","bravest"],[192,"","giftig","poisonous / toxic"],[193,"","geschickter","more skilled / more skillful"],[194,"","deutlich","clear / clearly"],[195,"der","Traummann","dream man / ideal man"],[196,"","getroffen","met/hit"],[197,"","erinnere","remember/remind (1st person)"],[198,"","wünschst","wish (2nd person singular)"],[199,"","durstig","thirsty"],[200,"","gehört","belongs / heard"],[201,"","gerade","just/straight/ currently"],[202,"","vorrätig","in stock"],
+  [203,"","Sondergrößen","special sizes","PDF_NOTE: Plural noun without article in source PDF."],
+  [204,"die","Bestellung","order"],[205,"der","Sommerschlussverkauf","summer sale"],
+  [206,"","Sonderpreisen","special prices","PDF_NOTE: Dative plural noun without article in source PDF."],
+  [207,"","passende","suitable / matching"],[208,"","folgende","following"],[209,"","laufen","to walk / run"],[210,"","reiten","to ride"],[211,"der","Flohmarkt","flea market"],[212,"","gebraucht","used/second-hand"],[213,"die","Standgebühr","stall fee / stand fee"],[214,"die","Herrenabteilung","men's department"],[215,"","rauschende","rustling/roaring / lavish (context-dependent)"],[216,"die","Auswahl","selection/choice"],[217,"","überhaupt","at all / generally"],[218,"","übermorgen","the day after tomorrow"],[219,"","schwanger","pregnant"],[220,"","günstigen","favorable / inexpensive"],[221,"","unbedingt","absolutely / definitely"],[222,"der","Grund","reason / ground"],[223,"die","Beratung","advice/consultation"],[224,"das","Fußballturnier","football/soccer tournament"],[225,"die","Mannschaften","teams"],[226,"der","Stadtteil","district/neighborhood"],[227,"","vorher","before / beforehand"],[228,"die","Läden","shops/stores"],[229,"","länger","longer"],[230,"","verschiedenen","different/various"],[231,"das","Programm","program"],[232,"","beliebte","popular"],
+  [233,"die","Weststadt","western part of the city","PDF_NOTE: Rejoined split line from PDF page 7."],
+  [234,"","statt","instead of"],[235,"der","Höhepunkt","highlight/climax"]
+];
+
+const CUSTOM_ELABORATIONS = {
+  47: { mnemonic: "ÜBERNACHTUNG (overnight stay) + MÖGLICHKEIT (possibility) -> 'die Übernachtungsmöglichkeit'.", sentence: "In diesem kleinen Dorf gibt es leider keine günstige {0}." },
+  76: { mnemonic: "PÜNKTLICH (punctual) + -KEIT -> 'die Pünktlichkeit'. All -keit nouns are feminine (die)!", sentence: "In Deutschland ist {0} bei der Arbeit extrem wichtig." },
+  84: { mnemonic: "CONTRAST PAIR with #127 (fruchtbar)! FURCHT = FEAR -> 'furchtbar' = terrible/awful.", sentence: "Das Wetter gestern war wirklich {0} kalt und nass." },
+  117: { mnemonic: "HALS (neck) + KETTE (chain) -> a chain around the neck = 'die Halskette' (necklace).", sentence: "Zum Geburtstag hat er ihr eine wertvolle {0} geschenkt." },
+  127: { mnemonic: "CONTRAST PAIR with #84 (furchtbar)! FRUCHT = FRUIT -> 'fruchtbar' = fruitful/fertile.", sentence: "Der Boden in diesem Tal ist sehr {0} für Pflanzen." },
+  130: { mnemonic: "BEVÖLKERUNG comes from 'das Volk' (people) + -ung (always feminine 'die').", sentence: "Die {0} in den großen Städten wächst jedes Jahr." },
+  156: { mnemonic: "STAND (civil status) + AMT (office) -> 'das Standesamt' (registry office).", sentence: "Vor der großen Feier heiraten sie morgen im {0}." },
+  204: { mnemonic: "BESTELLEN (to order) + -ung -> 'die Bestellung' (order).", sentence: "Meine {0} ist heute endlich mit der Post angekommen." },
+  211: { mnemonic: "FLOH (flea) + MARKT (market) -> 'der Flohmarkt' (flea market).", sentence: "Am Sonntag verkaufen wir alte Bücher auf dem {0}." },
+  235: { mnemonic: "HÖHE (height/peak) + PUNKT (point) -> 'der Höhepunkt' (highlight/climax).", sentence: "Das große Feuerwerk um Mitternacht war der {0} der Feier." }
+};
+
+function buildWordElaboration(item) {
+  if (CUSTOM_ELABORATIONS[item.id]) return CUSTOM_ELABORATIONS[item.id];
+  const w = item.word, art = item.hasValidArticle ? item.article : "";
+  let mnemonic = `Semantic Hook: Link "${w}" directly to "${item.english}" in a vivid mental scene.`;
+  if (art === "die" && (w.endsWith("ung") || w.endsWith("keit") || w.endsWith("heit") || w.endsWith("schaft") || w.endsWith("ion"))) {
+    mnemonic = `Morphology Rule: Nouns ending in -ung, -keit, -heit, -schaft, or -ion are 100% feminine ("die ${w}").`;
+  } else if (art === "der") {
+    mnemonic = `Visual Gender Anchor: Picture a bright BLUE masculine spotlight ("der") on "${w}" (${item.english}).`;
+  } else if (art === "das") {
+    mnemonic = `Visual Gender Anchor: Picture a bright GREEN neutral frame ("das") around "${w}" (${item.english}).`;
+  }
+  let sentence = `Im Alltag ist das Wort „{0}“ sehr wichtig.`;
+  if (item.hasValidArticle) {
+    sentence = art === "die" ? `Heute ist die {0} für uns alle besonders wichtig.` : (art === "der" ? `Der {0} spielt hier eine große Rolle.` : `Das {0} wurde gestern ausführlich besprochen.`);
+  } else if (item.english.startsWith("to ")) {
+    sentence = `Wir müssen das bis morgen unbedingt {0}.`;
+  }
+  return { mnemonic, sentence };
+}
+
+const STORAGE_KEY = "memodeutsch_v2_progress";
+const VOCAB_DATA = RAW_VOCAB.map(row => {
+  const [id, rawArticle, word, english, pdfNote] = row;
+  const hasValidArticle = ["der", "die", "das", "der/die"].includes(rawArticle);
+  const elab = buildWordElaboration({ id, article: rawArticle, word, english, hasValidArticle });
+  let baseDiff = 4.0 + (word.length > 14 ? 1.5 : 0) + ((id === 84 || id === 127) ? 1.5 : 0);
+  return { id, article: rawArticle, hasValidArticle, word, fullGerman: hasValidArticle ? `${rawArticle} ${word}` : word, english, pdfNote: pdfNote || null, mnemonic: elab.mnemonic, sentenceTemplate: elab.sentence, baseDiff };
+});
+
+let userState = { streak: 0, lastStudyDate: null, sessionTargetSize: 18, theme: "light", words: {} };
+
+function getDefaultWordProgress(item) {
+  return {
+    seen: 0, correct: 0, incorrect: 0, streak: 0, lastReviewed: null, nextReview: null,
+    stability: 0, difficulty: item.baseDiff, confidence: 0, falseConfidenceCount: 0, lastErrorReason: null,
+    stats: { deToEn: { c: 0, t: 0 }, enToDe: { c: 0, t: 0 }, article: { c: 0, t: 0 }, typing: { c: 0, t: 0 }, context: { c: 0, t: 0 } }
+  };
+}
+
+function loadState() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) userState = { ...userState, ...JSON.parse(raw) };
+  } catch (e) {}
+  VOCAB_DATA.forEach(item => {
+    if (!userState.words[item.id]) userState.words[item.id] = getDefaultWordProgress(item);
+  });
+  applyTheme();
+}
+
+function saveState() {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(userState)); } catch (e) {}
+}
+
+function getRetrievability(prog, nowMs = Date.now()) {
+  if (!prog || prog.seen === 0 || !prog.lastReviewed || prog.stability <= 0) return 0;
+  return Math.pow(0.9, Math.max(0, (nowMs - prog.lastReviewed) / 86400000) / prog.stability);
+}
+
+function getMemoryCategory(item) {
+  const p = userState.words[item.id];
+  if (!p || p.seen === 0) return "new";
+  const r = getRetrievability(p);
+  if (p.incorrect >= 2 && p.streak <= 1) return "forgotten";
+  if (r < 0.72 || p.difficulty >= 7.2 || p.falseConfidenceCount > 0) return "weak";
+  if (p.stability >= 6 && r >= 0.85 && p.streak >= 2) return "strong";
+  return "developing";
+}
+
+function isWordDue(item, nowMs = Date.now()) {
+  const p = userState.words[item.id];
+  if (!p || p.seen === 0) return false;
+  return !p.nextReview || nowMs >= p.nextReview || getRetrievability(p, nowMs) < 0.88;
+}
+
+function isWordDifficult(item) {
+  const p = userState.words[item.id];
+  if (!p || p.seen === 0) return false;
+  const artAcc = p.stats.article.t >= 2 ? (p.stats.article.c / p.stats.article.t) : 1;
+  return p.incorrect >= 2 || p.difficulty >= 6.8 || p.falseConfidenceCount >= 1 || (p.seen >= 2 && (p.correct / p.seen) < 0.65) || artAcc < 0.6;
+}
+
+let activeSession = null;
+let currentFilter = "all";
+
+function setSessionSize(size, el) {
+  userState.sessionTargetSize = size;
+  el.parentElement.querySelectorAll(".pill-option").forEach(b => b.classList.remove("active"));
+  el.classList.add("active");
+  saveState();
+}
+
+function startAdaptiveSession(mode = "standard") {
+  const now = Date.now();
+  const targetCount = mode === "rapid" ? 15 : (mode === "deep" ? 10 : userState.sessionTargetSize);
+  let pool = [];
+
+  if (mode === "articles") {
+    const nouns = VOCAB_DATA.filter(v => v.hasValidArticle).sort((a, b) => {
+      const pa = userState.words[a.id], pb = userState.words[b.id];
+      return (pa.stats.article.t ? pa.stats.article.c / pa.stats.article.t : 0.5) - (pb.stats.article.t ? pb.stats.article.c / pb.stats.article.t : 0.5);
+    });
+    pool = nouns.slice(0, targetCount).map(item => ({ item, forcedType: "C_ARTICLE", isRetry: false }));
+  } else if (mode === "deep") {
+    let diffItems = VOCAB_DATA.filter(isWordDifficult);
+    if (diffItems.length < 6) {
+      diffItems = diffItems.concat(VOCAB_DATA.filter(v => !diffItems.includes(v)).sort((a, b) => b.baseDiff - a.baseDiff).slice(0, 8 - diffItems.length));
+    }
+    pool = diffItems.slice(0, targetCount).map(item => ({ item, forcedType: "DEEP_STUDY", isRetry: false }));
+  } else {
+    const due = VOCAB_DATA.filter(v => isWordDue(v, now)).sort((a, b) => getRetrievability(userState.words[a.id], now) - getRetrievability(userState.words[b.id], now));
+    const diff = VOCAB_DATA.filter(v => isWordDifficult(v) && !due.includes(v));
+    const unseen = VOCAB_DATA.filter(v => userState.words[v.id].seen === 0);
+    const rest = VOCAB_DATA.filter(v => !due.includes(v) && !diff.includes(v) && !unseen.includes(v));
+
+    const selected = [
+      ...due.slice(0, Math.min(due.length, Math.ceil(targetCount * 0.45))),
+      ...diff.slice(0, Math.min(diff.length, Math.ceil(targetCount * 0.25)))
+    ];
+    selected.push(...unseen.slice(0, Math.min(unseen.length, Math.max(4, targetCount - selected.length))));
+    for (const r of rest) { if (selected.length >= targetCount) break; selected.push(r); }
+
+    pool = selected.map(item => ({ item, forcedType: mode === "rapid" ? "RAPID_RECALL" : null, isRetry: false }));
+  }
+
+  activeSession = { mode, queue: pool, index: 0, reviewedCount: 0, correctCount: 0, strengthenedIds: new Set(), lapsedIds: new Set(), articlesMasteredCount: 0, currentQuestion: null, lastResult: null };
+  document.querySelectorAll(".view-section").forEach(s => s.classList.remove("active"));
+  document.getElementById("view-session").classList.add("active");
+  renderCurrentSessionStep();
+}
+
+function chooseModalityForItem(item, forcedType) {
+  if (forcedType) return forcedType;
+  const p = userState.words[item.id];
+  if (p.seen === 0) return Math.random() < 0.5 ? "A_DE_TO_EN" : "H_RECOGNITION";
+  if (item.hasValidArticle && p.stats.article.t >= 1 && (p.stats.article.c / p.stats.article.t) < 0.75 && Math.random() < 0.65) return "C_ARTICLE";
+  const pool = ["A_DE_TO_EN", "B_EN_TO_DE", "D_COMPLETION", "E_PARTIAL_EN", "G_SENTENCE", "H_RECOGNITION", "J_TYPING"];
+  if (item.hasValidArticle) pool.push("C_ARTICLE");
+  return pool[Math.floor(Math.random() * pool.length)];
+}
+
+function getPlausibleDistractors(targetItem, count = 3) {
+  const candidates = VOCAB_DATA.filter(v => v.id !== targetItem.id).sort((a, b) => Math.abs(a.word.length - targetItem.word.length) - Math.abs(b.word.length - targetItem.word.length)).slice(0, 15);
+  for (let i = candidates.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [candidates[i], candidates[j]] = [candidates[j], candidates[i]]; }
+  return candidates.slice(0, count).map(v => v.fullGerman);
+}
+
+function renderCurrentSessionStep() {
+  if (!activeSession || activeSession.index >= activeSession.queue.length) { renderSessionSummary(); return; }
+  const entry = activeSession.queue[activeSession.index];
+  const item = entry.item;
+  const modality = chooseModalityForItem(item, entry.forcedType);
+  activeSession.currentQuestion = { item, modality };
+
+  const total = activeSession.queue.length;
+  document.getElementById("session-counter").textContent = `${activeSession.index + 1} / ${total}`;
+  document.getElementById("session-progress-bar").style.width = `${Math.round((activeSession.index / total) * 100)}%`;
+
+  const qStage = document.getElementById("question-stage"), fStage = document.getElementById("feedback-stage");
+  fStage.style.display = "none"; qStage.style.display = "block";
+
+  if (modality === "DEEP_STUDY") {
+    qStage.innerHTML = `
+      <div style="text-align:center;">
+        <span class="badge badge-purple">Deep Encoding (#${item.id})</span>
+        <div class="prompt-word">${formatGermanWithColor(item)}</div>
+        <button class="audio-pill" onclick="speakGerman('${escapeQuotes(item.fullGerman)}')">🔊 Pronounce</button>
+        <div class="prompt-sub" style="font-size:1.15rem; font-weight:600; color:var(--text); margin-top:10px;">${item.english}</div>
+      </div>
+      <div class="mnemonic-box"><strong>🧠 Memory Hook:</strong><br/>${item.mnemonic}</div>
+      <button class="btn btn-primary" style="margin-top:14px;" onclick="transitionDeepToTest()">Test My Recall →</button>
+    `;
+    return;
+  }
+
+  if (modality === "C_ARTICLE") {
+    qStage.innerHTML = `
+      <div class="prompt-word">___ ${item.word}</div>
+      <div class="prompt-sub">Meaning: “${item.english}” · Select the German article:</div>
+      <div class="article-grid">
+        <button class="article-btn art-der" onclick="submitArticleAnswer('der')">der</button>
+        <button class="article-btn art-die" onclick="submitArticleAnswer('die')">die</button>
+        <button class="article-btn art-das" onclick="submitArticleAnswer('das')">das</button>
+      </div>
+      ${item.article === "der/die" ? `<button class="btn btn-secondary" onclick="submitArticleAnswer('der/die')">der / die (Both)</button>` : ""}
+    `;
+    return;
+  }
+
+  if (modality === "A_DE_TO_EN" || modality === "E_PARTIAL_EN") {
+    const cleanEn = item.english.split("/")[0].trim();
+    const cue = modality === "E_PARTIAL_EN" ? `Hint: <strong>${cleanEn.slice(0,2)}____</strong>` : "Type the English meaning:";
+    qStage.innerHTML = `
+      <div style="text-align:center;"><button class="audio-pill" onclick="speakGerman('${escapeQuotes(item.fullGerman)}')">🔊 Listen</button></div>
+      <div class="prompt-word">${formatGermanWithColor(item)}</div>
+      <div class="prompt-sub">${cue}</div>
+      <form onsubmit="submitTypedAnswer(event, 'EN')">
+        <input type="text" id="answer-input" class="text-input" placeholder="English meaning..." autocomplete="off" autocapitalize="none" required />
+        <button type="submit" class="btn btn-primary">Check Answer</button>
+      </form>
+    `;
+    focusInputSafely();
+    return;
+  }
+
+  if (modality === "D_COMPLETION") {
+    const keep = Math.max(2, Math.floor(item.word.length * 0.45));
+    const cue = item.word.slice(0, keep) + "_".repeat(item.word.length - keep);
+    qStage.innerHTML = `
+      <div class="prompt-word">${item.english}</div>
+      <div class="prompt-sub">Complete: <strong>${item.hasValidArticle ? item.article + " " : ""}${cue}</strong></div>
+      <form onsubmit="submitTypedAnswer(event, 'DE')">
+        <input type="text" id="answer-input" class="text-input" placeholder="Type German word..." autocomplete="off" autocapitalize="none" required />
+        <button type="submit" class="btn btn-primary">Check Answer</button>
+      </form>
+    `;
+    focusInputSafely();
+    return;
+  }
+
+  if (modality === "G_SENTENCE") {
+    qStage.innerHTML = `
+      <div class="prompt-sub">Complete the sentence for <strong>“${item.english}”</strong>:</div>
+      <div class="prompt-word" style="font-size:1.3rem;">„${item.sentenceTemplate.replace("{0}", "________")}“</div>
+      <form onsubmit="submitTypedAnswer(event, 'DE')" style="margin-top:14px;">
+        <input type="text" id="answer-input" class="text-input" placeholder="German word..." autocomplete="off" autocapitalize="none" required />
+        <button type="submit" class="btn btn-primary">Check Answer</button>
+      </form>
+    `;
+    focusInputSafely();
+    return;
+  }
+
+  if (modality === "H_RECOGNITION") {
+    const opts = [...getPlausibleDistractors(item, 3), item.fullGerman].sort(() => Math.random() - 0.5);
+    qStage.innerHTML = `
+      <div class="prompt-word">${item.english}</div>
+      <div class="prompt-sub">Select the exact German entry:</div>
+      <div class="choice-grid">
+        ${opts.map(opt => `<button class="choice-btn" onclick="submitChoiceAnswer('${escapeQuotes(opt)}')"><span>${opt}</span><span>→</span></button>`).join("")}
+      </div>
+    `;
+    return;
+  }
+
+  qStage.innerHTML = `
+    <div class="prompt-word">${item.english}</div>
+    <div class="prompt-sub">${item.hasValidArticle ? "Type the German word (with der/die/das):" : "Type the German word:"}</div>
+    <form onsubmit="submitTypedAnswer(event, 'DE')">
+      <input type="text" id="answer-input" class="text-input" placeholder="${item.hasValidArticle ? 'e.g. die Bevölkerung' : 'German word...'}" autocomplete="off" autocapitalize="none" required />
+      <button type="submit" class="btn btn-primary">Check Answer</button>
+    </form>
+  `;
+  focusInputSafely();
+}
+
+function transitionDeepToTest() {
+  activeSession.queue[activeSession.index].forcedType = "J_TYPING";
+  renderCurrentSessionStep();
+}
+
+function focusInputSafely() {
+  setTimeout(() => { const inp = document.getElementById("answer-input"); if (inp) inp.focus(); }, 60);
+}
+
+function normalizeStr(s) {
+  return (s || "").toLowerCase().replace(/\([^)]*\)/g, "").replace(/[.,!?;"'„“]/g, "").replace(/\s+/g, " ").trim();
+}
+
+function evaluateEnglishInput(userRaw, item) {
+  const user = normalizeStr(userRaw);
+  if (!user || user.length < 2) return { isCorrect: false, note: null };
+  const targets = item.english.split(/[\/,]/).map(t => normalizeStr(t)).filter(Boolean);
+  for (const t of targets) {
+    const tNo = t.replace(/^to\s+/, ""), uNo = user.replace(/^to\s+/, "");
+    if (uNo === tNo || user === t || (tNo.length >= 5 && uNo.length >= 4 && (tNo.includes(uNo) || uNo.includes(tNo)))) return { isCorrect: true, note: null };
+  }
+  return { isCorrect: false, note: null };
+}
+
+function evaluateGermanInput(userRaw, item) {
+  const userLow = normalizeStr(userRaw), targetWordLow = normalizeStr(item.word), targetFullLow = normalizeStr(item.fullGerman);
+  if (userLow === targetFullLow) return { isCorrect: true, articleCorrect: true, note: null };
+  if (item.article === "der/die" && item.word.split("/").map(s => normalizeStr(s)).some(v => userLow.includes(v))) return { isCorrect: true, articleCorrect: true, note: null };
+  if (item.hasValidArticle && userLow === targetWordLow) {
+    return { isCorrect: true, articleCorrect: false, note: `Correct noun, but remember the article: "${item.article} ${item.word}"!` };
+  }
+  if (!item.hasValidArticle && userLow === targetWordLow) return { isCorrect: true, articleCorrect: null, note: null };
+  return { isCorrect: false, articleCorrect: false, note: null };
+}
+
+function submitArticleAnswer(chosenArt) {
+  const { item } = activeSession.currentQuestion;
+  const isCorrect = chosenArt === item.article || (item.article === "der/die" && ["der","die","der/die"].includes(chosenArt));
+  processEvaluation({ isCorrect, articleCorrect: isCorrect, userAnswer: `${chosenArt} ${item.word}`, note: null });
+}
+
+function submitChoiceAnswer(chosenText) {
+  const { item } = activeSession.currentQuestion;
+  const isCorrect = chosenText === item.fullGerman;
+  processEvaluation({ isCorrect, articleCorrect: item.hasValidArticle ? isCorrect : null, userAnswer: chosenText, note: null });
+}
+
+function submitTypedAnswer(e, lang) {
+  e.preventDefault();
+  const val = document.getElementById("answer-input").value;
+  const { item } = activeSession.currentQuestion;
+  const res = lang === "EN" ? evaluateEnglishInput(val, item) : evaluateGermanInput(val, item);
+  processEvaluation({ isCorrect: res.isCorrect, articleCorrect: res.articleCorrect ?? null, userAnswer: val, note: res.note });
+}
+
+function processEvaluation(evalResult) {
+  const { item } = activeSession.currentQuestion;
+  activeSession.lastResult = evalResult;
+  speakGerman(item.fullGerman);
+
+  const qStage = document.getElementById("question-stage"), fStage = document.getElementById("feedback-stage");
+  qStage.style.display = "none"; fStage.style.display = "block";
+
+  fStage.innerHTML = `
+    <div style="display:flex; justify-content:space-between; align-items:center;">
+      <span class="badge ${evalResult.isCorrect ? 'badge-success' : 'badge-danger'}">${evalResult.isCorrect ? '✓ Correct' : '✗ Forgotten'}</span>
+      <button class="audio-pill" onclick="speakGerman('${escapeQuotes(item.fullGerman)}')">🔊 ${item.fullGerman}</button>
+    </div>
+    <div class="prompt-word" style="margin: 12px 0 4px;">${formatGermanWithColor(item)}</div>
+    <div class="prompt-sub" style="font-size:1.05rem; color:var(--text); font-weight:600; margin-bottom:8px;">${item.english}</div>
+    ${evalResult.note ? `<div style="color:var(--warning); text-align:center; font-size:0.85rem; font-weight:600; margin-bottom:8px;">${evalResult.note}</div>` : ""}
+    <div class="mnemonic-box"><strong>💡 Memory Aid:</strong> ${item.mnemonic}</div>
+    <div style="margin-top: 14px;">
+      <div style="font-size: 0.78rem; font-weight: 700; color: var(--text-secondary); text-align: center;">HOW CONFIDENT WERE YOU?</div>
+      <div class="confidence-grid">
+        <button class="conf-btn" onclick="handleConfidenceSelection(1)"><span class="emoji">😕</span><span>Guessing</span></button>
+        <button class="conf-btn" onclick="handleConfidenceSelection(2)"><span class="emoji">🙂</span><span>Somewhat</span></button>
+        <button class="conf-btn" onclick="handleConfidenceSelection(3)"><span class="emoji">😎</span><span>Very Confident</span></button>
+      </div>
+    </div>
+  `;
+}
+
+function handleConfidenceSelection(confLevel) {
+  const { item, modality } = activeSession.currentQuestion;
+  const evalResult = activeSession.lastResult;
+  const p = userState.words[item.id];
+  const now = Date.now();
+
+  p.seen++; p.lastReviewed = now; p.confidence = confLevel;
+  if (modality === "C_ARTICLE" || (item.hasValidArticle && evalResult.articleCorrect !== null)) {
+    p.stats.article.t++; if (evalResult.articleCorrect) { p.stats.article.c++; activeSession.articlesMasteredCount++; }
+  }
+  activeSession.reviewedCount++;
+
+  if (evalResult.isCorrect) {
+    p.correct++; p.streak++; activeSession.correctCount++;
+    p.stability = confLevel === 1 ? 0.5 : (confLevel === 2 ? Math.max(1.5, p.stability * 1.6) : Math.max(3.0, p.stability * 2.3));
+    activeSession.strengthenedIds.add(item.id);
+  } else {
+    p.incorrect++; p.streak = 0; p.stability = 0.25;
+    if (confLevel === 3) p.falseConfidenceCount++;
+    activeSession.lapsedIds.add(item.id);
+  }
+  p.nextReview = now + p.stability * 86400000;
+
+  const todayStr = new Date().toISOString().slice(0, 10);
+  if (userState.lastStudyDate !== todayStr) { userState.streak = (userState.streak || 0) + 1; userState.lastStudyDate = todayStr; }
+  saveState();
+  activeSession.index++;
+  renderCurrentSessionStep();
+}
+
+function endSessionEarly() {
+  if (activeSession && activeSession.reviewedCount > 0) renderSessionSummary();
+  else switchView("home", document.querySelector(".bottom-nav .nav-item"));
+}
+
+function renderSessionSummary() {
+  const qStage = document.getElementById("question-stage"), fStage = document.getElementById("feedback-stage");
+  qStage.style.display = "none"; fStage.style.display = "block";
+  const total = activeSession.reviewedCount || 1;
+  const pct = Math.round((activeSession.correctCount / total) * 100);
+
+  fStage.innerHTML = `
+    <div style="text-align:center; margin-bottom:14px;">
+      <h2>Session Complete!</h2>
+      <p style="font-size:0.86rem; color:var(--text-secondary);">Score: <strong>${activeSession.correctCount} / ${total} (${pct}%)</strong></p>
+    </div>
+    <button class="btn btn-primary" style="margin-bottom:10px; background:var(--success);" onclick="shareSessionScore(${activeSession.correctCount}, ${total}, ${pct})">
+      📲 Share My Score with Friend
+    </button>
+    <button class="btn btn-secondary" onclick="switchView('home', document.querySelectorAll('.bottom-nav .nav-item')[0])">
+      Return Home
+    </button>
+  `;
+}
+
+// ============================================================================
+// FRIEND CHALLENGE & NATIVE iPHONE SHARE SHEET
+// ============================================================================
+function createFriendChallenge() {
+  let pool = VOCAB_DATA.filter(isWordDifficult);
+  if (pool.length < 10) {
+    const defaults = [130, 117, 84, 127, 47, 76, 156, 204, 211, 235].map(id => VOCAB_DATA.find(v => v.id === id)).filter(Boolean);
+    pool = pool.concat(defaults.filter(d => !pool.includes(d)));
+  }
+  const selectedIds = pool.slice(0, 10).map(v => v.id);
+  const code = "MD-" + btoa(selectedIds.join(",")).replace(/=+$/, "");
+  const shareUrl = window.location.href.split("?")[0] + "?challenge=" + encodeURIComponent(code);
+  const shareText = `🇩🇪 MemoDeutsch 10-Word Challenge! Can you beat my score?\n\nChallenge Code: ${code}\nTap link: ${shareUrl}`;
+
+  if (navigator.share) {
+    navigator.share({ title: "MemoDeutsch Challenge", text: shareText, url: shareUrl }).catch(() => {});
+  } else {
+    navigator.clipboard?.writeText(shareText);
+    alert(`Challenge copied!\n\nCode: ${code}\nPaste this in WhatsApp or iMessage.`);
+  }
+}
+
+function promptAcceptChallenge(prefilledCode = null) {
+  const raw = prefilledCode || prompt("Paste your friend's Challenge Code (starts with MD-):");
+  if (!raw) return;
+  try {
+    const clean = raw.trim().replace(/^MD-/i, "");
+    const ids = atob(clean).split(",").map(n => parseInt(n, 10)).filter(n => !isNaN(n));
+    const items = ids.map(id => VOCAB_DATA.find(v => v.id === id)).filter(Boolean);
+    if (!items.length) throw new Error();
+
+    activeSession = {
+      mode: "challenge",
+      queue: items.map((item, idx) => ({ item, forcedType: idx % 2 === 0 ? "J_TYPING" : (item.hasValidArticle ? "C_ARTICLE" : "A_DE_TO_EN"), isRetry: false })),
+      index: 0, reviewedCount: 0, correctCount: 0, strengthenedIds: new Set(), lapsedIds: new Set(), articlesMasteredCount: 0, currentQuestion: null, lastResult: null
+    };
+    document.querySelectorAll(".view-section").forEach(s => s.classList.remove("active"));
+    document.getElementById("view-session").classList.add("active");
+    renderCurrentSessionStep();
+  } catch (e) {
+    alert("Invalid Challenge Code. Make sure it starts with MD-");
+  }
+}
+
+function shareSessionScore(correct, total, pct) {
+  const url = window.location.href.split("?")[0];
+  const text = `🇩🇪 I just scored ${correct}/${total} (${pct}%) on MemoDeutsch! Try the 235-word German trainer: ${url}`;
+  if (navigator.share) navigator.share({ title: "MemoDeutsch Score", text, url }).catch(() => {});
+  else { navigator.clipboard?.writeText(text); alert("Score copied to clipboard!"); }
+}
+
+function shareAppWithFriend() {
+  const url = window.location.href.split("?")[0];
+  const text = `🇩🇪 Here is our 235-word German Vocabulary Coach for iPhone! Open in Safari and tap 'Add to Home Screen':`;
+  if (navigator.share) navigator.share({ title: "MemoDeutsch", text, url }).catch(() => {});
+  else { navigator.clipboard?.writeText(`${text} ${url}`); alert("Link copied to clipboard!"); }
+}
+
+function refreshAllViews() {
+  const now = Date.now();
+  let due = 0, unseen = 0, diff = 0, strong = 0, seen = 0, sumR7 = 0, sumR30 = 0, artC = 0, artT = 0, falseConf = 0;
+
+  VOCAB_DATA.forEach(item => {
+    const p = userState.words[item.id];
+    if (p.seen === 0) unseen++;
+    else {
+      seen++;
+      if (isWordDue(item, now)) due++;
+      if (isWordDifficult(item)) diff++;
+      if (getMemoryCategory(item) === "strong") strong++;
+      sumR7 += Math.pow(0.9, 7 / Math.max(0.25, p.stability));
+      sumR30 += Math.pow(0.9, 30 / Math.max(0.25, p.stability));
+    }
+    artC += p.stats.article.c; artT += p.stats.article.t;
+    falseConf += p.falseConfidenceCount;
+  });
+
+  document.getElementById("stat-due").textContent = due;
+  document.getElementById("stat-new").textContent = unseen;
+  document.getElementById("stat-difficult").textContent = diff;
+  document.getElementById("stat-mastered").textContent = strong;
+  document.getElementById("home-streak-badge").textContent = `🔥 ${userState.streak || 0} Day Streak`;
+
+  const est7 = seen ? Math.round((sumR7 / seen) * 100) : 0;
+  const est30 = seen ? Math.round((sumR30 / seen) * 100) : 0;
+  document.getElementById("home-retention-Est").textContent = seen ? `7d Est: ${est7}%` : "Ready";
+  document.getElementById("prog-7d").textContent = seen ? `${est7}%` : "--%";
+  document.getElementById("prog-30d").textContent = seen ? `${est30}%` : "--%";
+  document.getElementById("prog-art-acc").textContent = artT ? `${Math.round((artC / artT) * 100)}%` : "--%";
+  document.getElementById("prog-false-conf").textContent = falseConf;
+
+  renderHeatmap(); renderDifficultList(); renderVocabList();
+}
+
+function renderHeatmap() {
+  const cls = { new: "heat-new", strong: "heat-strong", developing: "heat-dev", weak: "heat-weak", forgotten: "heat-forgot" };
+  document.getElementById("heatmap-container").innerHTML = VOCAB_DATA.map(item =>
+    `<div class="heat-cell ${cls[getMemoryCategory(item)]}" onclick="openWordModal(${item.id})">${item.id}</div>`
+  ).join("");
+}
+
+function renderDifficultList() {
+  const list = VOCAB_DATA.filter(isWordDifficult);
+  const el = document.getElementById("difficult-list-container");
+  if (!list.length) { el.innerHTML = `<p style="color:var(--text-secondary); font-size:0.88rem;">No problem words yet! Missed words will automatically appear here.</p>`; return; }
+  el.innerHTML = list.map(item => `
+    <div class="card" style="background:var(--card-secondary); margin-bottom:10px; padding:12px;" onclick="openWordModal(${item.id})">
+      <strong>#${item.id} ${formatGermanWithColor(item)}</strong> — ${item.english}
+      <div class="mnemonic-box" style="margin-top:6px; font-size:0.8rem;">${item.mnemonic}</div>
+    </div>
+  `).join("");
+}
+
+function setVocabFilter(f, el) {
+  currentFilter = f;
+  el.parentElement.querySelectorAll(".pill-option").forEach(b => b.classList.remove("active"));
+  el.classList.add("active");
+  renderVocabList();
+}
+
+function renderVocabList() {
+  const q = (document.getElementById("vocab-search")?.value || "").toLowerCase().trim();
+  const filtered = VOCAB_DATA.filter(item => {
+    if (currentFilter === "nouns" && !item.hasValidArticle) return false;
+    if (currentFilter === "flagged" && !item.pdfNote) return false;
+    return !q || item.word.toLowerCase().includes(q) || item.english.toLowerCase().includes(q) || String(item.id) === q.replace("#", "");
+  });
+  document.getElementById("vocab-count-badge").textContent = `${filtered.length} items`;
+  document.getElementById("vocab-list-container").innerHTML = filtered.map(item => `
+    <div class="vocab-item" onclick="openWordModal(${item.id})">
+      <div>
+        <div style="font-weight:600;"><span style="color:var(--text-muted); font-size:0.8rem;">#${item.id}</span> ${formatGermanWithColor(item)}</div>
+        <div style="font-size:0.83rem; color:var(--text-secondary);">${item.english}</div>
+      </div>
+      <span class="badge badge-primary">${userState.words[item.id].seen > 0 ? Math.round(getRetrievability(userState.words[item.id])*100)+'%' : 'New'}</span>
+    </div>
+  `).join("");
+}
+
+function openWordModal(id) {
+  const item = VOCAB_DATA.find(v => v.id === id);
+  const p = userState.words[item.id];
+  document.getElementById("word-modal-content").innerHTML = `
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+      <span class="badge badge-primary">Entry #${item.id}</span>
+      <button class="btn btn-secondary btn-sm" onclick="closeWordModal()">Done</button>
+    </div>
+    <div style="font-size:1.6rem; font-weight:700;">${formatGermanWithColor(item)}</div>
+    <div style="font-size:1.05rem; color:var(--text-secondary); margin-bottom:12px;">${item.english}</div>
+    <button class="audio-pill" onclick="speakGerman('${escapeQuotes(item.fullGerman)}')" style="margin-bottom:12px;">🔊 Pronounce</button>
+    <div class="mnemonic-box"><strong>🧠 Memory Aid:</strong><br/>${item.mnemonic}</div>
+    <div class="card" style="background:var(--card-secondary); margin-top:10px; padding:12px;">
+      <div style="font-size:0.75rem; color:var(--text-muted); font-weight:600;">EXAMPLE SENTENCE</div>
+      <div style="font-size:0.92rem; margin-top:4px;">${item.sentenceTemplate.replace("{0}", `<strong>${item.word}</strong>`)}</div>
+    </div>
+  `;
+  document.getElementById("word-modal").classList.add("open");
+}
+
+function closeWordModal() { document.getElementById("word-modal").classList.remove("open"); }
+
+function speakGerman(text) {
+  if (!("speechSynthesis" in window)) return;
+  window.speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = "de-DE"; u.rate = 0.92;
+  window.speechSynthesis.speak(u);
+}
+
+function formatGermanWithColor(item) {
+  if (!item.hasValidArticle) return item.word;
+  const cls = item.article === "die" ? "art-die" : (item.article === "das" ? "art-das" : "art-der");
+  return `<span class="${cls}">${item.article}</span> ${item.word}`;
+}
+
+function escapeQuotes(str) { return String(str || "").replace(/'/g, "\\'").replace(/"/g, "&quot;"); }
+
+function switchView(viewName, btnEl) {
+  document.querySelectorAll(".view-section").forEach(el => el.classList.remove("active"));
+  document.getElementById(`view-${viewName}`).classList.add("active");
+  if (btnEl) {
+    document.querySelectorAll(".bottom-nav .nav-item").forEach(b => b.classList.remove("active"));
+    btnEl.classList.add("active");
+  }
+  refreshAllViews();
+}
+
+function toggleTheme() {
+  userState.theme = userState.theme === "dark" ? "light" : "dark";
+  applyTheme(); saveState();
+}
+
+function applyTheme() {
+  document.documentElement.className = userState.theme === "dark" ? "dark" : "light";
+  const btn = document.getElementById("theme-btn");
+  if (btn) btn.textContent = userState.theme === "dark" ? "☀️" : "🌙";
+}
+
+function exportProgressJSON() {
+  const blob = new Blob([JSON.stringify(userState, null, 2)], { type: "application/json" });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = `MemoDeutsch_Backup.json`;
+  a.click();
+}
+
+function importProgressJSON(event) {
+  const file = event.target.files?.[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    try { userState = JSON.parse(e.target.result); saveState(); applyTheme(); refreshAllViews(); alert("Backup restored!"); }
+    catch (err) { alert("Invalid JSON file."); }
+  };
+  reader.readAsText(file);
+}
+
+function resetAllProgress() {
+  if (!confirm("Reset all learning history?")) return;
+  localStorage.removeItem(STORAGE_KEY);
+  userState.words = {}; loadState(); refreshAllViews();
+}
+
+window.addEventListener("DOMContentLoaded", () => {
+  loadState();
+  refreshAllViews();
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("./sw.js").catch(() => {});
+  }
+  const challengeParam = new URLSearchParams(window.location.search).get("challenge");
+  if (challengeParam) setTimeout(() => promptAcceptChallenge(challengeParam), 300);
+});
+</script>
+</body>
+</html>
