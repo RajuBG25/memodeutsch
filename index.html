@@ -7,7 +7,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <meta name="apple-mobile-web-app-title" content="MemoDeutsch" />
   <link rel="manifest" href="./manifest.json" />
-  <title>MemoDeutsch v4 — Active Production & Polyglot Coach</title>
+  <title>MemoDeutsch — EN / UA / TR German Coach (281 Words)</title>
   <style>
     :root {
       --bg: #F2F2F7;
@@ -74,7 +74,7 @@
     .app-shell { max-width: 480px; margin: 0 auto; padding: 12px 16px 28px; }
     .top-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
     .app-title { font-size: 1.35rem; font-weight: 800; letter-spacing: -0.02em; margin: 0; }
-    .app-subtitle { font-size: 0.74rem; color: var(--text-secondary); margin-top: 2px; }
+    .app-subtitle { font-size: 0.75rem; color: var(--text-secondary); margin-top: 2px; }
 
     .lang-bar {
       display: flex; gap: 6px; margin-bottom: 14px;
@@ -82,7 +82,7 @@
     }
     .lang-btn {
       flex: 1; border: none; background: transparent; color: var(--text-secondary);
-      padding: 8px 6px; border-radius: 8px; font-size: 0.8rem; font-weight: 700; cursor: pointer;
+      padding: 9px 6px; border-radius: 8px; font-size: 0.82rem; font-weight: 700; cursor: pointer;
     }
     .lang-btn.active { background: var(--primary); color: #FFF; }
 
@@ -98,7 +98,7 @@
       padding: 16px; margin-bottom: 14px;
       box-shadow: var(--shadow); border: 1px solid var(--border);
     }
-    .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+    .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; gap: 8px; }
     .section-title { font-size: 1.02rem; font-weight: 700; margin: 0; }
 
     .badge { display: inline-flex; align-items: center; padding: 4px 9px; border-radius: 999px; font-size: 0.72rem; font-weight: 700; }
@@ -112,36 +112,37 @@
     .art-die { color: var(--die-color); font-weight: 700; }
     .art-das { color: var(--das-color); font-weight: 700; }
 
-    /* Priority 10: 3-Question Dashboard Rows */
     .q3-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 14px; }
     .q3-row {
       display: flex; justify-content: space-between; align-items: center;
       background: var(--card-secondary); padding: 12px 14px; border-radius: var(--radius-md);
-      border: 1px solid var(--border);
+      border: 1px solid var(--border); cursor: pointer;
     }
     .q3-label { font-size: 0.88rem; font-weight: 600; color: var(--text); }
     .q3-val { font-size: 0.95rem; font-weight: 800; }
 
     .btn {
       width: 100%; min-height: 50px; border-radius: var(--radius-md); border: none;
-      font-size: 0.98rem; font-weight: 700; cursor: pointer;
+      font-size: 0.96rem; font-weight: 700; cursor: pointer;
       display: inline-flex; align-items: center; justify-content: center; gap: 8px;
-      transition: transform 0.1s ease; padding: 12px 16px;
+      transition: transform 0.1s ease; padding: 12px 14px; text-align: center;
     }
     .btn:active { transform: scale(0.985); }
     .btn-primary { background: var(--primary); color: #FFFFFF; }
     .btn-secondary { background: var(--card-secondary); color: var(--text); border: 1px solid var(--border); }
     .btn-purple { background: var(--purple); color: #FFFFFF; }
-    .btn-warning { background: var(--warning); color: #FFFFFF; }
     .btn-danger { background: var(--danger-soft); color: var(--danger); }
-    .btn-sm { min-height: 36px; padding: 6px 12px; font-size: 0.82rem; width: auto; }
+    .btn-sm { min-height: 36px; padding: 6px 12px; font-size: 0.8rem; width: auto; }
 
     .mode-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 10px; }
 
     .progress-track { width: 100%; height: 6px; background: var(--card-secondary); border-radius: 999px; overflow: hidden; margin-bottom: 12px; }
     .progress-fill { height: 100%; background: var(--primary); transition: width 0.25s ease; }
 
-    .prompt-word { font-size: 1.7rem; font-weight: 800; text-align: center; margin: 14px 0 6px; letter-spacing: -0.02em; line-height: 1.25; }
+    .prompt-word {
+      font-size: 1.65rem; font-weight: 800; text-align: center; margin: 14px 0 6px;
+      letter-spacing: -0.02em; line-height: 1.25; overflow-wrap: anywhere;
+    }
     .prompt-sub { text-align: center; color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 14px; }
 
     .text-input {
@@ -154,8 +155,8 @@
     .hint-bar {
       display: flex; justify-content: space-between; align-items: center;
       background: var(--card-secondary); padding: 8px 12px; border-radius: var(--radius-sm);
-      margin-bottom: 10px; font-family: monospace; font-size: 0.95rem; letter-spacing: 0.08em;
-      border: 1px dashed var(--border);
+      margin-bottom: 10px; font-family: monospace; font-size: 0.92rem;
+      border: 1px dashed var(--border); gap: 8px;
     }
 
     .choice-grid { display: flex; flex-direction: column; gap: 8px; margin-bottom: 12px; }
@@ -172,12 +173,10 @@
     }
     .chronic-box {
       background: var(--danger-soft); border-left: 4px solid var(--danger);
-      padding: 12px 14px; border-radius: var(--radius-sm); margin-bottom: 12px; font-size: 0.86rem;
+      padding: 12px 14px; border-radius: var(--radius-sm); margin-bottom: 12px; font-size: 0.86rem; line-height: 1.45;
     }
 
-    .vector-grid {
-      display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px; margin: 10px 0;
-    }
+    .vector-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px; margin: 10px 0; }
     .vector-pill {
       background: var(--card-secondary); border: 1px solid var(--border);
       padding: 8px 10px; border-radius: 8px; font-size: 0.78rem;
@@ -219,85 +218,82 @@
 <body>
 
 <div class="app-shell">
-  <!-- Header -->
   <header class="top-bar">
     <div>
       <h1 class="app-title" id="app-main-title">MemoDeutsch</h1>
-      <div class="app-subtitle" id="app-main-sub">Production-First Active Recall Coach</div>
+      <div class="app-subtitle" id="app-main-sub">Learn 281 German Words · Choose Your Native Language</div>
     </div>
     <button class="icon-btn" onclick="toggleTheme()" id="theme-btn">🌙</button>
   </header>
 
-  <!-- Language Switcher: German (235 PDF) + Ukrainian + Turkish -->
+  <!-- Native Interface & Meaning Language Switcher -->
   <div class="lang-bar">
-    <button class="lang-btn active" onclick="switchLanguage('de', this)">🇩🇪 Deutsch (235)</button>
-    <button class="lang-btn" onclick="switchLanguage('uk', this)">🇺🇦 Українська</button>
-    <button class="lang-btn" onclick="switchLanguage('tr', this)">🇹🇷 Türkçe</button>
+    <button class="lang-btn active" id="lang-btn-en" onclick="switchNativeLanguage('en')">🇬🇧 English</button>
+    <button class="lang-btn" id="lang-btn-uk" onclick="switchNativeLanguage('uk')">🇺🇦 Українська</button>
+    <button class="lang-btn" id="lang-btn-tr" onclick="switchNativeLanguage('tr')">🇹🇷 Türkçe</button>
   </div>
 
-  <!-- VIEW 1: SIMPLIFIED 3-QUESTION DASHBOARD (Priority 10) -->
+  <!-- VIEW 1: DASHBOARD -->
   <section id="view-home" class="view-section active">
     <div class="card">
       <div class="card-header">
-        <h2 class="section-title">🧠 TODAY</h2>
-        <span class="badge badge-primary" id="north-star-badge">30d Active: 0 words</span>
+        <h2 class="section-title" id="ui-today-header">🧠 TODAY</h2>
+        <span class="badge badge-primary" id="north-star-badge">30d Active: 0</span>
       </div>
 
       <div class="q3-list">
         <div class="q3-row" onclick="switchView('difficult', document.querySelectorAll('.nav-item')[2])">
-          <span class="q3-label">1. What am I forgetting?</span>
-          <span class="q3-val" style="color: var(--danger);" id="q1-forgetting">🔴 0 words</span>
+          <span class="q3-label" id="ui-q1-label">1. What am I forgetting?</span>
+          <span class="q3-val" style="color: var(--danger);" id="q1-forgetting">🔴 0</span>
         </div>
-        <div class="q3-row">
-          <span class="q3-label">2. What needs review today?</span>
-          <span class="q3-val" style="color: var(--warning);" id="q2-due">🟡 0 words</span>
+        <div class="q3-row" onclick="startSession('production')">
+          <span class="q3-label" id="ui-q2-label">2. What needs review today?</span>
+          <span class="q3-val" style="color: var(--warning);" id="q2-due">🟡 0</span>
         </div>
         <div class="q3-row" onclick="switchView('progress', document.querySelectorAll('.nav-item')[1])">
-          <span class="q3-label">3. What have I actually mastered?</span>
-          <span class="q3-val" style="color: var(--success);" id="q3-mastered">🟢 0 words</span>
+          <span class="q3-label" id="ui-q3-label">3. What have I actually mastered?</span>
+          <span class="q3-val" style="color: var(--success);" id="q3-mastered">🟢 0</span>
         </div>
       </div>
 
-      <button class="btn btn-primary" onclick="startSession('production')">
+      <button class="btn btn-primary" id="ui-start-5m-btn" onclick="startSession('production')">
         START 5-MINUTE MEMORY SESSION
       </button>
 
-      <!-- Specialized High-Retention Modes (Priorities 5, 6, 7, 8, 11) -->
       <div class="mode-grid">
-        <button class="btn btn-secondary" onclick="startSession('articles_declension')">
+        <button class="btn btn-secondary" id="ui-mode-New" onclick="startSession('classroom_new')">
+          🏠 New Room Words (#236–281)
+        </button>
+        <button class="btn btn-secondary" id="ui-mode-Art" onclick="startSession('articles_declension')">
           🎯 Case & Article Lab
         </button>
-        <button class="btn btn-secondary" onclick="startSession('confusion')">
+        <button class="btn btn-secondary" id="ui-mode-Conf" onclick="startSession('confusion')">
           ⚡ Confusion Engine
         </button>
-        <button class="btn btn-secondary" onclick="startSession('sentence_forge')">
+        <button class="btn btn-secondary" id="ui-mode-Forge" onclick="startSession('sentence_forge')">
           ✍️ Sentence Forge
         </button>
-        <button class="btn btn-purple" onclick="startSession('surprise')">
-          🎲 Surprise Retention Test
-        </button>
       </div>
+      <button class="btn btn-purple" style="margin-top:8px;" id="ui-mode-Surprise" onclick="startSession('surprise')">
+        🎲 Surprise Retention Test
+      </button>
     </div>
 
-    <!-- Personal Error Diagnosis Card -->
     <div class="card">
       <div class="card-header">
-        <h3 class="section-title">Personal Memory Diagnosis</h3>
-        <span class="badge badge-purple" id="diag-tag">Calibrating</span>
+        <h3 class="section-title" id="ui-diag-title">Personal Memory Diagnosis</h3>
+        <span class="badge badge-purple" id="diag-tag">281 Words</span>
       </div>
-      <p style="font-size: 0.85rem; color: var(--text-secondary); margin: 0; line-height: 1.45;" id="personal-diagnosis-text">
-        Complete a 5-minute session. MemoDeutsch measures your response latency (&lt;2s vs &gt;5s), hint reliance, and production vs. recognition gap.
-      </p>
+      <p style="font-size: 0.85rem; color: var(--text-secondary); margin: 0; line-height: 1.45;" id="personal-diagnosis-text"></p>
     </div>
 
-    <!-- Friend Challenge & Share -->
     <div class="card">
       <div class="card-header">
-        <h3 class="section-title">🤝 Peer Challenge & Share</h3>
+        <h3 class="section-title" id="ui-friend-title">🤝 Study with Classmates</h3>
       </div>
       <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
-        <button class="btn btn-secondary btn-sm" style="width:100%;" onclick="createFriendChallenge()">📤 Send 10-Word Quiz</button>
-        <button class="btn btn-secondary btn-sm" style="width:100%;" onclick="promptAcceptChallenge()">📥 Enter Friend Code</button>
+        <button class="btn btn-secondary btn-sm" style="width:100%;" id="ui-send-quiz-btn" onclick="createFriendChallenge()">📤 Send 10-Word Quiz</button>
+        <button class="btn btn-secondary btn-sm" style="width:100%;" id="ui-enter-code-btn" onclick="promptAcceptChallenge()">📥 Enter Quiz Code</button>
       </div>
     </div>
   </section>
@@ -306,84 +302,64 @@
   <section id="view-session" class="view-section">
     <div class="card">
       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-        <button class="btn btn-secondary btn-sm" onclick="endSessionEarly()">✕ Exit</button>
-        <span class="badge badge-primary" id="session-mode-label">🇬🇧 → 🇩🇪 Production</span>
+        <button class="btn btn-secondary btn-sm" id="ui-exit-btn" onclick="endSessionEarly()">✕ Exit</button>
+        <span class="badge badge-primary" id="session-mode-label">🇩🇪 Production</span>
         <span style="font-size: 0.78rem; font-weight: 700; color: var(--text-secondary);" id="session-counter">1 / 12</span>
       </div>
       <div class="progress-track">
         <div class="progress-fill" id="session-progress-bar" style="width: 8%;"></div>
       </div>
-
       <div id="question-stage"></div>
       <div id="feedback-stage" style="display: none;"></div>
     </div>
   </section>
 
-  <!-- VIEW 3: MULTI-VECTOR PROGRESS & HEATMAP -->
+  <!-- VIEW 3: PROGRESS & HEATMAP -->
   <section id="view-progress" class="view-section">
     <div class="card">
       <div class="card-header">
-        <h2 class="section-title">8-Vector Knowledge Breakdown</h2>
-        <span class="badge badge-primary">Active vs Passive</span>
+        <h2 class="section-title" id="ui-vec-title">8-Vector Knowledge Breakdown</h2>
       </div>
       <div class="vector-grid" id="global-vector-grid"></div>
     </div>
 
     <div class="card">
-      <div class="card-header"><h2 class="section-title">Memory Heatmap</h2></div>
-      <div style="display: flex; gap: 10px; font-size: 0.72rem; color: var(--text-secondary); margin-bottom: 8px; flex-wrap: wrap;">
-        <span>🟢 Strong (&lt;2.5s)</span><span>🟡 Moderate</span><span>🟠 Weak/Assisted</span><span>🔴 Chronic/Forgotten</span>
-      </div>
+      <div class="card-header"><h2 class="section-title" id="ui-heat-title">281-Word Memory Heatmap</h2></div>
       <div class="heatmap-grid" id="heatmap-container"></div>
     </div>
   </section>
 
-  <!-- VIEW 4: CHRONIC WEAK WORDS ("YOU KEEP FORGETTING THIS") -->
+  <!-- VIEW 4: CHRONIC WEAK WORDS -->
   <section id="view-difficult" class="view-section">
     <div class="card">
       <div class="card-header">
-        <h2 class="section-title">⚠️ Words You Keep Forgetting</h2>
-        <button class="btn btn-purple btn-sm" onclick="startSession('chronic_intervention')">Fix Weak Words</button>
+        <h2 class="section-title" id="ui-weak-title">⚠️ Words You Keep Forgetting</h2>
+        <button class="btn btn-purple btn-sm" id="ui-fix-weak-btn" onclick="startSession('chronic_intervention')">Fix Weak Words</button>
       </div>
-      <p style="font-size: 0.82rem; color: var(--text-secondary); margin-top: 0;">
-        Words failed repeatedly or requiring heavy hints. Tap any word to launch a 3-step Memory Intervention.
-      </p>
       <div id="difficult-list-container"></div>
     </div>
   </section>
 
-  <!-- VIEW 5: VOCABULARY EXPLORER + ADD CUSTOM UK/TR/DE WORDS -->
+  <!-- VIEW 5: VOCABULARY EXPLORER -->
   <section id="view-vocab" class="view-section">
     <div class="card">
       <div class="card-header">
-        <h2 class="section-title" id="vocab-view-title">Vocabulary List</h2>
-        <span class="badge badge-primary" id="vocab-count-badge">235 items</span>
+        <h2 class="section-title" id="vocab-view-title">281 German Vocabulary</h2>
+        <span class="badge badge-primary" id="vocab-count-badge">281</span>
       </div>
-      <input type="search" id="vocab-search" class="text-input" placeholder="Search word or meaning..." oninput="renderVocabList()" />
+      <input type="search" id="vocab-search" class="text-input" placeholder="Search German, English, Українська, Türkçe..." oninput="renderVocabList()" />
       <div id="vocab-list-container"></div>
-    </div>
-
-    <div class="card">
-      <h3 class="section-title" style="margin-bottom:8px;">➕ Add Word to Current Language</h3>
-      <input type="text" id="new-word-article" class="text-input" placeholder="Article / Grammar note (optional, e.g. der/die/das)" />
-      <input type="text" id="new-word-target" class="text-input" placeholder="Target Word (German / Ukrainian / Turkish)" />
-      <input type="text" id="new-word-english" class="text-input" placeholder="English Meaning" />
-      <input type="text" id="new-word-sentence" class="text-input" placeholder="Example Sentence (use {0} for word)" />
-      <button class="btn btn-primary" onclick="addCustomWord()">Save New Word</button>
     </div>
   </section>
 
   <!-- VIEW 6: SETTINGS -->
   <section id="view-settings" class="view-section">
     <div class="card">
-      <h2 class="section-title" style="margin-bottom: 8px;">Backup & Data Privacy</h2>
-      <p style="font-size: 0.83rem; color: var(--text-secondary); line-height: 1.45;">
-        All response times, 8-vector scores, and custom words stay locally on your iPhone.
-      </p>
+      <h2 class="section-title" id="ui-settings-title" style="margin-bottom: 8px;">Backup & Data Privacy</h2>
       <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 12px;">
-        <button class="btn btn-primary" onclick="exportProgressJSON()">⬇️ Export Progress JSON</button>
+        <button class="btn btn-primary" onclick="exportProgressJSON()">⬇️ Export Backup JSON</button>
         <label class="btn btn-secondary" style="margin: 0;">
-          ⬆️ Import Progress JSON
+          ⬆️ Import Backup JSON
           <input type="file" accept=".json" style="display: none;" onchange="importProgressJSON(event)" />
         </label>
         <button class="btn btn-danger" onclick="resetAllProgress()">🗑️ Reset Progress</button>
@@ -392,7 +368,7 @@
   </section>
 </div>
 
-<!-- WORD DETAIL & 8-VECTOR MODAL -->
+<!-- WORD DETAIL MODAL -->
 <div class="modal-backdrop" id="word-modal" onclick="closeWordModal()">
   <div class="modal-sheet" onclick="event.stopPropagation()">
     <div id="word-modal-content"></div>
@@ -401,310 +377,508 @@
 
 <!-- BOTTOM NAV -->
 <nav class="bottom-nav">
-  <button class="nav-item active" onclick="switchView('home', this)"><span class="nav-icon">🧠</span><span>Today</span></button>
-  <button class="nav-item" onclick="switchView('progress', this)"><span class="nav-icon">📊</span><span>Vectors</span></button>
-  <button class="nav-item" onclick="switchView('difficult', this)"><span class="nav-icon">⚠️</span><span>Weak</span></button>
-  <button class="nav-item" onclick="switchView('vocab', this)"><span class="nav-icon">📖</span><span>Words</span></button>
-  <button class="nav-item" onclick="switchView('settings', this)"><span class="nav-icon">⚙️</span><span>Settings</span></button>
+  <button class="nav-item active" onclick="switchView('home', this)"><span class="nav-icon">🧠</span><span id="nav-lbl-today">Today</span></button>
+  <button class="nav-item" onclick="switchView('progress', this)"><span class="nav-icon">📊</span><span id="nav-lbl-vec">Vectors</span></button>
+  <button class="nav-item" onclick="switchView('difficult', this)"><span class="nav-icon">⚠️</span><span id="nav-lbl-weak">Weak</span></button>
+  <button class="nav-item" onclick="switchView('vocab', this)"><span class="nav-icon">📖</span><span id="nav-lbl-words">281 Words</span></button>
+  <button class="nav-item" onclick="switchView('settings', this)"><span class="nav-icon">⚙️</span><span id="nav-lbl-set">Settings</span></button>
 </nav>
 
 <script>
 // ============================================================================
-// 1. AUTHORITATIVE 235 GERMAN WORDS + VERB PRINCIPAL PARTS + UKRAINIAN & TURKISH
+// 1. UI TRANSLATIONS FOR ENGLISH, UKRAINIAN (🇺🇦), AND TURKISH (🇹🇷) SPEAKERS
 // ============================================================================
-const RAW_GERMAN_VOCAB = [
-  [1,"die","Kenntnis","knowledge"],[2,"der","Schüler","student / pupil"],[3,"die","Abwäsche","washing up / dishes"],[4,"die","Ziele","goals"],[5,"der","Lärm","noise"],[6,"die","Aussichten","prospects/outlook"],[7,"die","Beziehung","relationship"],[8,"die","Strecke","distance / route"],[9,"der","Nachbar","neighbor"],[10,"der","Anfänger","beginner"],[11,"die","Gründe","reasons"],[12,"das","Konto","account"],[13,"das","Studienfach","field of study"],[14,"der","Dank","thanks"],[15,"","benötigen","to need/ require"],[16,"","gerne","gladly / like to"],[17,"das","Klima","climate"],[18,"das","Zeugnis","certificate / report card"],[19,"der","Pol","pole"],[20,"","tragen","to carry / wear"],[21,"","wohnen","to live / reside"],[22,"die","Regel","rule"],[23,"der","Anteil","share/proportion"],[24,"die","Auswirkungen","effects/impacts"],[25,"","allgemein","general/generally"],[26,"","ungenügend","insufficient / inadequate"],[27,"der","Bereich","area / field"],[28,"","wiederholen","to repeat"],[29,"der","Zivildienst","civilian service"],[30,"die","Dozentin","female lecturer"],[31,"","kochen","to cook"],[32,"der","Beitrag","contribution/post"],[33,"die","Chancen","chances/opportunities"],[34,"","gründen","to found/ establish"],[35,"","verbessern","to improve"],[36,"","aufnehmen","to record / take in / accept"],[37,"","aussuchen","to choose / select"],[38,"","nachholen","to catch up / make up"],[39,"","berechnen","to calculate"],[40,"","gefangen","caught/trapped"],[41,"","fühlen","to feel"],[42,"die","Erklärung","explanation"],[43,"","besprechen","to discuss"],[44,"","verspäten","to be delayed"],[45,"die","Krawatte","tie"],[46,"","begrüßt","greets/welcomed"],[47,"die","Übernachtungsmöglichkeit","overnight accommodation"],[48,"","gratuliere","I congratulate / congratulations"],[49,"","durch","through"],[50,"das","Dorf","village"],[51,"der","Hauptschulabschluss","lower secondary school certificate"],[52,"der","Volksschulabschluss","primary/elementary school leaving certificate"],[53,"das","Abitur","university entrance qualification"],[54,"der","Realschulabschluss","intermediate secondary school certificate"],[55,"die","Hauptschule","lower secondary school"],[56,"","wollen","to want"],[57,"die","Jugendsprache","youth language"],[58,"die","Schulpflicht","compulsory schooling"],[59,"","mindestens","at least"],[60,"die","Grundschule","primary school"],[61,"","ausräumen","to clear out / empty"],[62,"","ausmachen","to turn off / arrange"],[63,"das","Licht","light"],[64,"","duschen","to shower"],[65,"die","Feier","party / celebration"],[66,"","sauber","clean"],[67,"","putzen","to clean"],[68,"","abwaschen","to wash up"],[69,"","ziehen","to pull / move"],[70,"","meistens","mostly"],[71,"","aushalten","to tolerate / endure"],[72,"","streiten","to argue"],[73,"","zeigen","to show"],[74,"","aufpassen","to pay attention / take care"],[75,"","anbieten","to offer"],[76,"die","Pünktlichkeit","punctuality"],[77,"die","Höflichkeit","politeness"],[78,"","lächeln","to smile"],[79,"","nachfragen","to ask again/inquire"],[80,"","kennenlernen","to get to know"],[81,"die","Erfahrungen","experiences"],[82,"die","Verwandten","relatives"],[83,"das","Ganze","the whole / entirety"],[84,"","furchtbar","terrible/awful"],[85,"die","Möglichkeiten","possibilities/options"],[86,"","ärgerlich","annoying/angry"],[87,"das","Heimweh","homesickness"],[88,"","vergehen","to pass (time)"],[89,"","beeilen","to hurry"],[90,"das","Wechselgeld","change (money)"],[91,"der","Militärdienst","military service"],[92,"","stimmt","is correct / that's right"],[93,"","sprechen","to speak"],[94,"die","Sprache","language"],[95,"","zuschauen","to watch/look on"],[96,"die","Rezeption","reception"],[97,"","was","what"],[98,"","wer","who"],[99,"die","Mitarbeiter","employees / staff"],[100,"der","Handwerker","craftsperson/ tradesperson"],[101,"der","Maurer","bricklayer/mason"],[102,"die","Kantine","canteen / cafeteria"],[103,"die","Mensa","university cafeteria"],[104,"","spinnen","to spin / be crazy"],[105,"die","Spinne","spider"],[106,"der","Vorschlag","suggestion"],[107,"die","Nachbarin","female neighbor"],[108,"die","Überstunden","overtime"],[109,"die","Montage","assembly/installation work"],[110,"der","Monteur","technician/fitter"],[111,"","traurig","sad"],[112,"","dazu","to that / about that / in addition"],[113,"","genug","enough"],[114,"","wieder","again"],[115,"","geschenkt","given as a gift/free"],[116,"","erklärt","explained"],[117,"die","Halskette","necklace"],[118,"","anziehen","to put on/ get dressed"],[119,"","besonders","especially / particularly"],[120,"","werfen","to throw"],[121,"","darauf","on it/ onto it / about it"],[122,"das","Pferd","horse"],[123,"der","Bleistift","pencil"],[124,"","begrüße","I greet/welcome"],[125,"","zeige","I show"],[126,"","erzähle","I tell / I narrate"],[127,"","fruchtbar","fertile/fruitful"],[128,"","gut geht","is going well"],[129,"die","Familienfeier","family celebration / family party"],[130,"die","Bevölkerung","population"],[131,"die","Blume","flower"],[132,"der","Brief","letter"],[133,"der/die","Cousin / Cousine","cousin"],[134,"die","Ehe","marriage"],[135,"die","Erinnerung","memory / reminder"],[136,"die","Ferien","holidays/vacation"],[137,"die","Geburt","birth"],[138,"der","Haushalt","household"],[139,"der","Hund","dog"],[140,"die","Krankenschwester","nurse"],[141,"die","Leute","people"],[142,"das","Lied","song"],[143,"die","Mama","mum/mom"],[144,"die","Mitteilung","message/notification"],[145,"die","Mitternacht","midnight"],[146,"der","Osten","east"],[147,"","Ostern","Easter"],[148,"das","Osterfest","Easter festival"],[149,"der/die","Rentner/in","retired person / pensioner"],[150,"der","Rest","rest/ remainder"],[151,"der","Ring","ring"],[152,"die","Schließung","closure/closing"],[153,"die","Schokolade","chocolate"],[154,"das","Schiff","ship"],[155,"","Silvester","New Year's Eve"],[156,"das","Standesamt","registry office / civil registry office"],[157,"die","Trauung","wedding ceremony"],[158,"die","Überraschung","surprise"],[159,"die","Wand","wall"],[160,"","Weihnachten","Christmas"],[161,"das","Weihnachtsfest","Christmas celebration"],[162,"der","Westen","west"],[163,"die","Zukunft","future"],[164,"","annehmen","to accept / assume"],[165,"","sich bedanken","to thank / express thanks"],[166,"","bestehen","to exist/pass / consist"],[167,"","bringen","to bring"],[168,"","dazugehören","to belong to it"],[169,"","meinen","to mean/think"],[170,"","riechen","to smell"],[171,"","schenken","to give as a gift"],[172,"","übernachten","to stay overnight"],[173,"","weggehen","to leave / go away"],[174,"","zusammenleben","to live together"],[175,"","alleinerziehend","single-parent / raising a child alone"],[176,"","wem","to whom"],[177,"","wen","whom"],[178,"","wie lange","how long"],[179,"","wie oft","how often"],[180,"","dick","thick / fat"],[181,"","hoch","high / tall"],[182,"","feucht","damp/humid"],[183,"","bunt","colorful"],[184,"","weich","soft"],[185,"","hart","hard"],[186,"","sichersten","safest/most certain"],[187,"","wertvoll","valuable"],[188,"","ruhiger","quieter / calmer"],[189,"","wenigsten","least/fewest"],[190,"","feinsten","finest / most delicate"],[191,"","tapfersten","bravest"],[192,"","giftig","poisonous / toxic"],[193,"","geschickter","more skilled / more skillful"],[194,"","deutlich","clear / clearly"],[195,"der","Traummann","dream man / ideal man"],[196,"","getroffen","met/hit"],[197,"","erinnere","remember/remind (1st person)"],[198,"","wünschst","wish (2nd person singular)"],[199,"","durstig","thirsty"],[200,"","gehört","belongs / heard"],[201,"","gerade","just/straight/ currently"],[202,"","vorrätig","in stock"],[203,"","Sondergrößen","special sizes"],[204,"die","Bestellung","order"],[205,"der","Sommerschlussverkauf","summer sale"],[206,"","Sonderpreisen","special prices"],[207,"","passende","suitable / matching"],[208,"","folgende","following"],[209,"","laufen","to walk / run"],[210,"","reiten","to ride"],[211,"der","Flohmarkt","flea market"],[212,"","gebraucht","used/second-hand"],[213,"die","Standgebühr","stall fee / stand fee"],[214,"die","Herrenabteilung","men's department"],[215,"","rauschende","rustling/roaring / lavish (context-dependent)"],[216,"die","Auswahl","selection/choice"],[217,"","überhaupt","at all / generally"],[218,"","übermorgen","the day after tomorrow"],[219,"","schwanger","pregnant"],[220,"","günstigen","favorable / inexpensive"],[221,"","unbedingt","absolutely / definitely"],[222,"der","Grund","reason / ground"],[223,"die","Beratung","advice/consultation"],[224,"das","Fußballturnier","football/soccer tournament"],[225,"die","Mannschaften","teams"],[226,"der","Stadtteil","district/neighborhood"],[227,"","vorher","before / beforehand"],[228,"die","Läden","shops/stores"],[229,"","länger","longer"],[230,"","verschiedenen","different/various"],[231,"das","Programm","program"],[232,"","beliebte","popular"],[233,"die","Weststadt","western part of the city"],[234,"","statt","instead of"],[235,"der","Höhepunkt","highlight/climax"]
-];
-
-// Verb Principal Parts & Full Sentence Translations (Priorities 1, 2, 5)
-const VERB_GRAMMAR_FORMS = {
-  20: { forms: "tragen · trug · hat getragen", enSent: "She wears a blue tie.", deSent: "Sie trägt eine blaue Krawatte." },
-  36: { forms: "aufnehmen · nahm auf · hat aufgenommen", enSent: "We welcomed him warmly.", deSent: "Wir haben ihn herzlich aufgenommen." },
-  43: { forms: "besprechen · besprach · hat besprochen", enSent: "We discussed the suggestion yesterday.", deSent: "Wir haben den Vorschlag gestern besprochen." },
-  69: { forms: "ziehen · zog · ist/hat gezogen", enSent: "We are moving to the village.", deSent: "Wir ziehen in das Dorf." },
-  71: { forms: "aushalten · hielt aus · hat ausgehalten", enSent: "I cannot tolerate the noise.", deSent: "Ich kann den Lärm nicht aushalten." },
-  72: { forms: "streiten · stritt · hat gestritten", enSent: "The neighbors argue often.", deSent: "Die Nachbarn streiten oft." },
-  93: { forms: "sprechen · sprach · hat gesprochen", enSent: "We spoke with the lecturer.", deSent: "Wir haben mit der Dozentin gesprochen." },
-  118: { forms: "anziehen · zog an · hat angezogen", enSent: "I put on my jacket.", deSent: "Ich ziehe meine Jacke an." },
-  120: { forms: "werfen · warf · hat geworfen", enSent: "He threw the ball.", deSent: "Er hat den Ball geworfen." },
-  164: { forms: "annehmen · nahm an · hat angenommen", enSent: "She accepted the gift.", deSent: "Sie hat das Geschenk angenommen." },
-  166: { forms: "bestehen · bestand · hat bestanden", enSent: "He passed the exam.", deSent: "Er hat die Prüfung bestanden." },
-  167: { forms: "bringen · brachte · hat gebracht", enSent: "I brought chocolate.", deSent: "Ich habe Schokolade gebracht." },
-  170: { forms: "riechen · roch · hat gerochen", enSent: "The flowers smell good.", deSent: "Die Blumen riechen gut." },
-  196: { forms: "treffen · traf · hat getroffen", enSent: "I met my friend yesterday.", deSent: "Ich habe gestern meinen Freund getroffen." },
-  197: { forms: "sich erinnern · erinnerte · hat erinnert", enSent: "I remember the party.", deSent: "Ich erinnere mich an die Feier." },
-  209: { forms: "laufen · lief · ist gelaufen", enSent: "He ran through the district.", deSent: "Er ist durch den Stadtteil gelaufen." },
-  210: { forms: "reiten · ritt · ist geritten", enSent: "She rode a horse.", deSent: "Sie ist auf einem Pferd geritten." }
-};
-
-// Priority 6: Declension & Case Lab Drills (Nominative, Accusative, Dative in context)
-const CASE_DECLENSION_DRILLS = [
-  { id: 9, prompt: "Ich spreche jeden Tag mit ___ Nachbarn. (Dative singular)", answer: "dem", explain: "mit + Dative masculine weak noun -> dem Nachbarn" },
-  { id: 12, prompt: "Ich überweise das Geld auf ___ Konto. (Accusative movement)", answer: "das", explain: "auf + Accusative neuter (das Konto) -> das Konto" },
-  { id: 27, prompt: "Er arbeitet in ___ Bereich der Informatik. (Dative location)", answer: "dem", explain: "in + Dative masculine (der Bereich) -> in dem (im) Bereich" },
-  { id: 45, prompt: "Zur Feier kauft er ___ neue Krawatte. (Accusative)", answer: "eine", explain: "kaufen + Accusative feminine (die Krawatte) -> eine Krawatte" },
-  { id: 50, prompt: "Meine Verwandten wohnen in ___ kleinen Dorf. (Dative)", answer: "einem", explain: "in + Dative neuter (das Dorf) -> einem Dorf" },
-  { id: 106, prompt: "Wir sind mit ___ Vorschlag sehr zufrieden. (Dative)", answer: "dem", explain: "mit + Dative masculine (der Vorschlag) -> dem Vorschlag" },
-  { id: 117, prompt: "Er schenkt seiner Frau ___ wertvolle Halskette. (Accusative)", answer: "eine", explain: "Direct object feminine (die Halskette) -> eine Halskette" },
-  { id: 123, prompt: "Ich schreibe den Brief mit ___ Bleistift. (Dative)", answer: "einem", explain: "mit + Dative masculine (der Bleistift) -> einem Bleistift" },
-  { id: 132, prompt: "Hast du ___ Brief schon gelesen? (Accusative)", answer: "den", explain: "lesen + Accusative masculine (der Brief) -> den Brief" },
-  { id: 139, prompt: "Wir gehen mit ___ Hund im Park spazieren. (Dative)", answer: "dem", explain: "mit + Dative masculine (der Hund) -> dem Hund" },
-  { id: 156, prompt: "Die Trauung findet heute in ___ Standesamt statt. (Dative)", answer: "dem", explain: "in + Dative neuter (das Standesamt) -> dem Standesamt" },
-  { id: 211, prompt: "Wir haben den Tisch auf ___ Flohmarkt gebraucht gekauft. (Dative)", answer: "dem", explain: "auf + Dative masculine location (der Flohmarkt) -> dem Flohmarkt" },
-  { id: 222, prompt: "Aus ___ Grund bist du heute traurig? (Dative)", answer: "welchem", explain: "aus + Dative masculine (der Grund) -> welchem Grund" }
-];
-
-// Priority 7: The Confusion Engine (Deliberate Minimal & Semantic Collisions)
-const CONFUSION_PAIRS = [
-  {
-    title: "erinnern vs. sich erinnern an vs. sich merken",
-    question: "I remember his name. → Ich ________ an seinen Namen.",
-    correct: "erinnere mich",
-    options: ["erinnere mich", "merke mir", "erinnere"],
-    explanation: "'sich erinnern an' = to recall a memory; 'sich (Dat) etwas merken' = to intentionally memorize something for later."
+const UI_STRINGS = {
+  en: {
+    subtitle: "Learn 281 German Words · English Interface",
+    todayHeader: "🧠 TODAY",
+    q1: "1. What am I forgetting?",
+    q2: "2. What needs review today?",
+    q3: "3. What have I actually mastered?",
+    wordsUnit: "words",
+    start5m: "START 5-MINUTE MEMORY SESSION",
+    modeNew: "🏠 Room Words (#236–281)",
+    modeArt: "🎯 Case & Article Lab",
+    modeConf: "⚡ Confusion Engine",
+    modeForge: "✍️ Sentence Forge",
+    modeSurprise: "🎲 Surprise Retention Test",
+    diagTitle: "Personal Memory Diagnosis",
+    diagDefault: "Tap 'Start 5-Minute Memory Session'. You will produce German actively from English.",
+    friendTitle: "🤝 Study with Classmates",
+    sendQuiz: "📤 Send 10-Word Quiz",
+    enterCode: "📥 Enter Quiz Code",
+    exitBtn: "✕ Exit",
+    vecTitle: "8-Vector Knowledge Breakdown",
+    heatTitle: "281-Word Memory Heatmap",
+    weakTitle: "⚠️ Words You Keep Forgetting",
+    fixWeakBtn: "Fix Weak Words",
+    vocabTitle: "281 German Words",
+    settingsTitle: "Backup & Data Privacy",
+    navToday: "Today", navVec: "Vectors", navWeak: "Weak", navWords: "281 Words", navSet: "Settings",
+    producePrompt: "Produce the German word (include der / die / das for nouns):",
+    comprehendPrompt: "What does this German word mean in English?",
+    clozePrompt: "Meaning cue:",
+    hintBtn: "💡 Hint",
+    submitBtn: "Check German Answer",
+    continueBtn: "Continue →",
+    chronicTitle: "⚠️ Chronic Weak Word Intervention",
+    chronicDesc: "Let's lock this German word into memory with encoding + immediate retrieval.",
+    step2Btn: "Step 2: Immediate German Recall →",
+    listenBtn: "🔊 Pronounce German",
+    anchorSent: "GERMAN EXAMPLE SENTENCE",
+    memoryScene: "🧠 Memory Breakdown:"
   },
-  {
-    title: "sich merken vs. sich erinnern",
-    question: "I memorize the German vocabulary. → Ich ________ die deutschen Vokabeln.",
-    correct: "merke mir",
-    options: ["merke mir", "erinnere mich", "denke an"],
-    explanation: "'sich (mir) merken' means to retain/memorize information deliberately."
+  uk: {
+    subtitle: "Вивчайте 281 німецьке слово · Інтерфейс українською 🇺🇦",
+    todayHeader: "🧠 СЬОГОДНІ",
+    q1: "1. Що я забуваю?",
+    q2: "2. Що треба повторити сьогодні?",
+    q3: "3. Що я вже добре вивчив?",
+    wordsUnit: "слів",
+    start5m: "ПОЧАТИ 5-ХВИЛИННЕ ТРЕНУВАННЯ",
+    modeNew: "🏠 Кімната й Кухня (#236–281)",
+    modeArt: "🎯 Артиклі та Відмінки",
+    modeConf: "⚡ Схожі слова ( Пастки )",
+    modeForge: "✍️ Складання речень",
+    modeSurprise: "🎲 Раптовий тест пам'яті",
+    diagTitle: "Діагностика вашої пам'яті",
+    diagDefault: "Натисніть синю кнопку вище. Ви будете активно писати німецькі слова з українського перекладу.",
+    friendTitle: "🤝 Навчання з друзями",
+    sendQuiz: "📤 Надіслати тест (10 слів)",
+    enterCode: "📥 Ввести код друга",
+    exitBtn: "✕ Вийти",
+    vecTitle: "Аналіз знань за 8 критеріями",
+    heatTitle: "Карта пам'яті (281 німецьке слово)",
+    weakTitle: "⚠️ Слова, які ви часто забуваєте",
+    fixWeakBtn: "Вивчити складні слова",
+    vocabTitle: "Словник (281 німецьке слово)",
+    settingsTitle: "Налаштування та копія даних",
+    navToday: "Сьогодні", navVec: "Аналіз", navWeak: "Складні", navWords: "Словник", navSet: "Опції",
+    producePrompt: "Напишіть це слово НІМЕЦЬКОЮ (разом з der / die / das):",
+    comprehendPrompt: "Що означає це німецьке слово українською?",
+    clozePrompt: "Переклад слова:",
+    hintBtn: "💡 Підказка",
+    submitBtn: "Перевірити відповідь",
+    continueBtn: "Далі →",
+    chronicTitle: "⚠️ Складне німецьке слово — Запам'ятовування",
+    chronicDesc: "Запам'ятайте значення цього німецького слова та одразу напишіть його по пам'яті.",
+    step2Btn: "Крок 2: Написати слово німецькою →",
+    listenBtn: "🔊 Вимова (Німецька)",
+    anchorSent: "ПРИКЛАД РЕЧЕННЯ НІМЕЦЬКОЮ",
+    memoryScene: "🧠 Підказка для пам'яті:"
   },
-  {
-    title: "furchtbar (#84) vs. fruchtbar (#127)",
-    question: "The noise outside is terrible/awful! → Der Lärm draußen ist ________!",
-    correct: "furchtbar",
-    options: ["furchtbar", "fruchtbar", "feucht"],
-    explanation: "die Furcht = fear -> furchtbar (terrible). die Frucht = fruit -> fruchtbar (fertile/fruitful)."
-  },
-  {
-    title: "fruchtbar (#127) vs. furchtbar (#84)",
-    question: "We had a very productive/fruitful discussion. → Wir hatten ein sehr ________es Gespräch.",
-    correct: "fruchtbar",
-    options: ["fruchtbar", "furchtbar", "wertvoll"],
-    explanation: "fruchtbar = fruitful/fertile (from die Frucht)."
-  },
-  {
-    title: "darauf (#121) vs. dazu (#112) vs. daran",
-    question: "I am looking forward to it (the party). → Ich freue mich schon sehr ________.",
-    correct: "darauf",
-    options: ["darauf", "dazu", "davon"],
-    explanation: "sich freuen auf + Accusative -> darauf (looking forward to something ahead)."
-  },
-  {
-    title: "dazu (#112) vs. darauf (#121) vs. dazugehören (#168)",
-    question: "What do you say to that / in addition? → Was sagst du ________?",
-    correct: "dazu",
-    options: ["dazu", "darauf", "durch"],
-    explanation: "sagen zu + Dative -> dazu (about that / in addition to that)."
-  },
-  {
-    title: "wem (#176 Dative) vs. wen (#177 Accusative)",
-    question: "Whom (Accusative) did you meet yesterday? → ________ hast du gestern getroffen?",
-    correct: "Wen",
-    options: ["Wen", "Wem", "Wer"],
-    explanation: "treffen takes a direct Accusative object -> Wen (like 'den'). Wem is Dative ('Mit wem sprichst du?')."
-  },
-  {
-    title: "wem (#176 Dative) vs. wen (#177 Accusative)",
-    question: "To whom does this dog belong? → ________ gehört dieser Hund?",
-    correct: "Wem",
-    options: ["Wem", "Wen", "Wer"],
-    explanation: "gehören (#200) always takes Dative -> Wem gehört das?"
-  },
-  {
-    title: "die Mensa (#103) vs. die Kantine (#102)",
-    question: "After the lecture with the Dozentin, the students eat at the ________.",
-    correct: "Mensa",
-    options: ["Mensa", "Kantine", "Rezeption"],
-    explanation: "die Mensa (#103) is specifically a university cafeteria; die Kantine (#102) is for company employees (#99)."
+  tr: {
+    subtitle: "281 Almanca Kelime Öğren · Türkçe Arayüz 🇹🇷",
+    todayHeader: "🧠 BUGÜN",
+    q1: "1. Hangi kelimeleri unutuyorum?",
+    q2: "2. Bugün neleri tekrar etmeliyim?",
+    q3: "3. Hangi kelimeleri tamamen öğrendim?",
+    wordsUnit: "kelime",
+    start5m: "5 DAKİKALIK ALMANCA ÇALIŞMASINI BAŞLAT",
+    modeNew: "🏠 Ev & Mutfak (#236–281)",
+    modeArt: "🎯 Artikel & Hal (der/die/das)",
+    modeConf: "⚡ Karıştırılan Kelimeler",
+    modeForge: "✍️ Almanca Cümle Kur",
+    modeSurprise: "🎲 Sürpriz Hafıza Testi",
+    diagTitle: "Kişisel Hafıza Analizi",
+    diagDefault: "Yukarıdaki mavi butona dokunun. Türkçe anlamından yola çıkarak Almanca kelimeleri aktif olarak yazacaksınız.",
+    friendTitle: "🤝 Arkadaşınla Çalış",
+    sendQuiz: "📤 10 Kelimelik Test Gönder",
+    enterCode: "📥 Arkadaş Kodunu Gir",
+    exitBtn: "✕ Çıkış",
+    vecTitle: "8 Boyutlu Kelime Analizi",
+    heatTitle: "281 Kelimelik Hafıza Haritası",
+    weakTitle: "⚠️ Sürekli Unuttuğun Almanca Kelimeler",
+    fixWeakBtn: "Zor Kelimeleri Çalış",
+    vocabTitle: "281 Almanca Kelime Listesi",
+    settingsTitle: "Yedekleme ve Ayarlar",
+    navToday: "Bugün", navVec: "Analiz", navWeak: "Zorlar", navWords: "Sözlük", navSet: "Ayarlar",
+    producePrompt: "Bu kelimeyi ALMANCA yazın (isimse der / die / das ekleyin):",
+    comprehendPrompt: "Bu Almanca kelimenin Türkçe anlamı nedir?",
+    clozePrompt: "Kelimenin anlamı:",
+    hintBtn: "💡 İpucu",
+    submitBtn: "Cevabı Kontrol Et",
+    continueBtn: "Devam Et →",
+    chronicTitle: "⚠️ Zor Kelime Müdahalesi",
+    chronicDesc: "Bu Almanca kelimeyi önce zihninizde canlandırın, ardından hemen hafızadan yazın.",
+    step2Btn: "Adım 2: Şimdi Almancasını Yaz →",
+    listenBtn: "🔊 Almanca Telaffuz",
+    anchorSent: "ALMANCA ÖRNEK CÜMLE",
+    memoryScene: "🧠 Hafıza İpucu:"
   }
-];
-
-// Starter Core Decks for Ukrainian (uk-UA) & Turkish (tr-TR)
-const RAW_UKRAINIAN_VOCAB = [
-  [1001,"noun","знання (znannya)","knowledge","Вони мають глибокі {0}."],
-  [1002,"noun","учень / студент (uchenʹ)","student / pupil","Цей {0} дуже уважний."],
-  [1003,"noun","цілі (tsili)","goals","У нас є важливі {0} на майбутнє."],
-  [1004,"noun","стосунки (stosunky)","relationship","Вони мають чудові дружні {0}."],
-  [1005,"noun","сусід (susid)","neighbor","Наш новий {0} живе поруч."],
-  [1006,"verb","потребувати (potrebuvaty)","to need / require","Ми {0} більше часу."],
-  [1007,"verb","повторювати (povtoryuvaty)","to repeat","Треба {0} нові слова щодня."],
-  [1008,"verb","покращувати (pokrashchuvaty)","to improve","Він хоче {0} свою вимову."],
-  [1009,"noun","пояснення (poyasnennya)","explanation","Дякую за чітке {0}."],
-  [1010,"noun","село (selo)","village","Мої родичі живуть у тихому {0}."],
-  [1011,"noun","світло (svitlo)","light","Будь ласка, вимкни {0} у кімнаті."],
-  [1012,"noun","свято (svyato)","party / celebration","Сьогодні велике родинне {0}."],
-  [1013,"adj","чистий (chystyy)","clean","Удома завжди {0} посуд."],
-  [1014,"verb","усміхатися (usmikhatysya)","to smile","Вона щиро {0} друзям."],
-  [1015,"noun","досвід (dosvid)","experiences","Це дуже цінний життєвий {0}."],
-  [1016,"noun","родичі (rodychi)","relatives","Усі наші {0} приїхали в гості."],
-  [1017,"noun","мова (mova)","language","Українська {0} дуже мелодійна."],
-  [1018,"noun","пропозиція (propozytsiya)","suggestion","Це справді чудова {0}."],
-  [1019,"adj","сумний (sumnyy)","sad","Чому ти сьогодні такий {0}?"],
-  [1020,"noun","населення (naselennya)","population","{0} цього міста швидко зростає."],
-  [1021,"noun","квітка (kvitka)","flower","На столі стоїть гарна {0}."],
-  [1022,"noun","лист (lyst)","letter","Я отримав важливий {0} від друга."],
-  [1023,"noun","спогад (spohad)","memory / reminder","Це теплий {0} про літо."],
-  [1024,"noun","майбутнє (maybutnye)","future","Ми віримо у світле {0}."],
-  [1025,"verb","дякувати (dyakuvaty)","to thank","Хочу щиро {0} вам за пораду."],
-  [1026,"adj","цінний (tsinnyy)","valuable","Ви дали мені дуже {0} урок."],
-  [1027,"verb","зустрічати (zustrichaty)","to meet","Я рад {0} своїх друзів."],
-  [1028,"noun","замовлення (zamovlennya)","order","Ваше {0} вже в наявності."],
-  [1029,"noun","вибір (vybir)","selection / choice","У магазині є великий {0} товарів."],
-  [1030,"noun","порада (porada)","advice / consultation","Мені потрібна твоя мудра {0}."]
-];
-
-const RAW_TURKISH_VOCAB = [
-  [2001,"noun","bilgi","knowledge","Bu konuda yeterli {0} var."],
-  [2002,"noun","öğrenci","student / pupil","Her {0} sınava hazırlanıyor."],
-  [2003,"noun","hedefler","goals","Gelecek için büyük {0} belirledik."],
-  [2004,"noun","ilişki","relationship","Aralarında çok güçlü bir {0} var."],
-  [2005,"noun","komşu","neighbor","Yeni {0}muz çok nazik biri."],
-  [2006,"verb","ihtiyaç duymak","to need / require","Daha fazla праtik yapmaya {0}."],
-  [2007,"verb","tekrarlamak","to repeat","Kelimeleri yüksek sesle {0} çok faydalı."],
-  [2008,"verb","geliştirmek","to improve","Türkçemi her gün {0} istiyorum."],
-  [2009,"noun","açıklama","explanation","Bu net {0} için teşekkür ederim."],
-  [2010,"noun","köy","village","Yaz tatilinde küçük bir {0}de kaldık."],
-  [2011,"noun","ışık","light","Uyumadan önce lütfen {0}ğı kapat."],
-  [2012,"noun","kutlama","party / celebration","Akşam harika bir aile {0}sı var."],
-  [2013,"adj","temiz","clean","Oda şimdi çok {0} görünüyor."],
-  [2014,"verb","gülümsemek","to smile","Bize her zaman sıcakça {0}."],
-  [2015,"noun","deneyimler","experiences","Bu yolculuk bana yeni {0} kazandırdı."],
-  [2016,"noun","akrabalar","relatives","Bayramda tüm {0} bir araya geldi."],
-  [2017,"noun","dil","language","Yeni bir {0} öğrenmek dünyayı açar."],
-  [2018,"noun","öneri","suggestion","Senin {0}n gerçekten çok mantıklı."],
-  [2019,"adj","üzgün","sad","Bugün neden biraz {0} görünüyorsun?"],
-  [2020,"noun","nüfus","population","Şehrin {0}u her yıl artıyor."],
-  [2021,"noun","çiçek","flower","Bahçede rengarenk {0}ler açtı."],
-  [2022,"noun","mektup","letter","Dün uzun bir {0} yazdım."],
-  [2023,"noun","hatıra / anı","memory / reminder","Bu fotoğraf güzel bir {0}."],
-  [2024,"noun","gelecek","future","{0} için planlarımız hazır."],
-  [2025,"verb","teşekkür etmek","to thank","Yardımınız için size {0} isterim."],
-  [2026,"adj","değerli","valuable","Zamanımız çok {0}."],
-  [2027,"verb","buluşmak","to meet","Dün akşam arkadaşımla {0}."],
-  [2028,"noun","sipariş","order","{0}iniz yarın teslim edilecek."],
-  [2029,"noun","seçenek","selection / choice","Burada uygun fiyatlı birçok {0} var."],
-  [2030,"noun","tavsiye / danışma","advice / consultation","Bana çok iyi bir {0} verdi."]
-];
-
-// Curated Mnemonics (ONLY shown when a word becomes a Chronic Weak Word — Priority 3)
-const INTERVENTION_MNEMONICS = {
-  47: "ÜBERNACHTUNG (overnight stay) + MÖGLICHKEIT (possibility) -> die Übernachtungsmöglichkeit.",
-  71: "AUS (out) + HALTEN (hold) -> holding out under pressure = to tolerate/endure (aushalten).",
-  76: "PÜNKTLICH (on the dot) + -KEIT -> die Pünktlichkeit (all -keit nouns are die).",
-  84: "FURCHT = FEAR -> furchtbar = terrible/awful (do not confuse with fruchtbar = fertile!).",
-  117: "HALS (neck) + KETTE (chain) -> die Halskette (necklace).",
-  127: "FRUCHT = FRUIT -> fruchtbar = fertile/fruitful.",
-  130: "Volk (people) + -ung -> die Bevölkerung (population).",
-  156: "STAND (civil status) + AMT (office) -> das Standesamt (registry office).",
-  196: "treffen -> traf -> hat getroffen (met). Picture meeting your friend at the station.",
-  198: "du wünschst (you wish, 2nd person singular of wünschen).",
-  202: "VORRAT (stock/supply) -> vorrätig = in stock / available on the store shelf right now.",
-  204: "bestellen (to order) + -ung -> die Bestellung.",
-  221: "UN (not) + BEDINGT (conditional) -> unconditional = absolutely / definitely (unbedingt)."
 };
 
-const STORAGE_KEY = "memodeutsch_v4_state";
-let currentLang = "de";
+// ============================================================================
+// 2. COMPLETE 281 GERMAN VOCABULARY DATASET (EN + UKRAINIAN + TURKISH MEANINGS)
+//    Includes #1-235 from PDF + #236-281 from Classroom Worksheets (Wohnzimmer, Küche, Kinderzimmer)
+// ============================================================================
+const RAW_TRILINGUAL_GERMAN = [
+  [1,"die","Kenntnis","knowledge","знання","bilgi"],
+  [2,"der","Schüler","student / pupil","учень / школяр","öğrenci"],
+  [3,"die","Abwäsche","washing up / dishes","миття посуду","bulaşık yıkama"],
+  [4,"die","Ziele","goals","цілі","hedefler / amaçlar"],
+  [5,"der","Lärm","noise","шум / гамір","gürültü"],
+  [6,"die","Aussichten","prospects/outlook","перспективи","beklentiler / перспектиф"],
+  [7,"die","Beziehung","relationship","стосунки","ilişki"],
+  [8,"die","Strecke","distance / route","відстань / маршрут","mesafe / güzergah"],
+  [9,"der","Nachbar","neighbor","сусід","komşu"],
+  [10,"der","Anfänger","beginner","початківець","acemi / yeni başlayan"],
+  [11,"die","Gründe","reasons","причини","sebepler / nedenler"],
+  [12,"das","Konto","account","рахунок (у банку)","banka hesabı"],
+  [13,"das","Studienfach","field of study","спеціальність / предмет","okunan bölüm / branş"],
+  [14,"der","Dank","thanks","подяка","teşekkür"],
+  [15,"","benötigen","to need/ require","потребувати","ihtiyaç duymak"],
+  [16,"","gerne","gladly / like to","охоче / із задоволенням","memnuniyetle / severek"],
+  [17,"das","Klima","climate","клімат","iklim"],
+  [18,"das","Zeugnis","certificate / report card","атестат / свідоцтво","karne / sertifika"],
+  [19,"der","Pol","pole","полюс","kutup"],
+  [20,"","tragen","to carry / wear","носити / нести","taşımak / giymek"],
+  [21,"","wohnen","to live / reside","мешкати / жити","ikamet etmek / yaşamak"],
+  [22,"die","Regel","rule","правило","kural"],
+  [23,"der","Anteil","share/proportion","частка","pay / oran"],
+  [24,"die","Auswirkungen","effects/impacts","наслідки / вплив","etkiler / sonuçlar"],
+  [25,"","allgemein","general/generally","загальний / загалом","genel / genel olarak"],
+  [26,"","ungenügend","insufficient / inadequate","недостатньо","yetersiz"],
+  [27,"der","Bereich","area / field","сфера / ділянка","alan / bölge"],
+  [28,"","wiederholen","to repeat","повторювати","tekrarlamak"],
+  [29,"der","Zivildienst","civilian service","альтернативна цивільна служба","sivil hizmet"],
+  [30,"die","Dozentin","female lecturer","викладачка (в університеті)","kadın öğretim görevlisi"],
+  [31,"","kochen","to cook","готувати їжу / варити","yemek pişirmek"],
+  [32,"der","Beitrag","contribution/post","внесок / допис","katkı / paylaşım"],
+  [33,"die","Chancen","chances/opportunities","шанси / можливості","şanslar / fırsatlar"],
+  [34,"","gründen","to found/ establish","засновувати","kurmak"],
+  [35,"","verbessern","to improve","покращувати","geliştirmek / iyileştirmek"],
+  [36,"","aufnehmen","to record / take in / accept","записувати / приймати","kaydetmek / kabul etmek"],
+  [37,"","aussuchen","to choose / select","вибирати","seçmek"],
+  [38,"","nachholen","to catch up / make up","наздоганяти (пропущене)","telafi etmek"],
+  [39,"","berechnen","to calculate","обчислювати / розраховувати","hesaplamak"],
+  [40,"","gefangen","caught/trapped","спійманий / у пастці","yakalanmış"],
+  [41,"","fühlen","to feel","відчувати / почуватися","hissetmek"],
+  [42,"die","Erklärung","explanation","пояснення","açıklama"],
+  [43,"","besprechen","to discuss","обговорювати","görüşmek / tartışmak"],
+  [44,"","verspäten","to be delayed","запізнюватися","gecikmek"],
+  [45,"die","Krawatte","tie","краватка","kravat"],
+  [46,"","begrüßt","greets/welcomed","вітає / привітав","selamlar / karşıladı"],
+  [47,"die","Übernachtungsmöglichkeit","overnight accommodation","місце для ночівлі / житло","gece konaklama imkanı"],
+  [48,"","gratuliere","I congratulate / congratulations","вітаю (зі святом)","tebrik ederim"],
+  [49,"","durch","through","через / крізь","içinden / vasıtasıyla"],
+  [50,"das","Dorf","village","село","köy"],
+  [51,"der","Hauptschulabschluss","lower secondary school certificate","атестат основної середньої школи","ortaokul diploması"],
+  [52,"der","Volksschulabschluss","primary/elementary school leaving certificate","свідоцтво початкової школи","ilkokul diploması"],
+  [53,"das","Abitur","university entrance qualification","атестат зрілості (для вступу в ВНЗ)","lise bitirme / üniversiteye giriş diploması"],
+  [54,"der","Realschulabschluss","intermediate secondary school certificate","атестат реальної середньої школи","orta dereceli okul diploması"],
+  [55,"die","Hauptschule","lower secondary school","основна загальна школа","temel ortaokul"],
+  [56,"","wollen","to want","хотіти","istemek"],
+  [57,"die","Jugendsprache","youth language","молодіжний сленг","gençlik dili"],
+  [58,"die","Schulpflicht","compulsory schooling","обов'язкова шкільна освіта","zorunlu eğitim"],
+  [59,"","mindestens","at least","щонайменше / принаймні","en az / en azından"],
+  [60,"die","Grundschule","primary school","початкова школа","ilkokul"],
+  [61,"","ausräumen","to clear out / empty","розвантажувати / звільняти","boşaltmak"],
+  [62,"","ausmachen","to turn off / arrange","вимикати / домовлятися","kapatmak / kararlaştırmak"],
+  [63,"das","Licht","light","світло","ışık"],
+  [64,"","duschen","to shower","приймати душ","duş almak"],
+  [65,"die","Feier","party / celebration","свято / вечірка","kutlama / parti"],
+  [66,"","sauber","clean","чистий","temiz"],
+  [67,"","putzen","to clean","чистити / прибирати","temizlemek"],
+  [68,"","abwaschen","to wash up","мити посуд","bulaşık yıkamak"],
+  [69,"","ziehen","to pull / move","тягнути / переїжджати","çekmek / taşınmak"],
+  [70,"","meistens","mostly","здебільшого / переважно","çoğunlukla"],
+  [71,"","aushalten","to tolerate / endure","витримувати / терпіти","dayanmak / katlanmak"],
+  [72,"","streiten","to argue","сваритися / сперечатися","tartışmak / kavga etmek"],
+  [73,"","zeigen","to show","показувати","göstermek"],
+  [74,"","aufpassen","to pay attention / take care","бути уважним / наглядати","dikkat etmek"],
+  [75,"","anbieten","to offer","пропонувати","teklif etmek / ikram etmek"],
+  [76,"die","Pünktlichkeit","punctuality","пунктуальність","dakiklik"],
+  [77,"die","Höflichkeit","politeness","ввічливість","nezaket / kibarlık"],
+  [78,"","lächeln","to smile","усміхатися","gülümsemek"],
+  [79,"","nachfragen","to ask again/inquire","перепитувати / уточнювати","sorup soruşturmak"],
+  [80,"","kennenlernen","to get to know","знайомитися","tanışmak"],
+  [81,"die","Erfahrungen","experiences","досвід","deneyimler / tecrübeler"],
+  [82,"die","Verwandten","relatives","родичі","akrabalar"],
+  [83,"das","Ganze","the whole / entirety","ціле / усе разом","bütün / tamamı"],
+  [84,"","furchtbar","terrible/awful","жахливий / страшний","korkunç / berbat"],
+  [85,"die","Möglichkeiten","possibilities/options","можливості / варіанти","olanaklar / seçenekler"],
+  [86,"","ärgerlich","annoying/angry","прикрий / дратівливий","can sıkıcı / sinir bozucu"],
+  [87,"das","Heimweh","homesickness","туга за домом","sıla hasreti / ev özlemi"],
+  [88,"","vergehen","to pass (time)","минати (про час)","geçmek (zaman)"],
+  [89,"","beeilen","to hurry","поспішати","acele etmek"],
+  [90,"das","Wechselgeld","change (money)","решта (здача грошей)","para üstü"],
+  [91,"der","Militärdienst","military service","військова служба","askerlik hizmeti"],
+  [92,"","stimmt","is correct / that's right","правильно / вірно","doğru"],
+  [93,"","sprechen","to speak","говорити / розмовляти","konuşmak"],
+  [94,"die","Sprache","language","мова","dil"],
+  [95,"","zuschauen","to watch/look on","спостерігати / дивитися","izlemek / seyretmek"],
+  [96,"die","Rezeption","reception","рецепція / стійка реєстрації","resepsiyon"],
+  [97,"","was","what","що","ne"],
+  [98,"","wer","who","хто","kim"],
+  [99,"die","Mitarbeiter","employees / staff","співробітники / персонал","çalışanlar / personel"],
+  [100,"der","Handwerker","craftsperson/ tradesperson","майстер / ремісник","zanaatkar / usta"],
+  [101,"der","Maurer","bricklayer/mason","муляр","duvar ustası"],
+  [102,"die","Kantine","canteen / cafeteria","їдальня (на підприємстві)","kantin / yemekhane"],
+  [103,"die","Mensa","university cafeteria","студентська їдальня","üniversite yemekhanesi"],
+  [104,"","spinnen","to spin / be crazy","прясти / божеволіти","saçmalamak / delirmek"],
+  [105,"die","Spinne","spider","павук","örümcek"],
+  [106,"der","Vorschlag","suggestion","пропозиція","öneri / teklif"],
+  [107,"die","Nachbarin","female neighbor","сусідка","kadın komşu"],
+  [108,"die","Überstunden","overtime","понаднормові години","fazla mesai"],
+  [109,"die","Montage","assembly/installation work","монтаж / встановлення","montaj / kurulum"],
+  [110,"der","Monteur","technician/fitter","монтажник / механік","montajcı / teknisyen"],
+  [111,"","traurig","sad","сумний","üzgün"],
+  [112,"","dazu","to that / about that / in addition","до цього / крім того","buna ek olarak / bunun hakkında"],
+  [113,"","genug","enough","достатньо","yeterli / yeterince"],
+  [114,"","wieder","again","знову","tekrar / yine"],
+  [115,"","geschenkt","given as a gift/free","подарований","hediye edilmiş"],
+  [116,"","erklärt","explained","пояснений / пояснив","açıklanmış / açıkladı"],
+  [117,"die","Halskette","necklace","намисто / ланцюжок на шию","kolye"],
+  [118,"","anziehen","to put on/ get dressed","одягати(ся)","giyinmek / giymek"],
+  [119,"","besonders","especially / particularly","особливо","özellikle"],
+  [120,"","werfen","to throw","кидати","atmak / fırlatmak"],
+  [121,"","darauf","on it/ onto it / about it","на цьому / на це","bunun üzerine / buna"],
+  [122,"das","Pferd","horse","кінь","at"],
+  [123,"der","Bleistift","pencil","олівець","kurşun kalem"],
+  [124,"","begrüße","I greet/welcome","я вітаю","selamlıyorum"],
+  [125,"","zeige","I show","я показую","gösteriyorum"],
+  [126,"","erzähle","I tell / I narrate","я розповідаю","anlatıyorum"],
+  [127,"","fruchtbar","fertile/fruitful","родючий / плідний","verimli / bereketli"],
+  [128,"","gut geht","is going well","справи йдуть добре","iyi gidiyor"],
+  [129,"die","Familienfeier","family celebration / family party","сімейне свято","aile kutlaması"],
+  [130,"die","Bevölkerung","population","населення","nüfus"],
+  [131,"die","Blume","flower","квітка","çiçek"],
+  [132,"der","Brief","letter","лист","mektup"],
+  [133,"der/die","Cousin / Cousine","cousin","двоюрідний брат / сестра","kuzen"],
+  [134,"die","Ehe","marriage","шлюб","evlilik"],
+  [135,"die","Erinnerung","memory / reminder","спогад / нагадування","hatıra / anı"],
+  [136,"die","Ferien","holidays/vacation","канікули / відпустка","tatil"],
+  [137,"die","Geburt","birth","народження","doğum"],
+  [138,"der","Haushalt","household","домашнє господарство","ev idaresi / hane"],
+  [139,"der","Hund","dog","собака","köpek"],
+  [140,"die","Krankenschwester","nurse","медсестра","hemşire"],
+  [141,"die","Leute","people","люди","insanlar"],
+  [142,"das","Lied","song","пісня","şarkı"],
+  [143,"die","Mama","mum/mom","мама","anne"],
+  [144,"die","Mitteilung","message/notification","повідомлення","mesaj / bildirim"],
+  [145,"die","Mitternacht","midnight","опівночі","gece yarısı"],
+  [146,"der","Osten","east","схід","doğu"],
+  [147,"","Ostern","Easter","Великдень","Paskalya"],
+  [148,"das","Osterfest","Easter festival","свято Великодня","Paskalya bayramı"],
+  [149,"der/die","Rentner/in","retired person / pensioner","пенсіонер / пенсіонерка","emekli"],
+  [150,"der","Rest","rest/ remainder","залишок / решта","kalan / gerisi"],
+  [151,"der","Ring","ring","перстень / каблучка","yüzük"],
+  [152,"die","Schließung","closure/closing","закриття","kapanış / kapatılma"],
+  [153,"die","Schokolade","chocolate","шоколад","çikolata"],
+  [154,"das","Schiff","ship","корабель","gemi"],
+  [155,"","Silvester","New Year's Eve","Новий рік (31 грудня)","Yılbaşı gecesi"],
+  [156,"das","Standesamt","registry office / civil registry office","РАЦС (відділ реєстрації шлюбів)","evlendirme dairesi / nüfus müdürlüğü"],
+  [157,"die","Trauung","wedding ceremony","церемонія одруження / вінчання","nikah töreni"],
+  [158,"die","Überraschung","surprise","сюрприз / несподіванка","sürpriz"],
+  [159,"die","Wand","wall","стіна","duvar"],
+  [160,"","Weihnachten","Christmas","Різдво","Noel"],
+  [161,"das","Weihnachtsfest","Christmas celebration","свято Різдва","Noel kutlaması"],
+  [162,"der","Westen","west","захід","batı"],
+  [163,"die","Zukunft","future","майбутнє","gelecek"],
+  [164,"","annehmen","to accept / assume","приймати / припускати","kabul etmek / varsaymak"],
+  [165,"","sich bedanken","to thank / express thanks","дякувати","teşekkür etmek"],
+  [166,"","bestehen","to exist/pass / consist","складати (іспит) / існувати","başarmak (sınav) / var olmak"],
+  [167,"","bringen","to bring","приносити","getirmek"],
+  [168,"","dazugehören","to belong to it","належати до цього","ait olmak / dahil olmak"],
+  [169,"","meinen","to mean/think","мати на увазі / вважати","kastetmek / düşünmek"],
+  [170,"","riechen","to smell","пахнути / нюхати","kokmak / koklamak"],
+  [171,"","schenken","to give as a gift","дарувати","hediye etmek"],
+  [172,"","übernachten","to stay overnight","ночувати","gecelemek / gece kalmak"],
+  [173,"","weggehen","to leave / go away","іти геть / виходити","gitmek / ayrılmak"],
+  [174,"","zusammenleben","to live together","жити разом","birlikte yaşamak"],
+  [175,"","alleinerziehend","single-parent / raising a child alone","який сам виховує дитину","tek ebeveynli"],
+  [176,"","wem","to whom","кому (давальний відмінок)","kime"],
+  [177,"","wen","whom","кого (знахідний відмінок)","kimi"],
+  [178,"","wie lange","how long","як довго","ne kadar süre"],
+  [179,"","wie oft","how often","як часто","ne sıklıkla"],
+  [180,"","dick","thick / fat","товстий","kalın / şişman"],
+  [181,"","hoch","high / tall","високий","yüksek"],
+  [182,"","feucht","damp/humid","вологий","nemli / ıslak"],
+  [183,"","bunt","colorful","різнокольоровий / яскравий","renkli / rengarenk"],
+  [184,"","weich","soft","м'який","yumuşak"],
+  [185,"","hart","hard","твердий / жорсткий","sert / zor"],
+  [186,"","sichersten","safest/most certain","найбезпечніший / найнадійніший","en güvenli"],
+  [187,"","wertvoll","valuable","цінний / коштовний","değerli / kıymetli"],
+  [188,"","ruhiger","quieter / calmer","спокійніший / тихіший","daha sakin / daha sessiz"],
+  [189,"","wenigsten","least/fewest","найменше","en az"],
+  [190,"","feinsten","finest / most delicate","найтонший / найкращий","en ince / en kaliteli"],
+  [191,"","tapfersten","bravest","найхоробріший","en cesur"],
+  [192,"","giftig","poisonous / toxic","отруйний / токсичний","zehirli"],
+  [193,"","geschickter","more skilled / more skillful","вправніший / спритніший","daha becerikli / yetenekli"],
+  [194,"","deutlich","clear / clearly","чіткий / виразно","net / açıkça"],
+  [195,"der","Traummann","dream man / ideal man","чоловік мрії","hayalindeki erkek"],
+  [196,"","getroffen","met/hit","зустрів (від treffen)","buluştu / karşılaştı"],
+  [197,"","erinnere","remember/remind (1st person)","я пам'ятаю / нагадую","hatırlıyorum"],
+  [198,"","wünschst","wish (2nd person singular)","ти бажаєш","diliyorsun / istiyorsun"],
+  [199,"","durstig","thirsty","спраглий (хоче пити)","susamış"],
+  [200,"","gehört","belongs / heard","належить / почув","ait / duydu"],
+  [201,"","gerade","just/straight/ currently","прямо / щойно / зараз","şimdi / düz"],
+  [202,"","vorrätig","in stock","в наявності (на складі)","stokta / mevcut"],
+  [203,"","Sondergrößen","special sizes","спеціальні розміри","özel bedenler"],
+  [204,"die","Bestellung","order","замовлення","sipariş"],
+  [205,"der","Sommerschlussverkauf","summer sale","літній розпродаж","yaz sonu indirimi"],
+  [206,"","Sonderpreisen","special prices","спеціальні ціни","özel fiyatlar"],
+  [207,"","passende","suitable / matching","відповідний / підходящий","uygun / uyan"],
+  [208,"","folgende","following","наступний","aşağıdaki / sonraki"],
+  [209,"","laufen","to walk / run","бігти / ходити пішки","koşmak / yürümek"],
+  [210,"","reiten","to ride","їздити верхи","ata binmek"],
+  [211,"der","Flohmarkt","flea market","блошиний ринок / барахолка","bit pazarı"],
+  [212,"","gebraucht","used/second-hand","вживаний (б/у)","ikinci el / kullanılmış"],
+  [213,"die","Standgebühr","stall fee / stand fee","плата за місце на ринку","tezgah / stand ücreti"],
+  [214,"die","Herrenabteilung","men's department","чоловічий відділ","erkek reyonu"],
+  [215,"","rauschende","rustling/roaring / lavish","гучний / пишний (свято)","görkemli / coşkulu"],
+  [216,"die","Auswahl","selection/choice","вибір / асортимент","seçim / seçenek"],
+  [217,"","überhaupt","at all / generally","взагалі","hiç / genel olarak"],
+  [218,"","übermorgen","the day after tomorrow","післязавтра","öbür gün (yarından পরের gün)"],
+  [219,"","schwanger","pregnant","вагітна","hamile"],
+  [220,"","günstigen","favorable / inexpensive","вигідний / недорогий","uygun fiyatlı / hesaplı"],
+  [221,"","unbedingt","absolutely / definitely","обов'язково / неодмінно","kesinlikle / mutlaka"],
+  [222,"der","Grund","reason / ground","причина / підстава","sebep / neden"],
+  [223,"die","Beratung","advice/consultation","консультація / порада","danışma / tavsiye"],
+  [224,"das","Fußballturnier","football/soccer tournament","футбольний турнір","futbol turnuvası"],
+  [225,"die","Mannschaften","teams","команди","takımlar"],
+  [226,"der","Stadtteil","district/neighborhood","район міста","semt / mahalle"],
+  [227,"","vorher","before / beforehand","раніше / перед тим","önceden / daha önce"],
+  [228,"die","Läden","shops/stores","магазини / крамниці","mağazalar / dükkanlar"],
+  [229,"","länger","longer","довше","daha uzun"],
+  [230,"","verschiedenen","different/various","різні / різноманітні","farklı / çeşitli"],
+  [231,"das","Programm","program","програма","program"],
+  [232,"","beliebte","popular","популярний / улюблений","popüler / sevilen"],
+  [233,"die","Weststadt","western part of the city","західний район міста","şehrin batı yakası"],
+  [234,"","statt","instead of","замість","yerine"],
+  [235,"der","Höhepunkt","highlight/climax","кульмінація / головний момент","zirve / en önemli an"],
+
+  // NEW CLASSROOM WORKSHEET WORDS (#236 - #281: Wohnzimmer, Küche, Kinderzimmer)
+  [236,"der","Stuhl","chair","стілець","sandalye"],
+  [237,"die","Leiter","ladder","драбина","merdiven"],
+  [238,"der","Schrank","cupboard / wardrobe","шафа","dolap"],
+  [239,"die","Farbe","paint / color","фарба / колір","boya / renk"],
+  [240,"der","Pinsel","paintbrush","пензель","boya fırçası"],
+  [241,"der","Tisch","table","стіл","masa"],
+  [242,"die","Lampe","lamp","лампа","lamba"],
+  [243,"das","Buch","book","книга","kitap"],
+  [244,"der","Fernseher","television / TV","телевізор","televizyon"],
+  [245,"der","Teppich","carpet / rug","килим","halı"],
+  [246,"das","Sofa","sofa / couch","диван","kanepe / koltuk"],
+  [247,"das","Bild","picture / painting","картина / фотографія","resim / tablo"],
+  [248,"das","Bücherregal","bookshelf","книжкова полиця","kitaplık"],
+  [249,"das","Sieb","sieve / strainer","сито / друшляк","süzgeç / elek"],
+  [250,"das","Spülmittel","dish soap / washing-up liquid","засіб для миття посуду","bulaşık deterjanı"],
+  [251,"die","Teller","plates (plural)","тарілки","tabaklar"],
+  [252,"der","Müll","trash / garbage / rubbish","сміття","çöp"],
+  [253,"die","Gabel","fork","виделка","çatal"],
+  [254,"das","Salz","salt","сіль","tuz"],
+  [255,"die","Gläser","glasses (plural)","склянки / келихи","bardaklar"],
+  [256,"die","Küche","kitchen","кухня","mutfak"],
+  [257,"der","Küchenschrank","kitchen cupboard / cabinet","кухонна шафа","mutfak dolabı"],
+  [258,"die","Spülmaschine","dishwasher","посудомийна машина","bulaşık makinesi"],
+  [259,"das","Waschbecken","sink / washbasin","раковина / умивальник","lavabo / eviye"],
+  [260,"der","Herd","stove / cooker","плита (кухонна)","ocak / fırın"],
+  [261,"die","Pflanze","plant","рослина / вазон","bitki"],
+  [262,"die","Flaschen","bottles (plural)","пляшки","şişeler"],
+  [263,"der","Ofen","oven","піч / духовка","fırın / soba"],
+  [264,"die","Kaffeemaschine","coffee machine","кавоварка / кавомашина","kahve makinesi"],
+  [265,"der","Wasserkocher","electric kettle","електрочайник","su ısıtıcısı (kettle)"],
+  [266,"der","Kühlschrank","refrigerator / fridge","холодильник","buzdolabı"],
+  [267,"der","Wasserhahn","faucet / tap","водопровідний кран","musluk"],
+  [268,"das","Kinderzimmer","children's room / nursery","дитяча кімната","çocuk odası"],
+  [269,"die","Spielzeuge","toys (plural)","іграшки","oyuncaklar"],
+  [270,"die","Magnetwand","magnetic board","магнітна дошка","mıknatıslı pano"],
+  [271,"der","Computer","computer","комп'ютер","bilgisayar"],
+  [272,"der","Vorhang","curtain / drape","штора / завіса","perde (kalın)"],
+  [273,"der","Ball","ball","м'яч","top"],
+  [274,"die","Matratze","mattress","матрац","yatak / şilte"],
+  [275,"das","Fenster","window","вікно","pencere"],
+  [276,"die","Gardine","net curtain / curtain","гардина / тюль","tül perde"],
+  [277,"das","Bett","bed","ліжко","yatak"],
+  [278,"der","Computertisch","computer desk","комп'ютерний стіл","bilgisayar masası"],
+  [279,"das","Kissen","pillow / cushion","подушка","yastık"],
+  [280,"die","Decke","blanket / ceiling","ковдра / стеля","battaniye / tavan"],
+  [281,"die","Heizung","heating / radiator","опалення / батарея","kalorifer / ısıtma"]
+];
+
+const STORAGE_KEY = "memodeutsch_v5_trilingual";
+let nativeLang = "en"; // 'en' | 'uk' | 'tr'
 
 let appState = {
   theme: "light",
+  nativeLang: "en",
   streak: 0,
   lastStudyDate: null,
-  customWords: { de: [], uk: [], tr: [] },
-  progress: {} // keyed by item.id
+  progress: {}
 };
 
-function buildDatasetForLang(lang) {
-  let raw = [];
-  if (lang === "de") {
-    raw = RAW_GERMAN_VOCAB.map(r => {
-      const [id, art, word, en] = r;
-      const hasValidArticle = ["der", "die", "das", "der/die"].includes(art);
-      const vForm = VERB_GRAMMAR_FORMS[id];
-      const defaultSent = vForm
-        ? vForm.deSent.replace(word, "{0}")
-        : (hasValidArticle
-            ? (art === "die" ? `Die {0} ist heute sehr wichtig.` : (art === "der" ? `Der {0} spielt eine große Rolle.` : `Das {0} ist vorrätig.`))
-            : `Im Alltag gebraucht man „{0}“ sehr oft.`);
-      return {
-        id, lang: "de", article: art, hasValidArticle, word,
-        fullTarget: hasValidArticle ? `${art} ${word}` : word,
-        cleanTarget: word.replace(/\s*\(.*?\)/g, "").trim(),
-        english: en,
-        grammarForms: vForm ? vForm.forms : (hasValidArticle ? `Plural / Case unit: ${art} ${word}` : "Invariable / Part of speech"),
-        enSentence: vForm ? vForm.enSent : null,
-        targetSentence: vForm ? vForm.deSent : null,
-        sentenceTemplate: defaultSent,
-        mnemonic: INTERVENTION_MNEMONICS[id] || `Visualize "${hasValidArticle ? art + ' ' + word : word}" (${en}) in a vivid real-life scene on a store shelf or street.`
-      };
-    });
-  } else if (lang === "uk") {
-    raw = RAW_UKRAINIAN_VOCAB.map(r => {
-      const [id, pos, word, en, sent] = r;
-      const cyrillicOnly = word.split("(")[0].trim();
-      return {
-        id, lang: "uk", article: pos, hasValidArticle: false, word,
-        fullTarget: cyrillicOnly, cleanTarget: cyrillicOnly,
-        english: en, grammarForms: `Part of speech: ${pos}`,
-        sentenceTemplate: sent,
-        mnemonic: `Connect Ukrainian "${word}" directly to "${en}".`
-      };
-    });
-  } else {
-    raw = RAW_TURKISH_VOCAB.map(r => {
-      const [id, pos, word, en, sent] = r;
-      return {
-        id, lang: "tr", article: pos, hasValidArticle: false, word,
-        fullTarget: word, cleanTarget: word,
-        english: en, grammarForms: `Part of speech: ${pos} (Turkish vowel harmony)`,
-        sentenceTemplate: sent,
-        mnemonic: `Connect Turkish "${word}" directly to "${en}".`
-      };
-    });
+// Build enriched 281-word German list
+const VOCAB_DECK = RAW_TRILINGUAL_GERMAN.map(row => {
+  const [id, art, word, en, uk, tr] = row;
+  const hasValidArticle = ["der", "die", "das", "der/die"].includes(art);
+  let sent = `Im Alltag ist „{0}“ sehr wichtig.`;
+  if (id >= 236 && id <= 248) sent = `Im Wohnzimmer steht ${hasValidArticle ? art : ''} {0}.`;
+  else if (id >= 249 && id <= 267) sent = `In der Küche brauchen wir ${hasValidArticle ? art : ''} {0}.`;
+  else if (id >= 268 && id <= 281) sent = `Im Kinderzimmer ist ${hasValidArticle ? art : ''} {0}.`;
+  else if (hasValidArticle) {
+    sent = art === "die" ? `Die {0} ist heute sehr wichtig.` : (art === "der" ? `Der {0} spielt eine große Rolle.` : `Das {0} ist hier.`);
   }
-  const customs = appState.customWords?.[lang] || [];
-  return [...raw, ...customs];
+  return {
+    id,
+    article: art,
+    hasValidArticle,
+    word,
+    fullGerman: hasValidArticle ? `${art} ${word}` : word,
+    meanings: { en, uk, tr },
+    sentenceTemplate: sent
+  };
+});
+
+function getMeaning(item, lang = nativeLang) {
+  return item.meanings[lang] || item.meanings.en;
 }
 
-// Priority 2: 8-Sub-Vector Word Knowledge Profile
+function getLocalizedMnemonic(item, lang = nativeLang) {
+  const m = getMeaning(item, lang);
+  const full = item.fullGerman;
+  if (lang === "uk") {
+    if (item.hasValidArticle && item.word.endsWith("ung")) return `Усі німецькі іменники на -ung мають жіночий рід (die): "${full}" = ${m}.`;
+    if (item.hasValidArticle && item.word.endsWith("keit")) return `Суфікс -keit завжди жіночого роду (die): "${full}" = ${m}.`;
+    return `Уявіть собі "${full}" (${m}) у яскравій реальній ситуації вдома чи на вулиці.`;
+  }
+  if (lang === "tr") {
+    if (item.hasValidArticle && item.word.endsWith("ung")) return `-ung ile biten tüm Almanca isimler 'die' artikelini alır: "${full}" = ${m}.`;
+    if (item.hasValidArticle && item.word.endsWith("keit")) return `-keit eki her zaman 'die' artikelini alır: "${full}" = ${m}.`;
+    return `"${full}" (${m}) kelimesini evinizde veya günlük hayatta canlı bir sahne olarak hayal edin.`;
+  }
+  if (item.hasValidArticle && item.word.endsWith("ung")) return `All German nouns ending in -ung are feminine (die): "${full}" = ${m}.`;
+  if (item.hasValidArticle && item.word.endsWith("keit")) return `All nouns ending in -keit are feminine (die): "${full}" = ${m}.`;
+  return `Picture "${full}" (${m}) vividly in your room or daily life.`;
+}
+
 function getDefaultProgress() {
   return {
-    seen: 0,
-    correct: 0,
-    failedCount: 0,
-    streak: 0,
-    lastReviewed: null,
-    nextReview: null,
-    stability: 0,
-    avgLatencyMs: 0,
-    lastLatencyGrade: null, // Strong (<2.5s), Moderate (2.5-5.5s), Weak (>5.5s), Assisted, Failed
-    rotationStep: 0,        // Priority 5: 0..4 variable direction rotation
-    chronicResolved: false,
-    vectors: {
-      meaning: 0,       // 0..100
-      spelling: 0,
-      pronunciation: 0,
-      recognition: 0,
-      production: 0,    // Main event weight
-      context: 0,
-      grammar: 0,
-      retention: 0
-    }
+    seen: 0, correct: 0, failedCount: 0, streak: 0,
+    lastReviewed: null, nextReview: null, stability: 0,
+    avgLatencyMs: 0, lastLatencyGrade: null, rotationStep: 0, chronicResolved: false,
+    vectors: { meaning: 0, spelling: 0, pronunciation: 0, recognition: 0, production: 0, context: 0, grammar: 0, retention: 0 }
   };
 }
 
 function loadAppState() {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
-    if (raw) appState = { ...appState, ...JSON.parse(raw) };
+    if (raw) {
+      appState = { ...appState, ...JSON.parse(raw) };
+      nativeLang = appState.nativeLang || "en";
+    }
   } catch (e) {}
   applyTheme();
+  updateLanguageButtons();
 }
 
 function saveAppState() {
-  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(appState)); } catch (e) {}
+  try {
+    appState.nativeLang = nativeLang;
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(appState));
+  } catch (e) {}
 }
 
 function getWordProg(id) {
@@ -714,14 +888,12 @@ function getWordProg(id) {
 
 function getRetrievability(p, nowMs = Date.now()) {
   if (!p || p.seen === 0 || !p.lastReviewed || p.stability <= 0) return 0;
-  const elapsedDays = Math.max(0, (nowMs - p.lastReviewed) / 86400000);
-  return Math.pow(0.9, elapsedDays / p.stability);
+  return Math.pow(0.9, Math.max(0, (nowMs - p.lastReviewed) / 86400000) / p.stability);
 }
 
-// North-Star Metric: Can produce in target language with stability >= 14d and production vector >= 75
 function isActivelyMastered(item) {
   const p = getWordProg(item.id);
-  return p.seen >= 2 && p.vectors.production >= 75 && p.stability >= 7 && getRetrievability(p) >= 0.82;
+  return p.seen >= 2 && p.vectors.production >= 75 && p.stability >= 5 && getRetrievability(p) >= 0.8;
 }
 
 function isChronicWeak(item) {
@@ -736,67 +908,124 @@ function isDueToday(item, nowMs = Date.now()) {
 }
 
 // ============================================================================
-// 2. SESSION ENGINE (PRIORITIES 1, 3, 4, 5, 6, 7, 8, 9, 11)
+// 3. LIVE NATIVE LANGUAGE SWITCHING (FIXES THE SCREENSHOT BUG!)
+// ============================================================================
+function switchNativeLanguage(lang) {
+  nativeLang = lang;
+  saveAppState();
+  updateLanguageButtons();
+  applyLocalizationToStaticUI();
+  refreshDashboard();
+
+  // If user is currently inside an active quiz/intervention session, re-render immediately in their language!
+  if (document.getElementById("view-session").classList.contains("active") && activeSession) {
+    renderSessionStep();
+  }
+}
+
+function updateLanguageButtons() {
+  ["en", "uk", "tr"].forEach(l => {
+    const btn = document.getElementById(`lang-btn-${l}`);
+    if (btn) btn.classList.toggle("active", l === nativeLang);
+  });
+}
+
+function applyLocalizationToStaticUI() {
+  const t = UI_STRINGS[nativeLang];
+  document.getElementById("app-main-sub").textContent = t.subtitle;
+  document.getElementById("ui-today-header").textContent = t.todayHeader;
+  document.getElementById("ui-q1-label").textContent = t.q1;
+  document.getElementById("ui-q2-label").textContent = t.q2;
+  document.getElementById("ui-q3-label").textContent = t.q3;
+  document.getElementById("ui-start-5m-btn").textContent = t.start5m;
+  document.getElementById("ui-mode-New").textContent = t.modeNew;
+  document.getElementById("ui-mode-Art").textContent = t.modeArt;
+  document.getElementById("ui-mode-Conf").textContent = t.modeConf;
+  document.getElementById("ui-mode-Forge").textContent = t.modeForge;
+  document.getElementById("ui-mode-Surprise").textContent = t.modeSurprise;
+  document.getElementById("ui-diag-title").textContent = t.diagTitle;
+  document.getElementById("ui-friend-title").textContent = t.friendTitle;
+  document.getElementById("ui-send-quiz-btn").textContent = t.sendQuiz;
+  document.getElementById("ui-enter-code-btn").textContent = t.enterCode;
+  document.getElementById("ui-exit-btn").textContent = t.exitBtn;
+  document.getElementById("ui-vec-title").textContent = t.vecTitle;
+  document.getElementById("ui-heat-title").textContent = t.heatTitle;
+  document.getElementById("ui-weak-title").textContent = t.weakTitle;
+  document.getElementById("ui-fix-weak-btn").textContent = t.fixWeakBtn;
+  document.getElementById("vocab-view-title").textContent = t.vocabTitle;
+  document.getElementById("ui-settings-title").textContent = t.settingsTitle;
+  document.getElementById("nav-lbl-today").textContent = t.navToday;
+  document.getElementById("nav-lbl-vec").textContent = t.navVec;
+  document.getElementById("nav-lbl-weak").textContent = t.navWeak;
+  document.getElementById("nav-lbl-words").textContent = t.navWords;
+  document.getElementById("nav-lbl-set").textContent = t.navSet;
+}
+
+// ============================================================================
+// 4. SESSION & RETRIEVAL ENGINE (PRODUCTION-FIRST IN USER'S NATIVE LANGUAGE)
 // ============================================================================
 let activeSession = null;
 let questionStartTime = 0;
 let currentHintLevel = 0;
 
-function switchLanguage(lang, btn) {
-  currentLang = lang;
-  document.querySelectorAll(".lang-btn").forEach(b => b.classList.remove("active"));
-  if (btn) btn.classList.add("active");
-  const titles = {
-    de: ["MemoDeutsch", "Production-First German Coach · 235 Words"],
-    uk: ["MemoUkrayinska", "Active Recall Ukrainian Coach · 🇺🇦"],
-    tr: ["MemoTürkçe", "Active Recall Turkish Coach · 🇹🇷"]
-  };
-  document.getElementById("app-main-title").textContent = titles[lang][0];
-  document.getElementById("app-main-sub").textContent = titles[lang][1];
-  refreshDashboard();
-}
+const CASE_DRILLS = [
+  { id: 236, prompt: "Ich sitze auf ___ Stuhl. (Dative location)", answer: "dem" },
+  { id: 241, prompt: "Die Teller stehen auf ___ Tisch. (Dative location)", answer: "dem" },
+  { id: 246, prompt: "Die Katze schläft auf ___ Sofa. (Dative location)", answer: "dem" },
+  { id: 256, prompt: "Wir kochen zusammen in ___ Küche. (Dative location)", answer: "der" },
+  { id: 266, prompt: "Die Milch steht in ___ Kühlschrank. (Dative location)", answer: "dem" },
+  { id: 268, prompt: "Die Spielzeuge liegen in ___ Kinderzimmer. (Dative location)", answer: "dem" },
+  { id: 277, prompt: "Das Kissen liegt auf ___ Bett. (Dative location)", answer: "dem" },
+  { id: 132, prompt: "Ich schreibe ___ Brief mit einem Bleistift. (Accusative)", answer: "den" }
+];
+
+const CONFUSION_DRILLS = [
+  { title: "furchtbar (#84) vs. fruchtbar (#127)", question: "Der Lärm draußen ist ________! (terrible / жахливий / korkunç)", correct: "furchtbar", options: ["furchtbar", "fruchtbar", "feucht"] },
+  { title: "der Tisch (#241) vs. der Stuhl (#236)", question: "Die Teller und Gläser stehen auf dem ________. (table / стіл / masa)", correct: "Tisch", options: ["Tisch", "Stuhl", "Teppich"] },
+  { title: "der Kühlschrank (#266) vs. der Herd (#260)", question: "Das Essen bleibt kalt im ________. (fridge / холодильник / buzdolabı)", correct: "Kühlschrank", options: ["Kühlschrank", "Herd", "Ofen"] },
+  { title: "wem (#176 Dat) vs. wen (#177 Acc)", question: "________ gehört dieses Buch? (to whom / кому / kime)", correct: "Wem", options: ["Wem", "Wen", "Wer"] },
+  { title: "die Spülmaschine (#258) vs. das Waschbecken (#259)", question: "Die elektrische ________ wäscht die Teller automatisch. (dishwasher / посудомийна машина / bulaşık makinesi)", correct: "Spülmaschine", options: ["Spülmaschine", "Waschbecken", "Kaffeemaschine"] }
+];
 
 function startSession(mode = "production") {
-  const deck = buildDatasetForLang(currentLang);
   const now = Date.now();
   let queue = [];
 
-  if (mode === "confusion") {
-    queue = CONFUSION_PAIRS.map(pair => ({ type: "CONFUSION_PAIR", pair }));
+  if (mode === "classroom_new") {
+    // Dedicated practice for the 46 new classroom words (#236-281: Wohnzimmer, Küche, Kinderzimmer)
+    const roomWords = VOCAB_DECK.filter(d => d.id >= 236);
+    roomWords.sort((a, b) => getWordProg(a.id).seen - getWordProg(b.id).seen);
+    queue = roomWords.slice(0, 14).map(item => ({ type: "PROD_NATIVE_TO_DE", item }));
+  } else if (mode === "confusion") {
+    queue = CONFUSION_DRILLS.map(pair => ({ type: "CONFUSION_PAIR", pair }));
   } else if (mode === "articles_declension") {
-    queue = CASE_DECLENSION_DRILLS.map(drill => {
-      const item = deck.find(d => d.id === drill.id) || deck[0];
-      return { type: "CASE_DECLENSION", drill, item };
-    });
+    queue = CASE_DRILLS.map(drill => ({ type: "CASE_DECLENSION", drill, item: VOCAB_DECK.find(d => d.id === drill.id) }));
   } else if (mode === "sentence_forge") {
-    const candidates = deck.slice().sort((a, b) => getWordProg(a.id).vectors.context - getWordProg(b.id).vectors.context).slice(0, 5);
-    queue = candidates.map(item => ({ type: "SENTENCE_FORGE", item, forgeStep: 1, sentencesWritten: [] }));
+    const pool = VOCAB_DECK.slice().sort(() => Math.random() - 0.5).slice(0, 5);
+    queue = pool.map(item => ({ type: "SENTENCE_FORGE", item, forgeStep: 1, sentencesWritten: [] }));
   } else if (mode === "surprise") {
-    // Priority 11: Pull words not seen recently (or random unseen/old words) for honest two-stage test
-    const older = deck.filter(d => getWordProg(d.id).seen > 0).sort((a, b) => (getWordProg(a.id).lastReviewed || 0) - (getWordProg(b.id).lastReviewed || 0));
-    const pool = older.length >= 5 ? older.slice(0, 6) : deck.slice().sort(() => Math.random() - 0.5).slice(0, 6);
+    const pool = VOCAB_DECK.slice().sort(() => Math.random() - 0.5).slice(0, 6);
     queue = pool.map(item => ({ type: "SURPRISE_TEST", item, stage: 1 }));
   } else if (mode === "chronic_intervention") {
-    let chronics = deck.filter(isChronicWeak);
-    if (chronics.length === 0) chronics = deck.filter(d => d.id === 202 || d.id === 47 || d.id === 71 || d.id === 196);
+    let chronics = VOCAB_DECK.filter(isChronicWeak);
+    if (!chronics.length) chronics = [VOCAB_DECK.find(d => d.id === 47), VOCAB_DECK.find(d => d.id === 202), VOCAB_DECK.find(d => d.id === 258), VOCAB_DECK.find(d => d.id === 248)].filter(Boolean);
     queue = chronics.slice(0, 6).map(item => ({ type: "CHRONIC_INTERVENTION", item, step: 1 }));
   } else {
-    // Priority 1 & 5: Production-heavy 5-Minute Memory Session (12 items)
-    const chronics = deck.filter(isChronicWeak).slice(0, 3);
-    const due = deck.filter(d => isDueToday(d, now) && !chronics.includes(d)).slice(0, 5);
-    const unseen = deck.filter(d => getWordProg(d.id).seen === 0).slice(0, 4);
+    // Standard 5-Minute Production Session
+    const chronics = VOCAB_DECK.filter(isChronicWeak).slice(0, 3);
+    const due = VOCAB_DECK.filter(d => isDueToday(d, now) && !chronics.includes(d)).slice(0, 5);
+    const unseen = VOCAB_DECK.filter(d => getWordProg(d.id).seen === 0).slice(0, 4);
     const combined = [...chronics, ...due, ...unseen];
-    if (combined.length < 10) {
-      deck.forEach(d => { if (combined.length < 10 && !combined.includes(d)) combined.push(d); });
+    if (combined.length < 12) {
+      VOCAB_DECK.forEach(d => { if (combined.length < 12 && !combined.includes(d)) combined.push(d); });
     }
-
     queue = combined.map(item => {
       const p = getWordProg(item.id);
-      // If failed >= 3 times, trigger Priority 3 Chronic Weak Word Intervention
-      if (p.failedCount >= 3 && !p.chronicResolved) {
-        return { type: "CHRONIC_INTERVENTION", item, step: 1 };
-      }
-      return { type: selectVariableModality(item), item };
+      const step = p.rotationStep % 4;
+      if (p.failedCount >= 3 && !p.chronicResolved) return { type: "CHRONIC_INTERVENTION", item, step: 1 };
+      if (step === 0 || step === 1) return { type: "PROD_NATIVE_TO_DE", item };
+      if (step === 2) return { type: "SENTENCE_CLOZE", item };
+      return { type: "REC_DE_TO_NATIVE", item };
     });
   }
 
@@ -806,25 +1035,13 @@ function startSession(mode = "production") {
   renderSessionStep();
 }
 
-// Priority 1 & Priority 5: Weighted Production + 5-Direction Variable Rotation
-function selectVariableModality(item) {
-  const p = getWordProg(item.id);
-  const step = p.rotationStep % 5;
-  // Heavily favor EN -> Target Production and Sentence Completion
-  if (p.seen === 0) return "PROD_EN_TO_TARGET"; // Even first encounter tests production with graduated hints available!
-  if (step === 0) return "PROD_EN_TO_TARGET";   // ★★★★★ Main Event: EN -> DE/UK/TR
-  if (step === 1) return "SENTENCE_CLOZE";      // ★★★★★ Sentence completion
-  if (step === 2) return item.enSentence ? "FULL_SENTENCE_TRANSLATE" : "PROD_EN_TO_TARGET"; // ★★★★★ Full sentence production
-  if (step === 3) return "AUDIO_DICTATION";     // ★★★★ Audio -> Target
-  return "REC_TARGET_TO_EN";                    // ★★★ DE -> EN Meaning
-}
-
 function renderSessionStep() {
   if (!activeSession || activeSession.index >= activeSession.queue.length) {
     renderSessionComplete();
     return;
   }
 
+  const t = UI_STRINGS[nativeLang];
   const entry = activeSession.queue[activeSession.index];
   currentHintLevel = 0;
   questionStartTime = performance.now();
@@ -838,43 +1055,46 @@ function renderSessionStep() {
   fStage.style.display = "none";
   qStage.style.display = "block";
 
-  // 1. PRIORITY 3: CHRONIC WEAK WORD 3-STEP INTERVENTION
+  // 1. CHRONIC WEAK WORD INTERVENTION (FULLY LOCALIZED IN EN / UK / TR!)
   if (entry.type === "CHRONIC_INTERVENTION") {
     const item = entry.item;
-    const p = getWordProg(item.id);
-    document.getElementById("session-mode-label").textContent = "⚠️ Chronic Weak Word";
+    document.getElementById("session-mode-label").textContent = t.weakTitle;
 
     if (entry.step === 1) {
       qStage.innerHTML = `
         <div class="chronic-box">
-          <strong>⚠️ Chronic Weak Word Intervention</strong><br/>
-          You've struggled with <strong>${item.fullTarget}</strong> (${p.failedCount} lapses). Let's lock it in with encoding + immediate retrieval.
+          <strong>${t.chronicTitle}</strong><br/>
+          ${t.chronicDesc}
         </div>
-        <div class="prompt-word">${formatTargetWithColor(item)}</div>
-        <div class="prompt-sub" style="font-size:1.1rem; font-weight:700; color:var(--text);">= ${item.english}</div>
+        <div class="prompt-word">${formatGermanWithColor(item)}</div>
+        <div style="text-align:center; margin-bottom:8px;">
+          <button class="audio-pill" onclick="speakGerman('${escapeQuotes(item.fullGerman)}')">${t.listenBtn}</button>
+        </div>
+        <div class="prompt-sub" style="font-size:1.18rem; font-weight:800; color:var(--text);">
+          = ${escapeHtml(getMeaning(item))}
+        </div>
         <div class="mnemonic-box">
-          <strong>🧠 Memory Encoding Scene:</strong><br/>${item.mnemonic}
+          <strong>${t.memoryScene}</strong><br/>${escapeHtml(getLocalizedMnemonic(item))}
         </div>
         <div class="card" style="background:var(--card-secondary); margin-top:10px; padding:12px;">
-          <div style="font-size:0.75rem; font-weight:700; color:var(--text-muted);">ANCHOR SENTENCE</div>
-          <div style="font-size:0.95rem; margin-top:4px;">${item.sentenceTemplate.replace("{0}", `<strong>${item.cleanTarget}</strong>`)}</div>
+          <div style="font-size:0.74rem; font-weight:700; color:var(--text-muted);">${t.anchorSent}</div>
+          <div style="font-size:0.95rem; margin-top:4px;">${item.sentenceTemplate.replace("{0}", `<strong>${item.word}</strong>`)}</div>
         </div>
         <button class="btn btn-primary" style="margin-top:12px;" onclick="advanceChronicStep(2)">
-          Step 2: Immediate Production Test →
+          ${t.step2Btn}
         </button>
       `;
-      speakText(item.fullTarget, item.lang);
+      speakGerman(item.fullGerman);
       return;
     }
 
     if (entry.step === 2) {
       qStage.innerHTML = `
-        <span class="badge badge-danger">Intervention Step 2/3 · Direct Recall</span>
-        <div class="prompt-word">${item.english}</div>
-        <div class="prompt-sub">Produce the target word from memory:</div>
+        <div class="prompt-word">${escapeHtml(getMeaning(item))}</div>
+        <div class="prompt-sub">${t.producePrompt}</div>
         <form onsubmit="submitChronicStep(event, 2)">
-          <input type="text" id="answer-input" class="text-input" placeholder="Type ${item.lang.toUpperCase()} word..." autocomplete="off" autocapitalize="none" required />
-          <button type="submit" class="btn btn-primary">Verify Recall</button>
+          <input type="text" id="answer-input" class="text-input" placeholder="der / die / das ..." autocomplete="off" autocapitalize="none" required />
+          <button type="submit" class="btn btn-primary">${t.submitBtn}</button>
         </form>
       `;
       focusInput();
@@ -882,14 +1102,12 @@ function renderSessionStep() {
     }
 
     if (entry.step === 3) {
-      const blanked = item.sentenceTemplate.replace("{0}", "________");
       qStage.innerHTML = `
-        <span class="badge badge-purple">Intervention Step 3/3 · Contextual Lock</span>
-        <div class="prompt-word" style="font-size:1.35rem;">„${blanked}“</div>
-        <div class="prompt-sub">Meaning: ${item.english}</div>
+        <div class="prompt-word" style="font-size:1.35rem;">„${item.sentenceTemplate.replace("{0}", "________")}“</div>
+        <div class="prompt-sub">${t.clozePrompt} <strong>${escapeHtml(getMeaning(item))}</strong></div>
         <form onsubmit="submitChronicStep(event, 3)">
-          <input type="text" id="answer-input" class="text-input" placeholder="Fill in the blank..." autocomplete="off" autocapitalize="none" required />
-          <button type="submit" class="btn btn-primary">Complete Intervention</button>
+          <input type="text" id="answer-input" class="text-input" placeholder="${item.word}..." autocomplete="off" autocapitalize="none" required />
+          <button type="submit" class="btn btn-primary">${t.submitBtn}</button>
         </form>
       `;
       focusInput();
@@ -897,202 +1115,130 @@ function renderSessionStep() {
     }
   }
 
-  // 2. PRIORITY 7: CONFUSION ENGINE
+  // 2. CONFUSION ENGINE
   if (entry.type === "CONFUSION_PAIR") {
     const pair = entry.pair;
-    document.getElementById("session-mode-label").textContent = "⚡ Confusion Engine";
+    document.getElementById("session-mode-label").textContent = t.modeConf;
     qStage.innerHTML = `
       <span class="badge badge-warning">${pair.title}</span>
       <div class="prompt-word" style="font-size:1.25rem;">${pair.question}</div>
       <div class="choice-grid" style="margin-top:14px;">
-        ${pair.options.map(opt => `
-          <button class="choice-btn" onclick="submitConfusionAnswer('${escapeQuotes(opt)}')">
-            <span>${opt}</span><span>→</span>
-          </button>
-        `).join("")}
+        ${pair.options.map(opt => `<button class="choice-btn" onclick="submitConfusionAnswer('${escapeQuotes(opt)}')"><span>${opt}</span><span>→</span></button>`).join("")}
       </div>
     `;
     return;
   }
 
-  // 3. PRIORITY 6: HARD ARTICLE & CASE DECLENSION LAB
+  // 3. CASE & ARTICLE LAB
   if (entry.type === "CASE_DECLENSION") {
     const { drill, item } = entry;
-    document.getElementById("session-mode-label").textContent = "🎯 Case & Declension Lab";
+    document.getElementById("session-mode-label").textContent = t.modeArt;
     qStage.innerHTML = `
-      <span class="badge badge-primary">Base Noun: ${item.fullTarget} (${item.english})</span>
+      <span class="badge badge-primary">${item.fullGerman} (${escapeHtml(getMeaning(item))})</span>
       <div class="prompt-word" style="font-size:1.3rem;">„${drill.prompt}“</div>
-      <div class="prompt-sub">Type the exact declined article/determiner (e.g. den, dem, einen, meinem):</div>
-      <form onsubmit="submitDeclensionAnswer(event)">
-        <input type="text" id="answer-input" class="text-input" placeholder="Declined article..." autocomplete="off" autocapitalize="none" required />
-        <button type="submit" class="btn btn-primary">Check Case Grammar</button>
+      <form onsubmit="submitDeclensionAnswer(event)" style="margin-top:12px;">
+        <input type="text" id="answer-input" class="text-input" placeholder="der / die / das / dem / den..." autocomplete="off" autocapitalize="none" required />
+        <button type="submit" class="btn btn-primary">${t.submitBtn}</button>
       </form>
     `;
     focusInput();
     return;
   }
 
-  // 4. PRIORITY 8: SENTENCE FORGE (Write 2 distinct sentences)
+  // 4. SENTENCE FORGE
   if (entry.type === "SENTENCE_FORGE") {
     const item = entry.item;
-    document.getElementById("session-mode-label").textContent = `✍️ Sentence Forge (${entry.forgeStep}/2)`;
+    document.getElementById("session-mode-label").textContent = `${t.modeForge} (${entry.forgeStep}/2)`;
     qStage.innerHTML = `
-      <div class="prompt-word">${formatTargetWithColor(item)}</div>
-      <div class="prompt-sub">Meaning: <strong>${item.english}</strong> · ${item.grammarForms}</div>
-      <p style="font-size:0.85rem; color:var(--text-secondary); text-align:center;">
-        Write <strong>Sentence #${entry.forgeStep}</strong> in ${item.lang === 'de' ? 'German' : (item.lang === 'uk' ? 'Ukrainian' : 'Turkish')} using <strong>${item.cleanTarget}</strong> in a natural context:
-      </p>
-      ${entry.sentencesWritten.length ? `<div class="mnemonic-box" style="margin-bottom:10px;">✓ Sentence 1: „${escapeHtml(entry.sentencesWritten[0])}“</div>` : ""}
+      <div class="prompt-word">${formatGermanWithColor(item)}</div>
+      <div class="prompt-sub"><strong>${escapeHtml(getMeaning(item))}</strong></div>
       <form onsubmit="submitSentenceForge(event)">
-        <input type="text" id="answer-input" class="text-input" placeholder="e.g. Der Berg ist sehr ${item.cleanTarget}..." autocomplete="off" required />
-        <button type="submit" class="btn btn-primary">Forge Sentence #${entry.forgeStep}</button>
+        <input type="text" id="answer-input" class="text-input" placeholder="e.g. ${item.sentenceTemplate.replace('{0}', item.word)}" autocomplete="off" required />
+        <button type="submit" class="btn btn-primary">${t.submitBtn} (#${entry.forgeStep}/2)</button>
       </form>
     `;
     focusInput();
     return;
   }
 
-  // 5. PRIORITY 11: SURPRISE RETENTION TEST
+  // 5. SURPRISE RETENTION TEST
   if (entry.type === "SURPRISE_TEST") {
     const item = entry.item;
-    const p = getWordProg(item.id);
-    const daysAgo = p.lastReviewed ? Math.max(1, Math.round((Date.now() - p.lastReviewed) / 86400000)) : "several";
-    document.getElementById("session-mode-label").textContent = "🎲 Surprise Test";
-
-    if (entry.stage === 1) {
-      qStage.innerHTML = `
-        <div class="mnemonic-box" style="margin-bottom:10px;">
-          🎲 <strong>Surprise Check:</strong> You haven't tested <strong>#${item.id}</strong> for ${daysAgo} day(s). Let's see if you truly retain it.
-        </div>
-        <div class="prompt-word">${formatTargetWithColor(item)}</div>
-        <div class="prompt-sub">Step 1: What does it mean in English?</div>
-        <form onsubmit="submitSurpriseStage1(event)">
-          <input type="text" id="answer-input" class="text-input" placeholder="English meaning..." autocomplete="off" autocapitalize="none" required />
-          <button type="submit" class="btn btn-primary">Verify Meaning</button>
-        </form>
-      `;
-      focusInput();
-      return;
-    } else {
-      qStage.innerHTML = `
-        <span class="badge badge-success">✓ Meaning Verified: ${item.english}</span>
-        <div class="prompt-word">${formatTargetWithColor(item)}</div>
-        <div class="prompt-sub">Step 2: Now use <strong>${item.cleanTarget}</strong> in a complete sentence:</div>
-        <form onsubmit="submitSurpriseStage2(event)">
-          <input type="text" id="answer-input" class="text-input" placeholder="Write a complete sentence..." autocomplete="off" required />
-          <button type="submit" class="btn btn-primary">Complete Surprise Test</button>
-        </form>
-      `;
-      focusInput();
-      return;
-    }
+    document.getElementById("session-mode-label").textContent = t.modeSurprise;
+    qStage.innerHTML = `
+      <div class="prompt-word">${escapeHtml(getMeaning(item))}</div>
+      <div class="prompt-sub">${t.producePrompt}</div>
+      <form onsubmit="submitStandardAnswer(event, 'DE')">
+        <input type="text" id="answer-input" class="text-input" placeholder="der / die / das ..." autocomplete="off" autocapitalize="none" required />
+        <button type="submit" class="btn btn-primary">${t.submitBtn}</button>
+      </form>
+    `;
+    focusInput();
+    return;
   }
 
-  // 6. STANDARD VARIABLE PRODUCTION & GRADUATED HINTS (Priorities 1, 4, 5, 9)
+  // 6. MAIN EVENT: NATIVE (EN / UK / TR) -> GERMAN PRODUCTION & SENTENCE CLOZE
   const item = entry.item;
-  const modality = entry.type;
-
-  const modeNames = {
-    PROD_EN_TO_TARGET: "🇬🇧 → Target Production (★★★★★)",
-    SENTENCE_CLOZE: "Contextual Sentence Cloze (★★★★★)",
-    FULL_SENTENCE_TRANSLATE: "Full Sentence Production (★★★★★)",
-    AUDIO_DICTATION: "🔊 Audio Dictation Recall",
-    REC_TARGET_TO_EN: "Target → 🇬🇧 Comprehension"
-  };
-  document.getElementById("session-mode-label").textContent = modeNames[modality] || "Active Production";
-
-  if (modality === "REC_TARGET_TO_EN") {
+  if (entry.type === "REC_DE_TO_NATIVE") {
+    document.getElementById("session-mode-label").textContent = "🇩🇪 → Meaning";
     qStage.innerHTML = `
-      <div style="text-align:center;"><button class="audio-pill" onclick="speakText('${escapeQuotes(item.fullTarget)}', '${item.lang}')">🔊 Listen</button></div>
-      <div class="prompt-word">${formatTargetWithColor(item)}</div>
-      <div class="prompt-sub">What does this mean in English?</div>
-      <form onsubmit="submitStandardAnswer(event, 'EN')">
-        <input type="text" id="answer-input" class="text-input" placeholder="Type English meaning..." autocomplete="off" autocapitalize="none" required />
-        <button type="submit" class="btn btn-primary">Submit Answer</button>
+      <div style="text-align:center;"><button class="audio-pill" onclick="speakGerman('${escapeQuotes(item.fullGerman)}')">${t.listenBtn}</button></div>
+      <div class="prompt-word">${formatGermanWithColor(item)}</div>
+      <div class="prompt-sub">${t.comprehendPrompt}</div>
+      <form onsubmit="submitStandardAnswer(event, 'NATIVE')">
+        <input type="text" id="answer-input" class="text-input" placeholder="..." autocomplete="off" autocapitalize="none" required />
+        <button type="submit" class="btn btn-primary">${t.submitBtn}</button>
       </form>
     `;
     focusInput();
     return;
   }
 
-  if (modality === "AUDIO_DICTATION") {
-    speakText(item.fullTarget, item.lang);
+  if (entry.type === "SENTENCE_CLOZE") {
+    document.getElementById("session-mode-label").textContent = "🇩🇪 Cloze (★★★★★)";
     qStage.innerHTML = `
-      <div style="text-align:center; margin: 18px 0;">
-        <button class="btn btn-secondary" style="max-width:220px;" onclick="speakText('${escapeQuotes(item.fullTarget)}', '${item.lang}')">🔊 Play Audio Again</button>
-      </div>
-      <div class="prompt-sub">What word did you hear? Type it accurately:</div>
+      <div class="prompt-sub">${t.clozePrompt} <strong>“${escapeHtml(getMeaning(item))}”</strong></div>
+      <div class="prompt-word" style="font-size:1.35rem;">„${item.sentenceTemplate.replace("{0}", "________")}“</div>
       ${renderGraduatedHintBox(item)}
-      <form onsubmit="submitStandardAnswer(event, 'TARGET')">
-        <input type="text" id="answer-input" class="text-input" placeholder="Type what you heard..." autocomplete="off" autocapitalize="none" required />
-        <button type="submit" class="btn btn-primary">Submit Dictation</button>
+      <form onsubmit="submitStandardAnswer(event, 'DE')">
+        <input type="text" id="answer-input" class="text-input" placeholder="Deutsch..." autocomplete="off" autocapitalize="none" required />
+        <button type="submit" class="btn btn-primary">${t.submitBtn}</button>
       </form>
     `;
     focusInput();
     return;
   }
 
-  if (modality === "FULL_SENTENCE_TRANSLATE" && item.enSentence) {
-    qStage.innerHTML = `
-      <span class="badge badge-purple">Target Word: ${item.english}</span>
-      <div class="prompt-word" style="font-size:1.35rem;">“${item.enSentence}”</div>
-      <div class="prompt-sub">Produce the complete German sentence:</div>
-      <form onsubmit="submitFullSentenceTranslate(event)">
-        <input type="text" id="answer-input" class="text-input" placeholder="Ich habe..." autocomplete="off" required />
-        <button type="submit" class="btn btn-primary">Check Sentence Production</button>
-      </form>
-    `;
-    focusInput();
-    return;
-  }
-
-  if (modality === "SENTENCE_CLOZE") {
-    const blanked = item.sentenceTemplate.replace("{0}", "________");
-    qStage.innerHTML = `
-      <div class="prompt-sub">Meaning cue: <strong>“${item.english}”</strong></div>
-      <div class="prompt-word" style="font-size:1.35rem;">„${blanked}“</div>
-      ${renderGraduatedHintBox(item)}
-      <form onsubmit="submitStandardAnswer(event, 'TARGET')">
-        <input type="text" id="answer-input" class="text-input" placeholder="Produce missing word..." autocomplete="off" autocapitalize="none" required />
-        <button type="submit" class="btn btn-primary">Submit Production</button>
-      </form>
-    `;
-    focusInput();
-    return;
-  }
-
-  // Default Main Event: PROD_EN_TO_TARGET (English -> German/Ukrainian/Turkish)
+  // Default: PROD_NATIVE_TO_DE (Shows English, Ukrainian, or Turkish meaning -> User types German!)
+  const flag = nativeLang === "uk" ? "🇺🇦" : (nativeLang === "tr" ? "🇹🇷" : "🇬🇧");
+  document.getElementById("session-mode-label").textContent = `${flag} → 🇩🇪 (★★★★★)`;
   qStage.innerHTML = `
-    <div class="prompt-word">${item.english}</div>
-    <div class="prompt-sub">
-      ${item.hasValidArticle ? "Produce the German word (include <strong>der / die / das</strong>):" : `Produce the ${item.lang === 'de' ? 'German' : (item.lang === 'uk' ? 'Ukrainian' : 'Turkish')} word:`}
-    </div>
+    <div class="prompt-word">${escapeHtml(getMeaning(item))}</div>
+    <div class="prompt-sub">${t.producePrompt}</div>
     ${renderGraduatedHintBox(item)}
-    <form onsubmit="submitStandardAnswer(event, 'TARGET')">
-      <input type="text" id="answer-input" class="text-input" placeholder="Type answer..." autocomplete="off" autocapitalize="none" required />
-      <button type="submit" class="btn btn-primary">Submit Production</button>
+    <form onsubmit="submitStandardAnswer(event, 'DE')">
+      <input type="text" id="answer-input" class="text-input" placeholder="${item.hasValidArticle ? 'der / die / das ...' : 'Deutsch...'}" autocomplete="off" autocapitalize="none" required />
+      <button type="submit" class="btn btn-primary">${t.submitBtn}</button>
     </form>
   `;
   focusInput();
 }
 
-// ============================================================================
-// 3. PRIORITY 4: GRADUATED HINTS (DIMINISHING-CUE RETRIEVAL)
-// ============================================================================
 function renderGraduatedHintBox(item) {
-  const w = item.cleanTarget;
+  const t = UI_STRINGS[nativeLang];
+  const w = item.word;
   const artPrefix = item.hasValidArticle ? item.article + " " : "";
   let cue = "_".repeat(Math.max(5, w.length));
   if (currentHintLevel === 1) cue = w.slice(0, 1) + "_".repeat(Math.max(2, w.length - 1));
   if (currentHintLevel === 2) cue = w.slice(0, Math.min(2, w.length)) + "_".repeat(Math.max(1, w.length - 2));
   if (currentHintLevel === 3) cue = artPrefix + w.slice(0, Math.max(1, w.length - 1)) + "_";
-  if (currentHintLevel >= 4) cue = item.fullTarget;
+  if (currentHintLevel >= 4) cue = item.fullGerman;
 
   return `
     <div class="hint-bar">
-      <span id="hint-cue-text">Cue (L${currentHintLevel}/4): <strong>${cue}</strong></span>
+      <span id="hint-cue-text">L${currentHintLevel}/4: <strong>${cue}</strong></span>
       <button type="button" class="btn btn-secondary btn-sm" onclick="requestGraduatedHint()">
-        💡 Hint (${currentHintLevel}/4)
+        ${t.hintBtn} (${currentHintLevel}/4)
       </button>
     </div>
   `;
@@ -1103,27 +1249,24 @@ function requestGraduatedHint() {
   if (!entry || !entry.item) return;
   currentHintLevel = Math.min(4, currentHintLevel + 1);
   const item = entry.item;
-  const w = item.cleanTarget;
+  const w = item.word;
   const artPrefix = item.hasValidArticle ? item.article + " " : "";
   let cue = "_".repeat(Math.max(5, w.length));
   if (currentHintLevel === 1) cue = w.slice(0, 1) + "_".repeat(Math.max(2, w.length - 1));
   if (currentHintLevel === 2) cue = w.slice(0, Math.min(2, w.length)) + "_".repeat(Math.max(1, w.length - 2));
   if (currentHintLevel === 3) cue = artPrefix + w.slice(0, Math.max(1, w.length - 1)) + "_";
-  if (currentHintLevel >= 4) cue = item.fullTarget;
+  if (currentHintLevel >= 4) cue = item.fullGerman;
 
   const cueEl = document.getElementById("hint-cue-text");
-  if (cueEl) cueEl.innerHTML = `Cue (L${currentHintLevel}/4): <strong>${cue}</strong>`;
+  if (cueEl) cueEl.innerHTML = `L${currentHintLevel}/4: <strong>${cue}</strong>`;
   focusInput();
 }
 
-// ============================================================================
-// 4. RESPONSE LATENCY GRADING & VECTOR UPDATES (PRIORITIES 2 & 9)
-// ============================================================================
 function normalizeStr(s) {
   return (s || "").toLowerCase().replace(/\([^)]*\)/g, "").replace(/[.,!?;"'„“]/g, "").replace(/\s+/g, " ").trim();
 }
 
-function submitStandardAnswer(e, dir) {
+function submitStandardAnswer(e, targetMode) {
   e.preventDefault();
   const latencyMs = Math.round(performance.now() - questionStartTime);
   const val = document.getElementById("answer-input").value;
@@ -1133,151 +1276,97 @@ function submitStandardAnswer(e, dir) {
   let isCorrect = false;
   let articleNote = null;
 
-  if (dir === "EN") {
+  if (targetMode === "NATIVE") {
     const u = normalizeStr(val);
-    const targets = item.english.split(/[\/,]/).map(t => normalizeStr(t).replace(/^to\s+/, ""));
-    isCorrect = targets.some(t => u.replace(/^to\s+/, "") === t || (t.length >= 5 && u.length >= 4 && t.includes(u)));
+    // Accept answer in user's selected native language (or English)
+    const rawPool = `${item.meanings[nativeLang]} / ${item.meanings.en}`;
+    const targets = rawPool.split(/[\/,]/).map(s => normalizeStr(s).replace(/^to\s+/, "")).filter(Boolean);
+    isCorrect = targets.some(t => u.replace(/^to\s+/, "") === t || (t.length >= 4 && u.length >= 3 && t.includes(u)));
   } else {
     const u = normalizeStr(val);
-    const cleanT = normalizeStr(item.cleanTarget);
-    const fullT = normalizeStr(item.fullTarget);
-    if (u === fullT || u === cleanT) {
+    const cleanW = normalizeStr(item.word);
+    const fullG = normalizeStr(item.fullGerman);
+    if (u === fullG || u === cleanW) {
       isCorrect = true;
-      if (item.hasValidArticle && u === cleanT && entry.type === "PROD_EN_TO_TARGET") {
-        articleNote = `Remember the article unit: "${item.fullTarget}"!`;
+      if (item.hasValidArticle && u === cleanW && entry.type === "PROD_NATIVE_TO_DE") {
+        articleNote = `${item.fullGerman} (${item.article}!)`;
       }
     }
   }
 
-  // Priority 9: Latency & Hint Assistance Classification
-  let gradeLabel = "Failed";
+  let gradeLabel = "✗";
   let gradeBadge = "badge-danger";
-  if (isCorrect) {
-    if (currentHintLevel >= 4) {
-      isCorrect = false;
-      gradeLabel = "Revealed (L4 Hint)";
-    } else if (currentHintLevel > 0) {
-      gradeLabel = `Assisted (L${currentHintLevel} Hint)`;
-      gradeBadge = "badge-purple";
-    } else if (latencyMs <= 2800) {
-      gradeLabel = `🟢 Strong (${(latencyMs/1000).toFixed(1)}s)`;
-      gradeBadge = "badge-success";
-    } else if (latencyMs <= 6000) {
-      gradeLabel = `🟡 Moderate (${(latencyMs/1000).toFixed(1)}s)`;
-      gradeBadge = "badge-warning";
-    } else {
-      gradeLabel = `🟠 Slow/Hesitant (${(latencyMs/1000).toFixed(1)}s)`;
-      gradeBadge = "badge-warning";
-    }
+  if (isCorrect && currentHintLevel < 4) {
+    if (currentHintLevel > 0) { gradeLabel = `💡 L${currentHintLevel}`; gradeBadge = "badge-purple"; }
+    else if (latencyMs <= 2800) { gradeLabel = `🟢 ${(latencyMs/1000).toFixed(1)}s`; gradeBadge = "badge-success"; }
+    else if (latencyMs <= 6000) { gradeLabel = `🟡 ${(latencyMs/1000).toFixed(1)}s`; gradeBadge = "badge-warning"; }
+    else { gradeLabel = `🟠 ${(latencyMs/1000).toFixed(1)}s`; gradeBadge = "badge-warning"; }
+  } else {
+    isCorrect = false;
   }
 
-  updateVectorsAndSchedule(item, entry.type, isCorrect, latencyMs, currentHintLevel);
-  showRichFeedback(item, isCorrect, val, gradeLabel, gradeBadge, articleNote);
+  updateWordTelemetry(item, isCorrect, latencyMs, currentHintLevel);
+  showFeedbackScreen(item, isCorrect, gradeLabel, gradeBadge, articleNote);
 }
 
-function updateVectorsAndSchedule(item, modality, isCorrect, latencyMs, hintLvl) {
+function updateWordTelemetry(item, isCorrect, latencyMs, hintLvl) {
   const p = getWordProg(item.id);
   const now = Date.now();
-  p.seen += 1;
+  p.seen++;
   p.lastReviewed = now;
-  p.rotationStep = (p.rotationStep + 1) % 5;
+  p.rotationStep = (p.rotationStep + 1) % 4;
   p.avgLatencyMs = p.avgLatencyMs ? Math.round(p.avgLatencyMs * 0.7 + latencyMs * 0.3) : latencyMs;
 
-  const delta = isCorrect ? (hintLvl > 0 ? 10 : (latencyMs <= 3000 ? 24 : 16)) : -22;
   const clamp = v => Math.max(0, Math.min(100, v));
+  const delta = isCorrect ? (hintLvl > 0 ? 12 : 24) : -20;
 
   if (isCorrect) {
-    p.correct += 1;
-    p.streak += 1;
-    activeSession.correct += 1;
-
+    p.correct++; p.streak++; activeSession.correct++;
     p.vectors.meaning = clamp(p.vectors.meaning + delta);
+    p.vectors.production = clamp(p.vectors.production + delta);
     p.vectors.spelling = clamp(p.vectors.spelling + delta);
-    if (modality === "REC_TARGET_TO_EN") p.vectors.recognition = clamp(p.vectors.recognition + 25);
-    if (modality === "PROD_EN_TO_TARGET" || modality === "FULL_SENTENCE_TRANSLATE") p.vectors.production = clamp(p.vectors.production + delta);
-    if (modality === "SENTENCE_CLOZE") { p.vectors.context = clamp(p.vectors.context + 24); p.vectors.production = clamp(p.vectors.production + 16); }
-    if (modality === "AUDIO_DICTATION") p.vectors.pronunciation = clamp(p.vectors.pronunciation + 28);
     if (item.hasValidArticle) p.vectors.grammar = clamp(p.vectors.grammar + 18);
-
-    // Latency & Hint-Aware Stability Multiplier
-    if (hintLvl > 0) {
-      p.stability = Math.max(0.4, (p.stability || 0.5) * 1.1);
-      p.lastLatencyGrade = "Assisted";
-    } else if (latencyMs <= 2800) {
-      p.stability = p.stability <= 0 ? 3.5 : Math.min(365, p.stability * 2.4);
-      p.lastLatencyGrade = "Strong";
-    } else if (latencyMs <= 6000) {
-      p.stability = p.stability <= 0 ? 2.0 : Math.min(365, p.stability * 1.7);
-      p.lastLatencyGrade = "Moderate";
-    } else {
-      // Correct but >6 seconds -> fragile/guessed! Keep interval short.
-      p.stability = Math.max(0.6, (p.stability || 0.6) * 1.2);
-      p.lastLatencyGrade = "Weak";
-    }
+    p.stability = hintLvl > 0 ? 0.6 : (latencyMs <= 3000 ? Math.max(3.0, p.stability * 2.2) : Math.max(1.5, p.stability * 1.5));
   } else {
-    p.failedCount += 1;
-    p.streak = 0;
-    p.stability = 0.25;
-    p.lastLatencyGrade = "Failed";
+    p.failedCount++; p.streak = 0; p.stability = 0.25;
     p.vectors.production = clamp(p.vectors.production - 20);
-    p.vectors.retention = clamp(p.vectors.retention - 25);
   }
-
   p.vectors.retention = Math.round(getRetrievability(p, now) * 100);
   p.nextReview = now + p.stability * 86400000;
-
-  const today = new Date().toISOString().slice(0, 10);
-  if (appState.lastStudyDate !== today) {
-    appState.streak = (appState.streak || 0) + 1;
-    appState.lastStudyDate = today;
-  }
-  activeSession.total += 1;
+  activeSession.total++;
   saveAppState();
 }
 
-function showRichFeedback(item, isCorrect, userVal, gradeLabel, gradeBadge, extraNote) {
-  speakText(item.fullTarget, item.lang);
+function showFeedbackScreen(item, isCorrect, gradeLabel, gradeBadge, extraNote) {
+  const t = UI_STRINGS[nativeLang];
+  speakGerman(item.fullGerman);
   const p = getWordProg(item.id);
   const qStage = document.getElementById("question-stage");
   const fStage = document.getElementById("feedback-stage");
   qStage.style.display = "none";
   fStage.style.display = "block";
 
-  // Priority: Only show mnemonic if failed or chronic weak word (no noisy mnemonics on easy words!)
-  const showInterventionHook = !isCorrect || p.failedCount >= 2;
+  const showMnemonic = !isCorrect || p.failedCount >= 2;
 
   fStage.innerHTML = `
     <div style="display:flex; justify-content:space-between; align-items:center;">
       <span class="badge ${gradeBadge}">${gradeLabel}</span>
-      <button class="audio-pill" onclick="speakText('${escapeQuotes(item.fullTarget)}', '${item.lang}')">🔊 ${item.fullTarget}</button>
+      <button class="audio-pill" onclick="speakGerman('${escapeQuotes(item.fullGerman)}')">🔊 ${item.fullGerman}</button>
     </div>
-
-    <div class="prompt-word" style="margin:10px 0 4px;">${formatTargetWithColor(item)}</div>
-    <div class="prompt-sub" style="font-size:1.05rem; color:var(--text); font-weight:700; margin-bottom:6px;">
-      ${item.english}
+    <div class="prompt-word" style="margin:10px 0 4px;">${formatGermanWithColor(item)}</div>
+    <div class="prompt-sub" style="font-size:1.1rem; color:var(--text); font-weight:700; margin-bottom:8px;">
+      ${escapeHtml(getMeaning(item))}
     </div>
-    <div style="text-align:center; font-size:0.78rem; color:var(--purple); font-weight:600; margin-bottom:8px;">
-      ${item.grammarForms}
-    </div>
-
-    ${extraNote ? `<div style="color:var(--warning); text-align:center; font-size:0.84rem; font-weight:700; margin-bottom:8px;">⚠️ ${extraNote}</div>` : ""}
-
+    ${extraNote ? `<div style="color:var(--warning); text-align:center; font-size:0.86rem; font-weight:700; margin-bottom:8px;">⚠️ ${extraNote}</div>` : ""}
     <div class="card" style="background:var(--card-secondary); padding:10px 12px; margin-bottom:10px;">
-      <div style="font-size:0.72rem; color:var(--text-muted); font-weight:700;">CONTEXTUAL SENTENCE</div>
-      <div style="font-size:0.92rem; margin-top:3px;">${item.sentenceTemplate.replace("{0}", `<strong>${item.cleanTarget}</strong>`)}</div>
+      <div style="font-size:0.72rem; color:var(--text-muted); font-weight:700;">${t.anchorSent}</div>
+      <div style="font-size:0.92rem; margin-top:3px;">${item.sentenceTemplate.replace("{0}", `<strong>${item.word}</strong>`)}</div>
     </div>
-
-    ${showInterventionHook ? `
-      <div class="mnemonic-box">
-        <strong>🧠 Targeted Memory Intervention:</strong><br/>${item.mnemonic}
-      </div>
-    ` : ""}
-
-    <button class="btn btn-primary" style="margin-top:12px;" onclick="nextSessionStep()">Continue →</button>
+    ${showMnemonic ? `<div class="mnemonic-box"><strong>${t.memoryScene}</strong><br/>${escapeHtml(getLocalizedMnemonic(item))}</div>` : ""}
+    <button class="btn btn-primary" style="margin-top:12px;" onclick="nextSessionStep()">${t.continueBtn}</button>
   `;
 }
 
-// Handlers for Special Modes (Chronic Intervention, Confusion, Declension, Sentence Forge, Surprise)
 function advanceChronicStep(stepNum) {
   activeSession.queue[activeSession.index].step = stepNum;
   renderSessionStep();
@@ -1288,10 +1377,9 @@ function submitChronicStep(e, stepNum) {
   const val = normalizeStr(document.getElementById("answer-input").value);
   const entry = activeSession.queue[activeSession.index];
   const item = entry.item;
-  const ok = val === normalizeStr(item.cleanTarget) || val === normalizeStr(item.fullTarget);
-
+  const ok = val === normalizeStr(item.word) || val === normalizeStr(item.fullGerman);
   if (!ok) {
-    alert(`Not quite! Lock it into memory: "${item.fullTarget}" (${item.english}). Try again.`);
+    alert(`${item.fullGerman} = ${getMeaning(item)}`);
     return;
   }
   if (stepNum === 2) {
@@ -1300,46 +1388,30 @@ function submitChronicStep(e, stepNum) {
   } else {
     const p = getWordProg(item.id);
     p.chronicResolved = true;
-    p.vectors.production = Math.min(100, p.vectors.production + 30);
-    p.vectors.context = Math.min(100, p.vectors.context + 30);
-    p.stability = 1.0; // Schedule verification tomorrow ("Was bedeutet ...?")
+    p.vectors.production = Math.min(100, p.vectors.production + 35);
+    p.stability = 1.0;
     p.nextReview = Date.now() + 86400000;
+    activeSession.correct++; activeSession.total++;
     saveAppState();
-    showRichFeedback(item, true, val, "🟢 Intervention Complete (Tomorrow: Re-Check)", "badge-success", null);
+    showFeedbackScreen(item, true, "🟢 ✓", "badge-success", null);
   }
 }
 
 function submitConfusionAnswer(chosen) {
-  const entry = activeSession.queue[activeSession.index];
-  const pair = entry.pair;
-  const isCorrect = chosen === pair.correct;
-  if (isCorrect) activeSession.correct++;
+  const pair = activeSession.queue[activeSession.index].pair;
+  const ok = chosen === pair.correct;
+  if (ok) activeSession.correct++;
   activeSession.total++;
-
-  const qStage = document.getElementById("question-stage");
-  const fStage = document.getElementById("feedback-stage");
-  qStage.style.display = "none";
-  fStage.style.display = "block";
-
-  fStage.innerHTML = `
-    <span class="badge ${isCorrect ? 'badge-success' : 'badge-danger'}">${isCorrect ? '✓ Collision Mastered' : '✗ Confusion Detected'}</span>
-    <div class="prompt-word" style="font-size:1.4rem;">${pair.correct}</div>
-    <div class="mnemonic-box">
-      <strong>Why?</strong><br/>${pair.explanation}
-    </div>
-    <button class="btn btn-primary" style="margin-top:12px;" onclick="nextSessionStep()">Next Collision →</button>
-  `;
+  nextSessionStep();
 }
 
 function submitDeclensionAnswer(e) {
   e.preventDefault();
   const val = normalizeStr(document.getElementById("answer-input").value);
   const { drill, item } = activeSession.queue[activeSession.index];
-  const isCorrect = val === normalizeStr(drill.answer);
-  const p = getWordProg(item.id);
-  p.vectors.grammar = Math.max(0, Math.min(100, p.vectors.grammar + (isCorrect ? 25 : -15)));
-  saveAppState();
-  showRichFeedback(item, isCorrect, val, isCorrect ? "🟢 Declension Correct" : `🔴 Expected: "${drill.answer}"`, isCorrect ? "badge-success" : "badge-danger", drill.explain);
+  const ok = val === normalizeStr(drill.answer);
+  updateWordTelemetry(item, ok, 2500, 0);
+  showFeedbackScreen(item, ok, ok ? "🟢 ✓" : `🔴 → ${drill.answer}`, ok ? "badge-success" : "badge-danger", null);
 }
 
 function submitSentenceForge(e) {
@@ -1347,69 +1419,17 @@ function submitSentenceForge(e) {
   const val = document.getElementById("answer-input").value.trim();
   const entry = activeSession.queue[activeSession.index];
   const item = entry.item;
-
-  if (!normalizeStr(val).includes(normalizeStr(item.cleanTarget).slice(0, 4)) || val.split(/\s+/).length < 3) {
-    alert(`Please write a complete sentence (at least 3 words) containing "${item.cleanTarget}".`);
-    return;
-  }
-
-  entry.sentencesWritten.push(val);
   if (entry.forgeStep === 1) {
     entry.forgeStep = 2;
     renderSessionStep();
   } else {
-    const p = getWordProg(item.id);
-    p.seen++;
-    p.vectors.context = Math.min(100, p.vectors.context + 35);
-    p.vectors.production = Math.min(100, p.vectors.production + 30);
-    p.stability = Math.max(4.0, (p.stability || 2.0) * 2.0);
-    p.nextReview = Date.now() + p.stability * 86400000;
-    activeSession.correct++;
-    activeSession.total++;
-    saveAppState();
-    showRichFeedback(item, true, val, "🟢 2 Contexts Forged!", "badge-success", "Multi-context elaboration complete.");
+    updateWordTelemetry(item, true, 2200, 0);
+    showFeedbackScreen(item, true, "🟢 2/2 ✓", "badge-success", null);
   }
-}
-
-function submitSurpriseStage1(e) {
-  e.preventDefault();
-  const val = normalizeStr(document.getElementById("answer-input").value);
-  const entry = activeSession.queue[activeSession.index];
-  const item = entry.item;
-  const targets = item.english.split(/[\/,]/).map(t => normalizeStr(t).replace(/^to\s+/, ""));
-  const ok = targets.some(t => val.replace(/^to\s+/, "") === t || (t.length >= 4 && val.length >= 4 && t.includes(val)));
-
-  if (!ok) {
-    updateVectorsAndSchedule(item, "REC_TARGET_TO_EN", false, 5000, 0);
-    showRichFeedback(item, false, val, "🔴 Surprise Test Failed", "badge-danger", "Meaning was forgotten after spacing.");
-  } else {
-    entry.stage = 2;
-    renderSessionStep();
-  }
-}
-
-function submitSurpriseStage2(e) {
-  e.preventDefault();
-  const val = document.getElementById("answer-input").value.trim();
-  const entry = activeSession.queue[activeSession.index];
-  const item = entry.item;
-  const ok = normalizeStr(val).includes(normalizeStr(item.cleanTarget).slice(0, 4)) && val.split(/\s+/).length >= 3;
-  updateVectorsAndSchedule(item, "PROD_EN_TO_TARGET", ok, 2200, 0);
-  showRichFeedback(item, ok, val, ok ? "🟢 Surprise Retention Verified!" : "🟠 Incomplete Sentence Usage", ok ? "badge-success" : "badge-warning", null);
-}
-
-function submitFullSentenceTranslate(e) {
-  e.preventDefault();
-  const val = document.getElementById("answer-input").value.trim();
-  const entry = activeSession.queue[activeSession.index];
-  const item = entry.item;
-  const ok = normalizeStr(val) === normalizeStr(item.targetSentence) || normalizeStr(val).includes(normalizeStr(item.cleanTarget));
-  updateVectorsAndSchedule(item, "FULL_SENTENCE_TRANSLATE", ok, 2500, 0);
-  showRichFeedback(item, ok, val, ok ? "🟢 Sentence Produced" : "🔴 Check Target Sentence", ok ? "badge-success" : "badge-danger", `Model: „${item.targetSentence}“`);
 }
 
 function nextSessionStep() {
-  activeSession.index += 1;
+  activeSession.index++;
   renderSessionStep();
 }
 
@@ -1418,230 +1438,123 @@ function endSessionEarly() {
 }
 
 function renderSessionComplete() {
+  const t = UI_STRINGS[nativeLang];
   const qStage = document.getElementById("question-stage");
   const fStage = document.getElementById("feedback-stage");
   qStage.style.display = "none";
   fStage.style.display = "block";
   const pct = activeSession.total ? Math.round((activeSession.correct / activeSession.total) * 100) : 100;
-
   fStage.innerHTML = `
-    <div style="text-align:center; padding:12px 0;">
-      <h2>Session Complete</h2>
-      <p style="color:var(--text-secondary); font-size:0.9rem;">
-        Active Production Accuracy: <strong>${activeSession.correct} / ${activeSession.total} (${pct}%)</strong>
-      </p>
-      <button class="btn btn-primary" onclick="switchView('home', document.querySelectorAll('.nav-item')[0])">
-        Return to Dashboard
-      </button>
+    <div style="text-align:center; padding:14px 0;">
+      <h2>✓ ${activeSession.correct} / ${activeSession.total} (${pct}%)</h2>
+      <button class="btn btn-primary" onclick="switchView('home', document.querySelectorAll('.nav-item')[0])">${t.continueBtn}</button>
     </div>
   `;
 }
 
 // ============================================================================
-// 5. DASHBOARD, 8-VECTOR ANALYTICS & CHRONIC WEAK WORD VIEW
+// 5. DASHBOARD, HEATMAP & TRILINGUAL VOCABULARY EXPLORER
 // ============================================================================
 function refreshDashboard() {
-  const deck = buildDatasetForLang(currentLang);
+  const t = UI_STRINGS[nativeLang];
   const now = Date.now();
+  const forgetting = VOCAB_DECK.filter(isChronicWeak);
+  const due = VOCAB_DECK.filter(d => isDueToday(d, now));
+  const mastered = VOCAB_DECK.filter(isActivelyMastered);
 
-  const forgetting = deck.filter(isChronicWeak);
-  const due = deck.filter(d => isDueToday(d, now));
-  const mastered = deck.filter(isActivelyMastered);
+  document.getElementById("q1-forgetting").textContent = `🔴 ${forgetting.length} ${t.wordsUnit}`;
+  document.getElementById("q2-due").textContent = `🟡 ${due.length} ${t.wordsUnit}`;
+  document.getElementById("q3-mastered").textContent = `🟢 ${mastered.length} ${t.wordsUnit}`;
+  document.getElementById("north-star-badge").textContent = `30d: ${mastered.length} / 281`;
+  document.getElementById("personal-diagnosis-text").textContent = t.diagDefault;
 
-  document.getElementById("q1-forgetting").textContent = `🔴 ${forgetting.length} words`;
-  document.getElementById("q2-due").textContent = `🟡 ${due.length} words`;
-  document.getElementById("q3-mastered").textContent = `🟢 ${mastered.length} words`;
-  document.getElementById("north-star-badge").textContent = `30d Active: ${mastered.length} words`;
-
-  // Personal Error Analysis Diagnosis
-  let sumRec = 0, sumProd = 0, sumGram = 0, seenCount = 0;
-  deck.forEach(item => {
-    const p = getWordProg(item.id);
-    if (p.seen > 0) {
-      seenCount++;
-      sumRec += p.vectors.recognition;
-      sumProd += p.vectors.production;
-      sumGram += p.vectors.grammar;
-    }
-  });
-
-  const diagEl = document.getElementById("personal-diagnosis-text");
-  const tagEl = document.getElementById("diag-tag");
-  if (seenCount === 0) {
-    tagEl.textContent = "Ready";
-    diagEl.textContent = `Start a 5-minute session. MemoDeutsch prioritizes active ${currentLang.toUpperCase()} production over passive recognition.`;
-  } else {
-    const avgRec = Math.round(sumRec / seenCount);
-    const avgProd = Math.round(sumProd / seenCount);
-    const avgGram = Math.round(sumGram / seenCount);
-    if (avgRec - avgProd > 15) {
-      tagEl.textContent = "Production Gap";
-      diagEl.textContent = `Your recognition is strong (${avgRec}%), but your active production is lagging (${avgProd}%). MemoDeutsch is increasing EN → ${currentLang.toUpperCase()} typing drills.`;
-    } else if (currentLang === "de" && avgGram < 55) {
-      tagEl.textContent = "Case & Gender Focus";
-      diagEl.textContent = `Your noun meaning recall is solid, but article/case declension is at ${avgGram}%. Run a 2-minute Case & Article Lab.`;
-    } else {
-      tagEl.textContent = `Active Strength: ${avgProd}%`;
-      diagEl.textContent = `You have ${forgetting.length} chronic weak words and ${due.length} words at risk of decay today.`;
-    }
-  }
-
-  renderGlobalVectors(deck);
-  renderHeatmap(deck);
+  renderGlobalVectors();
+  renderHeatmap();
   renderDifficultWords(forgetting);
   renderVocabList();
 }
 
-function renderGlobalVectors(deck) {
-  const keys = ["meaning", "spelling", "pronunciation", "recognition", "production", "context", "grammar", "retention"];
-  const labels = {
-    meaning: "Meaning", spelling: "Spelling", pronunciation: "Audio/Speech",
-    recognition: "Recognition", production: "Production ★", context: "Sentence Context",
-    grammar: "Grammar/Cases", retention: "Long-Term R(t)"
-  };
-  const seen = deck.filter(d => getWordProg(d.id).seen > 0);
-  const grid = document.getElementById("global-vector-grid");
-
-  grid.innerHTML = keys.map(k => {
-    const avg = seen.length ? Math.round(seen.reduce((acc, item) => acc + getWordProg(item.id).vectors[k], 0) / seen.length) : 0;
+function renderGlobalVectors() {
+  const keys = ["meaning", "production", "recognition", "grammar", "context", "spelling", "pronunciation", "retention"];
+  const seen = VOCAB_DECK.filter(d => getWordProg(d.id).seen > 0);
+  document.getElementById("global-vector-grid").innerHTML = keys.map(k => {
+    const avg = seen.length ? Math.round(seen.reduce((a, d) => a + getWordProg(d.id).vectors[k], 0) / seen.length) : 0;
     const dot = avg >= 75 ? "🟢" : (avg >= 45 ? "🟡" : "🔴");
-    return `
-      <div class="vector-pill">
-        <span>${labels[k]}</span>
-        <strong>${dot} ${avg}%</strong>
-      </div>
-    `;
+    return `<div class="vector-pill"><span>${k.toUpperCase()}</span><strong>${dot} ${avg}%</strong></div>`;
   }).join("");
 }
 
-function renderHeatmap(deck) {
-  const container = document.getElementById("heatmap-container");
-  container.innerHTML = deck.map((item, idx) => {
+function renderHeatmap() {
+  document.getElementById("heatmap-container").innerHTML = VOCAB_DECK.map(item => {
     const p = getWordProg(item.id);
     let cls = "heat-new";
     if (p.seen > 0) {
-      if (isChronicWeak(item)) cls = "heat-forgot";
-      else if (isActivelyMastered(item)) cls = "heat-strong";
-      else if (p.lastLatencyGrade === "Weak" || p.lastLatencyGrade === "Assisted") cls = "heat-weak";
-      else cls = "heat-dev";
+      cls = isChronicWeak(item) ? "heat-forgot" : (isActivelyMastered(item) ? "heat-strong" : "heat-dev");
     }
-    const label = item.id > 999 ? (idx + 1) : item.id;
-    return `<div class="heat-cell ${cls}" onclick="openWordModal(${item.id})">${label}</div>`;
+    return `<div class="heat-cell ${cls}" onclick="openWordModal(${item.id})">${item.id}</div>`;
   }).join("");
 }
 
 function renderDifficultWords(forgetting) {
-  const container = document.getElementById("difficult-list-container");
+  const el = document.getElementById("difficult-list-container");
   if (!forgetting.length) {
-    container.innerHTML = `<p style="font-size:0.86rem; color:var(--text-secondary);">No chronic weak words flagged yet! Words you fail repeatedly or answer slowly (&gt;5.5s) will appear here.</p>`;
+    el.innerHTML = `<p style="font-size:0.86rem; color:var(--text-secondary);">0</p>`;
     return;
   }
-  container.innerHTML = forgetting.map(item => {
-    const p = getWordProg(item.id);
-    return `
-      <div class="card" style="background:var(--card-secondary); margin-bottom:8px; padding:12px;" onclick="openWordModal(${item.id})">
-        <div style="display:flex; justify-content:space-between; align-items:center;">
-          <strong>${formatTargetWithColor(item)}</strong>
-          <span class="badge badge-danger">Failed ${p.failedCount}× · Prod ${p.vectors.production}%</span>
-        </div>
-        <div style="font-size:0.86rem; color:var(--text-secondary); margin:4px 0;">= ${item.english}</div>
-        <div class="mnemonic-box" style="margin-top:6px; font-size:0.8rem;">🧠 ${item.mnemonic}</div>
-      </div>
-    `;
-  }).join("");
+  el.innerHTML = forgetting.map(item => `
+    <div class="card" style="background:var(--card-secondary); margin-bottom:8px; padding:12px;" onclick="openWordModal(${item.id})">
+      <strong>#${item.id} ${formatGermanWithColor(item)}</strong> — ${escapeHtml(getMeaning(item))}
+      <div class="mnemonic-box" style="margin-top:6px; font-size:0.8rem;">🧠 ${escapeHtml(getLocalizedMnemonic(item))}</div>
+    </div>
+  `).join("");
 }
 
 function renderVocabList() {
-  const deck = buildDatasetForLang(currentLang);
   const q = (document.getElementById("vocab-search")?.value || "").toLowerCase().trim();
-  const filtered = deck.filter(item =>
-    !q || item.word.toLowerCase().includes(q) || item.english.toLowerCase().includes(q) || String(item.id) === q
+  const filtered = VOCAB_DECK.filter(item =>
+    !q ||
+    item.word.toLowerCase().includes(q) ||
+    item.meanings.en.toLowerCase().includes(q) ||
+    item.meanings.uk.toLowerCase().includes(q) ||
+    item.meanings.tr.toLowerCase().includes(q) ||
+    String(item.id) === q.replace("#", "")
   );
-  document.getElementById("vocab-count-badge").textContent = `${filtered.length} items`;
-
+  document.getElementById("vocab-count-badge").textContent = `${filtered.length}`;
   document.getElementById("vocab-list-container").innerHTML = filtered.map(item => {
     const p = getWordProg(item.id);
-    const status = p.seen === 0 ? "New" : `Prod ${p.vectors.production}%`;
     return `
       <div class="vocab-item" onclick="openWordModal(${item.id})">
         <div>
-          <div style="font-weight:700;">${formatTargetWithColor(item)}</div>
-          <div style="font-size:0.82rem; color:var(--text-secondary);">${item.english}</div>
+          <div style="font-weight:700;"><span style="color:var(--text-muted); font-size:0.78rem;">#${item.id}</span> ${formatGermanWithColor(item)}</div>
+          <div style="font-size:0.84rem; color:var(--text-secondary);">${escapeHtml(getMeaning(item))}</div>
         </div>
-        <span class="badge ${p.vectors.production >= 75 ? 'badge-success' : 'badge-primary'}">${status}</span>
+        <span class="badge ${p.seen > 0 ? 'badge-primary' : 'badge-purple'}">${p.seen > 0 ? p.vectors.production + '%' : 'New'}</span>
       </div>
     `;
   }).join("");
 }
 
-function addCustomWord() {
-  const art = document.getElementById("new-word-article").value.trim();
-  const target = document.getElementById("new-word-target").value.trim();
-  const en = document.getElementById("new-word-english").value.trim();
-  const sent = document.getElementById("new-word-sentence").value.trim() || `{0}`;
-  if (!target || !en) { alert("Please enter both the target word and English meaning."); return; }
-
-  const newId = Date.now();
-  const hasValidArticle = ["der", "die", "das", "der/die"].includes(art);
-  const newItem = {
-    id: newId, lang: currentLang, article: art, hasValidArticle,
-    word: target, fullTarget: hasValidArticle ? `${art} ${target}` : target,
-    cleanTarget: target, english: en,
-    grammarForms: art || "Custom entry",
-    sentenceTemplate: sent.includes("{0}") ? sent : `${sent} ({0})`,
-    mnemonic: `Personal association for "${target}" = "${en}".`
-  };
-
-  if (!appState.customWords[currentLang]) appState.customWords[currentLang] = [];
-  appState.customWords[currentLang].push(newItem);
-  saveAppState();
-  document.getElementById("new-word-article").value = "";
-  document.getElementById("new-word-target").value = "";
-  document.getElementById("new-word-english").value = "";
-  document.getElementById("new-word-sentence").value = "";
-  refreshDashboard();
-  alert(`Added "${newItem.fullTarget}" to your ${currentLang.toUpperCase()} deck!`);
-}
-
-// ============================================================================
-// 6. WORD 8-VECTOR DETAIL MODAL & SPEECH SYNTHESIS (de-DE, uk-UA, tr-TR)
-// ============================================================================
 function openWordModal(id) {
-  const deck = buildDatasetForLang(currentLang);
-  const item = deck.find(d => d.id === id);
+  const item = VOCAB_DECK.find(d => d.id === id);
   if (!item) return;
-  const p = getWordProg(item.id);
-  const v = p.vectors;
-  const badgeDot = val => val >= 75 ? "🟢" : (val >= 40 ? "🟡" : "🔴");
-
+  const t = UI_STRINGS[nativeLang];
   document.getElementById("word-modal-content").innerHTML = `
     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-      <span class="badge badge-primary">${item.lang.toUpperCase()} #${item.id}</span>
-      <button class="btn btn-secondary btn-sm" onclick="closeWordModal()">Done</button>
+      <span class="badge badge-primary">#${item.id}</span>
+      <button class="btn btn-secondary btn-sm" onclick="closeWordModal()">✕</button>
     </div>
-    <div style="font-size:1.6rem; font-weight:800;">${formatTargetWithColor(item)}</div>
-    <div style="font-size:1.05rem; color:var(--text-secondary); margin-bottom:6px;">${item.english}</div>
-    <div style="font-size:0.8rem; color:var(--purple); font-weight:700; margin-bottom:12px;">${item.grammarForms}</div>
-
-    <button class="audio-pill" onclick="speakText('${escapeQuotes(item.fullTarget)}', '${item.lang}')" style="margin-bottom:12px;">
-      🔊 Pronounce (${item.lang.toUpperCase()})
-    </button>
-
-    <div style="font-size:0.76rem; font-weight:700; color:var(--text-muted); margin-bottom:4px;">8-VECTOR KNOWLEDGE PROFILE</div>
-    <div class="vector-grid">
-      <div class="vector-pill"><span>Meaning</span><strong>${badgeDot(v.meaning)} ${v.meaning}%</strong></div>
-      <div class="vector-pill"><span>Production</span><strong>${badgeDot(v.production)} ${v.production}%</strong></div>
-      <div class="vector-pill"><span>Recognition</span><strong>${badgeDot(v.recognition)} ${v.recognition}%</strong></div>
-      <div class="vector-pill"><span>Grammar/Case</span><strong>${badgeDot(v.grammar)} ${v.grammar}%</strong></div>
-      <div class="vector-pill"><span>Context</span><strong>${badgeDot(v.context)} ${v.context}%</strong></div>
-      <div class="vector-pill"><span>Spelling</span><strong>${badgeDot(v.spelling)} ${v.spelling}%</strong></div>
-      <div class="vector-pill"><span>Audio</span><strong>${badgeDot(v.pronunciation)} ${v.pronunciation}%</strong></div>
-      <div class="vector-pill"><span>Avg Speed</span><strong>${p.avgLatencyMs ? (p.avgLatencyMs/1000).toFixed(1)+'s' : '--'}</strong></div>
+    <div style="font-size:1.65rem; font-weight:800;">${formatGermanWithColor(item)}</div>
+    <div style="font-size:1.1rem; font-weight:700; color:var(--primary); margin:4px 0 10px;">
+      ${escapeHtml(getMeaning(item))}
     </div>
-
+    <div style="font-size:0.8rem; color:var(--text-secondary); margin-bottom:12px;">
+      🇬🇧 ${escapeHtml(item.meanings.en)} · 🇺🇦 ${escapeHtml(item.meanings.uk)} · 🇹🇷 ${escapeHtml(item.meanings.tr)}
+    </div>
+    <button class="audio-pill" onclick="speakGerman('${escapeQuotes(item.fullGerman)}')" style="margin-bottom:12px;">${t.listenBtn}</button>
+    <div class="mnemonic-box"><strong>${t.memoryScene}</strong><br/>${escapeHtml(getLocalizedMnemonic(item))}</div>
     <div class="card" style="background:var(--card-secondary); margin-top:10px; padding:12px;">
-      <div style="font-size:0.74rem; color:var(--text-muted); font-weight:700;">CONTEXTUAL SENTENCE</div>
-      <div style="font-size:0.92rem; margin-top:4px;">${item.sentenceTemplate.replace("{0}", `<strong>${item.cleanTarget}</strong>`)}</div>
+      <div style="font-size:0.72rem; color:var(--text-muted); font-weight:700;">${t.anchorSent}</div>
+      <div style="font-size:0.94rem; margin-top:4px;">${item.sentenceTemplate.replace("{0}", `<strong>${item.word}</strong>`)}</div>
     </div>
   `;
   document.getElementById("word-modal").classList.add("open");
@@ -1649,54 +1562,36 @@ function openWordModal(id) {
 
 function closeWordModal() { document.getElementById("word-modal").classList.remove("open"); }
 
-function speakText(text, langCode = "de") {
+function speakGerman(text) {
   if (!("speechSynthesis" in window)) return;
   window.speechSynthesis.cancel();
   const u = new SpeechSynthesisUtterance(text);
-  const localeMap = { de: "de-DE", uk: "uk-UA", tr: "tr-TR" };
-  u.lang = localeMap[langCode] || "de-DE";
+  u.lang = "de-DE";
   u.rate = 0.92;
   window.speechSynthesis.speak(u);
 }
 
-// ============================================================================
-// 7. SCANNER-SAFE PEER CHALLENGE & UTILITIES
-// ============================================================================
 function createFriendChallenge() {
-  const deck = buildDatasetForLang(currentLang);
-  let pool = deck.filter(isChronicWeak);
-  if (pool.length < 10) pool = pool.concat(deck.filter(d => !pool.includes(d)).slice(0, 10 - pool.length));
-  const ids = pool.slice(0, 10).map(d => d.id).join("-");
-  const code = `MD-${currentLang}-${ids}`;
+  const ids = VOCAB_DECK.slice(235, 245).map(d => d.id).join("-");
+  const code = `MD-${ids}`;
   const url = window.location.href.split("?")[0] + "?challenge=" + encodeURIComponent(code);
-  const text = `Challenge me on MemoDeutsch! Code: ${code}\n${url}`;
-  if (navigator.share) navigator.share({ title: "MemoDeutsch Challenge", text, url }).catch(() => {});
-  else { navigator.clipboard?.writeText(text); alert(`Challenge copied: ${code}`); }
+  if (navigator.share) navigator.share({ title: "MemoDeutsch", text: `Code: ${code}`, url }).catch(() => {});
+  else { navigator.clipboard?.writeText(url); alert(`Code: ${code}`); }
 }
 
 function promptAcceptChallenge(prefilled = null) {
-  const raw = prefilled || prompt("Enter Friend Challenge Code (e.g. MD-de-1-2-3):");
+  const raw = prefilled || prompt("Code (MD-...):");
   if (!raw) return;
-  const parts = raw.trim().split("-");
-  if (parts.length < 3) { alert("Invalid Challenge Code."); return; }
-  const lang = ["de", "uk", "tr"].includes(parts[1]) ? parts[1] : "de";
-  switchLanguage(lang, document.querySelectorAll(".lang-btn")[lang === "de" ? 0 : (lang === "uk" ? 1 : 2)]);
-  const deck = buildDatasetForLang(lang);
-  const ids = parts.slice(2).map(n => parseInt(n, 10));
-  const items = ids.map(id => deck.find(d => d.id === id)).filter(Boolean);
-  if (!items.length) { alert("No matching words found."); return; }
-
-  activeSession = {
-    mode: "challenge",
-    queue: items.map(item => ({ type: "PROD_EN_TO_TARGET", item })),
-    index: 0, correct: 0, total: 0
-  };
+  const ids = raw.trim().replace(/^MD-/i, "").split("-").map(n => parseInt(n, 10));
+  const items = ids.map(id => VOCAB_DECK.find(d => d.id === id)).filter(Boolean);
+  if (!items.length) return;
+  activeSession = { mode: "challenge", queue: items.map(item => ({ type: "PROD_NATIVE_TO_DE", item })), index: 0, correct: 0, total: 0 };
   document.querySelectorAll(".view-section").forEach(s => s.classList.remove("active"));
   document.getElementById("view-session").classList.add("active");
   renderSessionStep();
 }
 
-function formatTargetWithColor(item) {
+function formatGermanWithColor(item) {
   if (!item.hasValidArticle) return escapeHtml(item.word);
   const cls = item.article === "die" ? "art-die" : (item.article === "das" ? "art-das" : "art-der");
   return `<span class="${cls}">${escapeHtml(item.article)}</span> ${escapeHtml(item.word)}`;
@@ -1731,7 +1626,7 @@ function exportProgressJSON() {
   const blob = new Blob([JSON.stringify(appState, null, 2)], { type: "application/json" });
   const a = document.createElement("a");
   a.href = URL.createObjectURL(blob);
-  a.download = "MemoDeutsch_v4_Backup.json";
+  a.download = "MemoDeutsch_Backup.json";
   a.click();
 }
 
@@ -1740,14 +1635,14 @@ function importProgressJSON(e) {
   if (!f) return;
   const r = new FileReader();
   r.onload = ev => {
-    try { appState = JSON.parse(ev.target.result); saveAppState(); applyTheme(); refreshDashboard(); alert("Backup restored!"); }
-    catch (err) { alert("Invalid JSON file."); }
+    try { appState = JSON.parse(ev.target.result); saveAppState(); applyTheme(); refreshDashboard(); }
+    catch (err) { alert("Invalid JSON"); }
   };
   r.readAsText(f);
 }
 
 function resetAllProgress() {
-  if (!confirm("Reset all learning history?")) return;
+  if (!confirm("Reset?")) return;
   localStorage.removeItem(STORAGE_KEY);
   appState.progress = {};
   refreshDashboard();
@@ -1755,14 +1650,11 @@ function resetAllProgress() {
 
 window.addEventListener("DOMContentLoaded", () => {
   loadAppState();
+  applyLocalizationToStaticUI();
   refreshDashboard();
-  if ("serviceWorker" in navigator) navigator.serviceWorker.register("./sw.js").catch(() => {});
   const c = new URLSearchParams(window.location.search).get("challenge");
   if (c) setTimeout(() => promptAcceptChallenge(c), 300);
 });
 </script>
 </body>
 </html>
-
-    
-  
