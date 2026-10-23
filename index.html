@@ -7,7 +7,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <meta name="apple-mobile-web-app-title" content="MemoDeutsch" />
   <link rel="manifest" href="./manifest.json" />
-  <title>MemoDeutsch v6 — 322 Words & Wechselpräpositionen Coach</title>
+  <title>MemoDeutsch v6 — EN / DE / UA / TR / MK Coach</title>
   <style>
     :root {
       --bg: #F2F2F7;
@@ -77,12 +77,13 @@
     .app-subtitle { font-size: 0.75rem; color: var(--text-secondary); margin-top: 2px; }
 
     .lang-bar {
-      display: flex; gap: 6px; margin-bottom: 14px;
-      background: var(--card); padding: 5px; border-radius: 12px; border: 1px solid var(--border);
+      display: grid; grid-template-columns: repeat(5, 1fr); gap: 4px; margin-bottom: 14px;
+      background: var(--card); padding: 4px; border-radius: 12px; border: 1px solid var(--border);
     }
     .lang-btn {
-      flex: 1; border: none; background: transparent; color: var(--text-secondary);
-      padding: 9px 6px; border-radius: 8px; font-size: 0.82rem; font-weight: 700; cursor: pointer;
+      border: none; background: transparent; color: var(--text-secondary);
+      padding: 8px 2px; border-radius: 8px; font-size: 0.74rem; font-weight: 700;
+      cursor: pointer; text-align: center; white-space: nowrap;
     }
     .lang-btn.active { background: var(--primary); color: #FFF; }
 
@@ -140,10 +141,21 @@
     .progress-fill { height: 100%; background: var(--primary); transition: width 0.25s ease; }
 
     .prompt-word {
-      font-size: 1.55rem; font-weight: 800; text-align: center; margin: 14px 0 6px;
-      letter-spacing: -0.02em; line-height: 1.3; overflow-wrap: anywhere;
+      font-size: clamp(1.25rem, 5.2vw, 1.65rem); font-weight: 800; text-align: center; margin: 14px 0 6px;
+      letter-spacing: -0.02em; line-height: 1.3; word-break: break-word; overflow-wrap: anywhere;
     }
     .prompt-sub { text-align: center; color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 14px; }
+
+    .kb-toolbar {
+      display: flex; gap: 5px; margin-bottom: 8px; overflow-x: auto; padding-bottom: 2px;
+    }
+    .kb-key {
+      flex: 1; min-width: 38px; height: 36px; border-radius: 7px;
+      background: var(--card-secondary); border: 1px solid var(--border);
+      color: var(--text); font-size: 0.86rem; font-weight: 700;
+      cursor: pointer; display: inline-flex; align-items: center; justify-content: center;
+    }
+    .kb-key:active { background: var(--primary); color: #FFF; }
 
     .text-input {
       width: 100%; min-height: 50px; border-radius: var(--radius-md);
@@ -159,7 +171,6 @@
       border: 1px dashed var(--border); gap: 8px;
     }
 
-    /* 3-Step Wechselpräpositionen Formula Pill Bar */
     .formula-bar {
       display: flex; gap: 6px; align-items: center; justify-content: center;
       background: var(--card-secondary); padding: 10px; border-radius: var(--radius-md);
@@ -171,7 +182,6 @@
     .formula-step.done { background: var(--success-soft); color: var(--success); border-color: var(--success); }
     .formula-step.active { background: var(--primary-soft); color: var(--primary); border-color: var(--primary); }
 
-    /* Visual 9-Mouse Preposition Grid */
     .mouse-grid {
       display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 10px;
     }
@@ -195,10 +205,6 @@
     .mnemonic-box {
       background: var(--purple-soft); border-left: 4px solid var(--purple);
       padding: 12px 14px; border-radius: var(--radius-sm); margin-top: 10px; font-size: 0.86rem; line-height: 1.45;
-    }
-    .chronic-box {
-      background: var(--danger-soft); border-left: 4px solid var(--danger);
-      padding: 12px 14px; border-radius: var(--radius-sm); margin-bottom: 12px; font-size: 0.86rem; line-height: 1.45;
     }
 
     .heatmap-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(34px, 1fr)); gap: 5px; margin-top: 10px; }
@@ -240,14 +246,19 @@
       <h1 class="app-title" id="app-main-title">MemoDeutsch</h1>
       <div class="app-subtitle" id="app-main-sub">322 German Words + Wechselpräpositionen Coach</div>
     </div>
-    <button class="icon-btn" onclick="toggleTheme()" id="theme-btn">🌙</button>
+    <div style="display:flex; gap:6px;">
+      <button class="icon-btn" onclick="forceUpdateAppCache()" title="Refresh App Update">🔄</button>
+      <button class="icon-btn" onclick="toggleTheme()" id="theme-btn">🌙</button>
+    </div>
   </header>
 
-  <!-- Native Interface & Meaning Switcher -->
+  <!-- 5-Language Switcher: English, Deutsch, Ukrainian, Turkish, Macedonian -->
   <div class="lang-bar">
-    <button class="lang-btn active" id="lang-btn-en" onclick="switchNativeLanguage('en')">🇬🇧 English</button>
-    <button class="lang-btn" id="lang-btn-uk" onclick="switchNativeLanguage('uk')">🇺🇦 Українська</button>
-    <button class="lang-btn" id="lang-btn-tr" onclick="switchNativeLanguage('tr')">🇹🇷 Türkçe</button>
+    <button class="lang-btn active" id="lang-btn-en" onclick="switchNativeLanguage('en')">🇬🇧 EN</button>
+    <button class="lang-btn" id="lang-btn-de" onclick="switchNativeLanguage('de')">🇩🇪 DE</button>
+    <button class="lang-btn" id="lang-btn-uk" onclick="switchNativeLanguage('uk')">🇺🇦 UA</button>
+    <button class="lang-btn" id="lang-btn-tr" onclick="switchNativeLanguage('tr')">🇹🇷 TR</button>
+    <button class="lang-btn" id="lang-btn-mk" onclick="switchNativeLanguage('mk')">🇲🇰 MK</button>
   </div>
 
   <!-- VIEW 1: DASHBOARD -->
@@ -294,7 +305,7 @@
       </div>
     </div>
 
-    <!-- Interactive 9-Mouse Spatial Preposition Matrix (From Berliner Platz 2 Sheet) -->
+    <!-- Interactive 9-Mouse Spatial Preposition Matrix -->
     <div class="card">
       <div class="card-header">
         <h3 class="section-title" id="ui-mouse-title">🐭 9 Wechselpräpositionen (Tap to Hear & Drill)</h3>
@@ -392,17 +403,23 @@
         <h2 class="section-title" id="vocab-view-title">322 German Vocabulary</h2>
         <span class="badge badge-primary" id="vocab-count-badge">322</span>
       </div>
-      <input type="search" id="vocab-search" class="text-input" placeholder="Search German, English, Українська, Türkçe..." oninput="renderVocabList()" />
+      <input type="search" id="vocab-search" class="text-input" placeholder="Search Deutsch, English, Українська, Türkçe, Македонски..." oninput="renderVocabList()" />
       <div id="vocab-list-container"></div>
     </div>
   </section>
 
-  <!-- VIEW 6: SETTINGS -->
+  <!-- VIEW 6: SETTINGS & ZERO-LOSS BACKUP -->
   <section id="view-settings" class="view-section">
     <div class="card">
       <h2 class="section-title" id="ui-settings-title" style="margin-bottom: 8px;">Backup & Data Privacy</h2>
+      <p style="font-size:0.8rem; color:var(--text-secondary); margin-top:0; line-height:1.45;">
+        Your progress is permanently saved under <code>MEMODEUTSCH_MASTER_PROGRESS</code> and automatically rescues data from older versions.
+      </p>
       <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 12px;">
-        <button class="btn btn-primary" onclick="exportProgressJSON()">⬇️ Export Backup JSON</button>
+        <button class="btn btn-purple" onclick="forceUpdateAppCache()">🔄 Force App Update (Clear Old Cache)</button>
+        <button class="btn btn-primary" onclick="copySyncCode()">📋 Copy Progress Sync Code</button>
+        <button class="btn btn-secondary" onclick="pasteSyncCode()">📥 Paste & Restore Sync Code</button>
+        <button class="btn btn-secondary" onclick="exportProgressJSON()">⬇️ Export Backup JSON</button>
         <label class="btn btn-secondary" style="margin: 0;">
           ⬆️ Import Backup JSON
           <input type="file" accept=".json" style="display: none;" onchange="importProgressJSON(event)" />
@@ -431,7 +448,7 @@
 
 <script>
 // ============================================================================
-// 1. UI STRINGS (ENGLISH, UKRAINIAN 🇺🇦, TURKISH 🇹🇷)
+// 1. UI STRINGS (ENGLISH 🇬🇧, DEUTSCH 🇩🇪, UKRAINIAN 🇺🇦, TURKISH 🇹🇷, MACEDONIAN 🇲🇰)
 // ============================================================================
 const UI_STRINGS = {
   en: {
@@ -469,6 +486,42 @@ const UI_STRINGS = {
     step1WoWohin: "Step 1: Does this sentence describe a static location (Wo? = Dativ) or movement/action (Wohin? = Akkusativ)?",
     step2Gender: "Step 2: What is the base article (Nominativ) of",
     step3Final: "Step 3: Now combine them! Type the exact missing word(s):"
+  },
+  de: {
+    subtitle: "322 Wörter + Wechselpräpositionen-Trainer (Deutsch-Modus 🇩🇪)",
+    todayHeader: "🧠 HEUTE",
+    q1: "1. Welche Wörter vergesse ich?",
+    q2: "2. Was muss ich heute wiederholen?",
+    q3: "3. Was beherrsche ich schon sicher?",
+    wordsUnit: "Wörter",
+    start5m: "5-MINUTEN-TRAINING STARTEN",
+    modeWechsel: "🧭 Wo? vs. Wohin? Labor",
+    modeVerbs: "🔄 legen/liegen · stellen",
+    modeNew: "🏠 Wohnen & Präp. (#236–322)",
+    modeErrors: "⚠️ Arbeitsblatt-Fallen",
+    mouseTitle: "🐭 9 Wechselpräpositionen (Antippen zum Üben)",
+    friendTitle: "🤝 Mit Kurskollegen lernen",
+    sendQuiz: "📤 10-Wörter-Quiz senden",
+    enterCode: "📥 Quiz-Code eingeben",
+    exitBtn: "✕ Beenden",
+    heatTitle: "Gedächtnis-Heatmap (322 Wörter)",
+    weakTitle: "⚠️ Schwierige Wörter",
+    fixWeakBtn: "Schwierige Wörter üben",
+    vocabTitle: "Wortschatz (322 Wörter)",
+    settingsTitle: "Backup & Datenschutz",
+    navToday: "Heute", navVec: "Grammatik", navWeak: "Schwierig", navWords: "322 Wörter", navSet: "Optionen",
+    producePrompt: "Schreiben Sie das gesuchte deutsche Wort (Nomen mit der / die / das):",
+    comprehendPrompt: "Was bedeutet dieses Wort?",
+    clozePrompt: "Bedeutung / Hinweis:",
+    hintBtn: "💡 Tipp",
+    submitBtn: "Antwort prüfen",
+    continueBtn: "Weiter →",
+    listenBtn: "🔊 Aussprache hören",
+    anchorSent: "BEISPIELSATZ AUF DEUTSCH",
+    memoryScene: "🧠 Grammatik- & Merkhilfe:",
+    step1WoWohin: "Schritt 1: Beschreibt der Satz eine feste Position (Wo? = Dativ) oder eine Bewegung/Richtung (Wohin? = Akkusativ)?",
+    step2Gender: "Schritt 2: Welchen Grundartikel (Nominativ) hat",
+    step3Final: "Schritt 3: Jetzt kombinieren! Tippen Sie das fehlende Wort ein:"
   },
   uk: {
     subtitle: "322 німецькі слова + Тренажер прийменників (Wo/Wohin) 🇺🇦",
@@ -541,356 +594,389 @@ const UI_STRINGS = {
     step1WoWohin: "Adım 1: Bu cümle sabit bir konum mu (Wo? = Dativ) yoksa hareket/eylem mi (Wohin? = Akkusativ) bildiriyor?",
     step2Gender: "Adım 2: Bu ismin yalın haldeki (Nominativ) artikeli nedir:",
     step3Final: "Adım 3: Şimdi birleştirin! Cümledeki boşluğa doğru formu yazın:"
+  },
+  mk: {
+    subtitle: "322 Германски зборови + Тренер за предлози (Wo/Wohin) 🇲🇰",
+    todayHeader: "🧠 ДЕНЕС",
+    q1: "1. Кои зборови ги заборавам?",
+    q2: "2. Што треба да повторам денес?",
+    q3: "3. Што имам целосно научено?",
+    wordsUnit: "зборови",
+    start5m: "ЗАПОЧНИ 5-МИНУТНА СЕСИЈА",
+    modeWechsel: "🧭 Вежби: Wo? или Wohin?",
+    modeVerbs: "🔄 legen/liegen · stellen",
+    modeNew: "🏠 Дом и Предлози (#236–322)",
+    modeErrors: "⚠️ Замки од работните листови",
+    mouseTitle: "🐭 9 Предлози за место (Допри за пример и звук)",
+    friendTitle: "🤝 Учи со колегите од курс",
+    sendQuiz: "📤 Испрати квиз (10 збора)",
+    enterCode: "📥 Внеси код за квиз",
+    exitBtn: "✕ Излез",
+    heatTitle: "Мапа на меморија (322 зборови)",
+    weakTitle: "⚠️ Зборови што често ги забораваш",
+    fixWeakBtn: "Вежбај тешки зборови",
+    vocabTitle: "Речник (322 германски зборови)",
+    settingsTitle: "Бекап и зачувување на напредокот",
+    navToday: "Денес", navVec: "Граматика", navWeak: "Тешки", navWords: "322 Збора", navSet: "Опции",
+    producePrompt: "Напиши го зборот на ГЕРМАНСКИ (со член der / die / das за именки):",
+    comprehendPrompt: "Што значи овој германски збор на македонски?",
+    clozePrompt: "Значење на зборот:",
+    hintBtn: "💡 Помош",
+    submitBtn: "Провери одговор",
+    continueBtn: "Продолжи →",
+    listenBtn: "🔊 Изговор (Германски)",
+    anchorSent: "ПРИМЕР РЕЧЕНИЦА НА ГЕРМАНСКИ",
+    memoryScene: "🧠 Граматичко објаснување:",
+    step1WoWohin: "Чекор 1: Дали реченицата опишува мирување/место (Wo? = Dativ) или движење/акција (Wohin? = Akkusativ)?",
+    step2Gender: "Чекор 2: Кој е основниот член (Nominativ) на именката",
+    step3Final: "Чекор 3: Спој ги! Впиши го точниот збор што недостасува:"
   }
 };
 
 // ============================================================================
-// 2. COMPLETE 322 GERMAN VOCABULARY DATASET (EN + UK + TR)
-//    #1-235: PDF | #236-281: Room Posters | #282-322: Wechselpräpositionen Worksheets
+// 2. COMPLETE 322 GERMAN VOCABULARY DATASET (EN + UK + TR + MK + DE UMSCHREIBUNG)
 // ============================================================================
-const RAW_TRILINGUAL_GERMAN = [
-  [1,"die","Kenntnis","knowledge","знання","bilgi"],
-  [2,"der","Schüler","student / pupil","учень / школяр","öğrenci"],
-  [3,"die","Abwäsche","washing up / dishes","миття посуду","bulaşık yıkama"],
-  [4,"die","Ziele","goals","цілі","hedefler / amaçlar"],
-  [5,"der","Lärm","noise","шум / гамір","gürültü"],
-  [6,"die","Aussichten","prospects/outlook","перспективи","beklentiler"],
-  [7,"die","Beziehung","relationship","стосунки","ilişki"],
-  [8,"die","Strecke","distance / route","відстань / маршрут","mesafe / güzergah"],
-  [9,"der","Nachbar","neighbor","сусід","komşu"],
-  [10,"der","Anfänger","beginner","початківець","acemi / yeni başlayan"],
-  [11,"die","Gründe","reasons","причини","sebepler / nedenler"],
-  [12,"das","Konto","account","рахунок (у банку)","banka hesabı"],
-  [13,"das","Studienfach","field of study","спеціальність / предмет","okunan bölüm / branş"],
-  [14,"der","Dank","thanks","подяка","teşekkür"],
-  [15,"","benötigen","to need/ require","потребувати","ihtiyaç duymak"],
-  [16,"","gerne","gladly / like to","охоче / із задоволенням","memnuniyetle / severek"],
-  [17,"das","Klima","climate","клімат","iklim"],
-  [18,"das","Zeugnis","certificate / report card","атестат / свідоцтво","karne / sertifika"],
-  [19,"der","Pol","pole","полюс","kutup"],
-  [20,"","tragen","to carry / wear","носити / нести","taşımak / giymek"],
-  [21,"","wohnen","to live / reside","мешкати / жити","ikamet etmek / yaşamak"],
-  [22,"die","Regel","rule","правило","kural"],
-  [23,"der","Anteil","share/proportion","частка","pay / oran"],
-  [24,"die","Auswirkungen","effects/impacts","наслідки / вплив","etkiler / sonuçlar"],
-  [25,"","allgemein","general/generally","загальний / загалом","genel / genel olarak"],
-  [26,"","ungenügend","insufficient / inadequate","недостатньо","yetersiz"],
-  [27,"der","Bereich","area / field","сфера / ділянка","alan / bölge"],
-  [28,"","wiederholen","to repeat","повторювати","tekrarlamak"],
-  [29,"der","Zivildienst","civilian service","альтернативна цивільна служба","sivil hizmet"],
-  [30,"die","Dozentin","female lecturer","викладачка (в університеті)","kadın öğretim görevlisi"],
-  [31,"","kochen","to cook","готувати їжу / варити","yemek pişirmek"],
-  [32,"der","Beitrag","contribution/post","внесок / допис","katkı / paylaşım"],
-  [33,"die","Chancen","chances/opportunities","шанси / можливості","şanslar / fırsatlar"],
-  [34,"","gründen","to found/ establish","засновувати","kurmak"],
-  [35,"","verbessern","to improve","покращувати","geliştirmek / iyileştirmek"],
-  [36,"","aufnehmen","to record / take in / accept","записувати / приймати","kaydetmek / kabul etmek"],
-  [37,"","aussuchen","to choose / select","вибирати","seçmek"],
-  [38,"","nachholen","to catch up / make up","наздоганяти (пропущене)","telafi etmek"],
-  [39,"","berechnen","to calculate","обчислювати / розраховувати","hesaplamak"],
-  [40,"","gefangen","caught/trapped","спійманий / у пастці","yakalanmış"],
-  [41,"","fühlen","to feel","відчувати / почуватися","hissetmek"],
-  [42,"die","Erklärung","explanation","пояснення","açıklama"],
-  [43,"","besprechen","to discuss","обговорювати","görüşmek / tartışmak"],
-  [44,"","verspäten","to be delayed","запізнюватися","gecikmek"],
-  [45,"die","Krawatte","tie","краватка","kravat"],
-  [46,"","begrüßt","greets/welcomed","вітає / привітав","selamlar / karşıladı"],
-  [47,"die","Übernachtungsmöglichkeit","overnight accommodation","місце для ночівлі / житло","gece konaklama imkanı"],
-  [48,"","gratuliere","I congratulate / congratulations","вітаю (зі святом)","tebrik ederim"],
-  [49,"","durch","through","через / крізь","içinden / vasıtasıyla"],
-  [50,"das","Dorf","village","село","köy"],
-  [51,"der","Hauptschulabschluss","lower secondary school certificate","атестат основної середньої школи","ortaokul diploması"],
-  [52,"der","Volksschulabschluss","primary/elementary school leaving certificate","свідоцтво початкової школи","ilkokul diploması"],
-  [53,"das","Abitur","university entrance qualification","атестат зрілості (для вступу в ВНЗ)","lise bitirme diploması"],
-  [54,"der","Realschulabschluss","intermediate secondary school certificate","атестат реальної середньої школи","orta dereceli okul diploması"],
-  [55,"die","Hauptschule","lower secondary school","основна загальна школа","temel ortaokul"],
-  [56,"","wollen","to want","хотіти","istemek"],
-  [57,"die","Jugendsprache","youth language","молодіжний сленг","gençlik dili"],
-  [58,"die","Schulpflicht","compulsory schooling","обов'язкова шкільна освіта","zorunlu eğitim"],
-  [59,"","mindestens","at least","щонайменше / принаймні","en az / en azından"],
-  [60,"die","Grundschule","primary school","початкова школа","ilkokul"],
-  [61,"","ausräumen","to clear out / empty","розвантажувати / звільняти","boşaltmak"],
-  [62,"","ausmachen","to turn off / arrange","вимикати / домовлятися","kapatmak / kararlaştırmak"],
-  [63,"das","Licht","light","світло","ışık"],
-  [64,"","duschen","to shower","приймати душ","duş almak"],
-  [65,"die","Feier","party / celebration","свято / вечірка","kutlama / parti"],
-  [66,"","sauber","clean","чистий","temiz"],
-  [67,"","putzen","to clean","чистити / прибирати","temizlemek"],
-  [68,"","abwaschen","to wash up","мити посуд","bulaşık yıkamak"],
-  [69,"","ziehen","to pull / move","тягнути / переїжджати","çekmek / taşınmak"],
-  [70,"","meistens","mostly","здебільшого / переважно","çoğunlukla"],
-  [71,"","aushalten","to tolerate / endure","витримувати / терпіти","dayanmak / katlanmak"],
-  [72,"","streiten","to argue","сваритися / сперечатися","tartışmak / kavga etmek"],
-  [73,"","zeigen","to show","показувати","göstermek"],
-  [74,"","aufpassen","to pay attention / take care","бути уважним / наглядати","dikkat etmek"],
-  [75,"","anbieten","to offer","пропонувати","teklif etmek / ikram etmek"],
-  [76,"die","Pünktlichkeit","punctuality","пунктуальність","dakiklik"],
-  [77,"die","Höflichkeit","politeness","ввічливість","nezaket / kibarlık"],
-  [78,"","lächeln","to smile","усміхатися","gülümsemek"],
-  [79,"","nachfragen","to ask again/inquire","перепитувати / уточнювати","sorup soruşturmak"],
-  [80,"","kennenlernen","to get to know","знайомитися","tanışmak"],
-  [81,"die","Erfahrungen","experiences","досвід","deneyimler / tecrübeler"],
-  [82,"die","Verwandten","relatives","родичі","akrabalar"],
-  [83,"das","Ganze","the whole / entirety","ціле / усе разом","bütün / tamamı"],
-  [84,"","furchtbar","terrible/awful","жахливий / страшний","korkunç / berbat"],
-  [85,"die","Möglichkeiten","possibilities/options","можливості / варіанти","olanaklar / seçenekler"],
-  [86,"","ärgerlich","annoying/angry","прикрий / дратівливий","can sıkıcı / sinir bozucu"],
-  [87,"das","Heimweh","homesickness","туга за домом","sıla hasreti / ev özlemi"],
-  [88,"","vergehen","to pass (time)","минати (про час)","geçmek (zaman)"],
-  [89,"","beeilen","to hurry","поспішати","acele etmek"],
-  [90,"das","Wechselgeld","change (money)","решта (здача грошей)","para üstü"],
-  [91,"der","Militärdienst","military service","військова служба","askerlik hizmeti"],
-  [92,"","stimmt","is correct / that's right","правильно / вірно","doğru"],
-  [93,"","sprechen","to speak","говорити / розмовляти","konuşmak"],
-  [94,"die","Sprache","language","мова","dil"],
-  [95,"","zuschauen","to watch/look on","спостерігати / дивитися","izlemek / seyretmek"],
-  [96,"die","Rezeption","reception","рецепція / стійка реєстрації","resepsiyon"],
-  [97,"","was","what","що","ne"],
-  [98,"","wer","who","хто","kim"],
-  [99,"die","Mitarbeiter","employees / staff","співробітники / персонал","çalışanlar / personel"],
-  [100,"der","Handwerker","craftsperson/ tradesperson","майстер / ремісник","zanaatkar / usta"],
-  [101,"der","Maurer","bricklayer/mason","муляр","duvar ustası"],
-  [102,"die","Kantine","canteen / cafeteria","їдальня (на підприємстві)","kantin / yemekhane"],
-  [103,"die","Mensa","university cafeteria","студентська їдальня","üniversite yemekhanesi"],
-  [104,"","spinnen","to spin / be crazy","прясти / божеволіти","saçmalamak / delirmek"],
-  [105,"die","Spinne","spider","павук","örümcek"],
-  [106,"der","Vorschlag","suggestion","пропозиція","öneri / teklif"],
-  [107,"die","Nachbarin","female neighbor","сусідка","kadın komşu"],
-  [108,"die","Überstunden","overtime","понаднормові години","fazla mesai"],
-  [109,"die","Montage","assembly/installation work","монтаж / встановлення","montaj / kurulum"],
-  [110,"der","Monteur","technician/fitter","монтажник / механік","montajcı / teknisyen"],
-  [111,"","traurig","sad","сумний","üzgün"],
-  [112,"","dazu","to that / about that / in addition","до цього / крім того","buna ek olarak"],
-  [113,"","genug","enough","достатньо","yeterli / yeterince"],
-  [114,"","wieder","again","знову","tekrar / yine"],
-  [115,"","geschenkt","given as a gift/free","подарований","hediye edilmiş"],
-  [116,"","erklärt","explained","пояснений / пояснив","açıklanmış / açıkladı"],
-  [117,"die","Halskette","necklace","намисто / ланцюжок на шию","kolye"],
-  [118,"","anziehen","to put on/ get dressed","одягати(ся)","giyinmek / giymek"],
-  [119,"","besonders","especially / particularly","особливо","özellikle"],
-  [120,"","werfen","to throw","кидати","atmak / fırlatmak"],
-  [121,"","darauf","on it/ onto it / about it","на цьому / на це","bunun üzerine / buna"],
-  [122,"das","Pferd","horse","кінь","at"],
-  [123,"der","Bleistift","pencil","олівець","kurşun kalem"],
-  [124,"","begrüße","I greet/welcome","я вітаю","selamlıyorum"],
-  [125,"","zeige","I show","я показую","gösteriyorum"],
-  [126,"","erzähle","I tell / I narrate","я розповідаю","anlatıyorum"],
-  [127,"","fruchtbar","fertile/fruitful","родючий / плідний","verimli / bereketli"],
-  [128,"","gut geht","is going well","справи йдуть добре","iyi gidiyor"],
-  [129,"die","Familienfeier","family celebration / family party","сімейне свято","aile kutlaması"],
-  [130,"die","Bevölkerung","population","населення","nüfus"],
-  [131,"die","Blume","flower","квітка","çiçek"],
-  [132,"der","Brief","letter","лист","mektup"],
-  [133,"der/die","Cousin / Cousine","cousin","двоюрідний брат / сестра","kuzen"],
-  [134,"die","Ehe","marriage","шлюб","evlilik"],
-  [135,"die","Erinnerung","memory / reminder","спогад / нагадування","hatıra / anı"],
-  [136,"die","Ferien","holidays/vacation","канікули / відпустка","tatil"],
-  [137,"die","Geburt","birth","народження","doğum"],
-  [138,"der","Haushalt","household","домашнє господарство","ev idaresi / hane"],
-  [139,"der","Hund","dog","собака","köpek"],
-  [140,"die","Krankenschwester","nurse","медсестра","hemşire"],
-  [141,"die","Leute","people","люди","insanlar"],
-  [142,"das","Lied","song","пісня","şarkı"],
-  [143,"die","Mama","mum/mom","мама","anne"],
-  [144,"die","Mitteilung","message/notification","повідомлення","mesaj / bildirim"],
-  [145,"die","Mitternacht","midnight","опівночі","gece yarısı"],
-  [146,"der","Osten","east","схід","doğu"],
-  [147,"","Ostern","Easter","Великдень","Paskalya"],
-  [148,"das","Osterfest","Easter festival","свято Великодня","Paskalya bayramı"],
-  [149,"der/die","Rentner/in","retired person / pensioner","пенсіонер / пенсіонерка","emekli"],
-  [150,"der","Rest","rest/ remainder","залишок / решта","kalan / gerisi"],
-  [151,"der","Ring","ring","перстень / каблучка","yüzük"],
-  [152,"die","Schließung","closure/closing","закриття","kapanış / kapatılma"],
-  [153,"die","Schokolade","chocolate","шоколад","çikolata"],
-  [154,"das","Schiff","ship","корабель","gemi"],
-  [155,"","Silvester","New Year's Eve","Новий рік (31 грудня)","Yılbaşı gecesi"],
-  [156,"das","Standesamt","registry office / civil registry office","РАЦС (відділ реєстрації шлюбів)","evlendirme dairesi"],
-  [157,"die","Trauung","wedding ceremony","церемонія одруження / вінчання","nikah töreni"],
-  [158,"die","Überraschung","surprise","сюрприз / несподіванка","sürpriz"],
-  [159,"die","Wand","wall","стіна","duvar"],
-  [160,"","Weihnachten","Christmas","Різдво","Noel"],
-  [161,"das","Weihnachtsfest","Christmas celebration","свято Різдва","Noel kutlaması"],
-  [162,"der","Westen","west","захід","batı"],
-  [163,"die","Zukunft","future","майбутнє","gelecek"],
-  [164,"","annehmen","to accept / assume","приймати / припускати","kabul etmek / varsaymak"],
-  [165,"","sich bedanken","to thank / express thanks","дякувати","teşekkür etmek"],
-  [166,"","bestehen","to exist/pass / consist","складати (іспит) / існувати","başarmak (sınav) / var olmak"],
-  [167,"","bringen","to bring","приносити","getirmek"],
-  [168,"","dazugehören","to belong to it","належати до цього","ait olmak / dahil olmak"],
-  [169,"","meinen","to mean/think","мати на увазі / вважати","kastetmek / düşünmek"],
-  [170,"","riechen","to smell","пахнути / нюхати","kokmak / koklamak"],
-  [171,"","schenken","to give as a gift","дарувати","hediye etmek"],
-  [172,"","übernachten","to stay overnight","ночувати","gecelemek / gece kalmak"],
-  [173,"","weggehen","to leave / go away","іти геть / виходити","gitmek / ayrılmak"],
-  [174,"","zusammenleben","to live together","жити разом","birlikte yaşamak"],
-  [175,"","alleinerziehend","single-parent","який сам виховує дитину","tek ebeveynli"],
-  [176,"","wem","to whom","кому (давальний відмінок)","kime"],
-  [177,"","wen","whom","кого (знахідний відмінок)","kimi"],
-  [178,"","wie lange","how long","як довго","ne kadar süre"],
-  [179,"","wie oft","how often","як часто","ne sıklıkla"],
-  [180,"","dick","thick / fat","товстий","kalın / şişman"],
-  [181,"","hoch","high / tall","високий","yüksek"],
-  [182,"","feucht","damp/humid","вологий","nemli / ıslak"],
-  [183,"","bunt","colorful","різнокольоровий / яскравий","renkli / rengarenk"],
-  [184,"","weich","soft","м'який","yumuşak"],
-  [185,"","hart","hard","твердий / жорсткий","sert / zor"],
-  [186,"","sichersten","safest/most certain","найбезпечніший","en güvenli"],
-  [187,"","wertvoll","valuable","цінний / коштовний","değerli / kıymetli"],
-  [188,"","ruhiger","quieter / calmer","спокійніший / тихіший","daha sakin / daha sessiz"],
-  [189,"","wenigsten","least/fewest","найменше","en az"],
-  [190,"","feinsten","finest / most delicate","найтонший / найкращий","en ince / en kaliteli"],
-  [191,"","tapfersten","bravest","найхоробріший","en cesur"],
-  [192,"","giftig","poisonous / toxic","отруйний / токсичний","zehirli"],
-  [193,"","geschickter","more skilled / more skillful","вправніший / спритніший","daha becerikli / yetenekli"],
-  [194,"","deutlich","clear / clearly","чіткий / виразно","net / açıkça"],
-  [195,"der","Traummann","dream man / ideal man","чоловік мрії","hayalindeki erkek"],
-  [196,"","getroffen","met/hit","зустрів (від treffen)","buluştu / karşılaştı"],
-  [197,"","erinnere","remember/remind (1st person)","я пам'ятаю / нагадую","hatırlıyorum"],
-  [198,"","wünschst","wish (2nd person singular)","ти бажаєш","diliyorsun / istiyorsun"],
-  [199,"","durstig","thirsty","спраглий (хоче пити)","susamış"],
-  [200,"","gehört","belongs / heard","належить / почув","ait / duydu"],
-  [201,"","gerade","just/straight/ currently","прямо / щойно / зараз","şimdi / düz"],
-  [202,"","vorrätig","in stock","в наявності (на складі)","stokta / mevcut"],
-  [203,"","Sondergrößen","special sizes","спеціальні розміри","özel bedenler"],
-  [204,"die","Bestellung","order","замовлення","sipariş"],
-  [205,"der","Sommerschlussverkauf","summer sale","літній розпродаж","yaz sonu indirimi"],
-  [206,"","Sonderpreisen","special prices","спеціальні ціни","özel fiyatlar"],
-  [207,"","passende","suitable / matching","відповідний / підходящий","uygun / uyan"],
-  [208,"","folgende","following","наступний","aşağıdaki / sonraki"],
-  [209,"","laufen","to walk / run","бігти / ходити пішки","koşmak / yürümek"],
-  [210,"","reiten","to ride","їздити верхи","ata binmek"],
-  [211,"der","Flohmarkt","flea market","блошиний ринок / барахолка","bit pazarı"],
-  [212,"","gebraucht","used/second-hand","вживаний (б/у)","ikinci el / kullanılmış"],
-  [213,"die","Standgebühr","stall fee / stand fee","плата за місце на ринку","tezgah / stand ücreti"],
-  [214,"die","Herrenabteilung","men's department","чоловічий відділ","erkek reyonu"],
-  [215,"","rauschende","rustling/roaring / lavish","гучний / пишний (свято)","görkemli / coşkulu"],
-  [216,"die","Auswahl","selection/choice","вибір / асортимент","seçim / seçenek"],
-  [217,"","überhaupt","at all / generally","взагалі","hiç / genel olarak"],
-  [218,"","übermorgen","the day after tomorrow","післязавтра","öbür gün"],
-  [219,"","schwanger","pregnant","вагітна","hamile"],
-  [220,"","günstigen","favorable / inexpensive","вигідний / недорогий","uygun fiyatlı / hesaplı"],
-  [221,"","unbedingt","absolutely / definitely","обов'язково / неодмінно","kesinlikle / mutlaka"],
-  [222,"der","Grund","reason / ground","причина / підстава","sebep / neden"],
-  [223,"die","Beratung","advice/consultation","консультація / порада","danışma / tavsiye"],
-  [224,"das","Fußballturnier","football/soccer tournament","футбольний турнір","futbol turnuvası"],
-  [225,"die","Mannschaften","teams","команди","takımlar"],
-  [226,"der","Stadtteil","district/neighborhood","район міста","semt / mahalle"],
-  [227,"","vorher","before / beforehand","раніше / перед тим","önceden / daha önce"],
-  [228,"die","Läden","shops/stores","магазини / крамниці","mağazalar / dükkanlar"],
-  [229,"","länger","longer","довше","daha uzun"],
-  [230,"","verschiedenen","different/various","різні / різноманітні","farklı / çeşitli"],
-  [231,"das","Programm","program","програма","program"],
-  [232,"","beliebte","popular","популярний / улюблений","popüler / sevilen"],
-  [233,"die","Weststadt","western part of the city","західний район міста","şehrin batı yakası"],
-  [234,"","statt","instead of","замість","yerine"],
-  [235,"der","Höhepunkt","highlight/climax","кульмінація / головний момент","zirve / en önemli an"],
+const RAW_MULTILINGUAL_GERMAN = [
+  [1,"die","Kenntnis","knowledge","знання","bilgi","знаење / познавање","das Wissen oder die Erfahrung in einem Fachgebiet"],
+  [2,"der","Schüler","student / pupil","учень / школяр","öğrenci","ученик","ein Kind oder Jugendlicher, der in die Schule geht"],
+  [3,"die","Abwäsche","washing up / dishes","миття посуду","bulaşık yıkama","миење садови","das schmutzige Geschirr nach dem Essen reinigen"],
+  [4,"die","Ziele","goals","цілі","hedefler / amaçlar","цели","das, was man in der Zukunft erreichen möchte (Plural)"],
+  [5,"der","Lärm","noise","шум / гамір","gürültü","бучава / галама","sehr laute und unangenehme Geräusche"],
+  [6,"die","Aussichten","prospects/outlook","перспективи","beklentiler","перспективи / изгледи","die Chancen oder Erwartungen für die Zukunft"],
+  [7,"die","Beziehung","relationship","стосунки","ilişki","врска / однос","die Verbindung oder Partnerschaft zwischen zwei Menschen"],
+  [8,"die","Strecke","distance / route","відстань / маршрут","mesafe / güzergah","растојание / рута","der Weg von einem Ort zu einem anderen Ort"],
+  [9,"der","Nachbar","neighbor","сусід","komşu","сосед / комшија","ein Mann, der direkt nebenan wohnt"],
+  [10,"der","Anfänger","beginner","початківець","acemi / yeni başlayan","почетник","eine Person, die etwas ganz neu lernt"],
+  [11,"die","Gründe","reasons","причини","sebepler / nedenler","причини","die Argumente oder Ursachen, warum etwas passiert (Plural)"],
+  [12,"das","Konto","account","рахунок (у банку)","banka hesabı","сметка (во банка)","der Ort bei der Bank, auf dem das Geld liegt"],
+  [13,"das","Studienfach","field of study","спеціальність / предмет","okunan bölüm / branş","студиска насока / предмет","das Thema, das man an der Universität studiert"],
+  [14,"der","Dank","thanks","подяка","teşekkür","благодарност","ein freundliches Wort, wenn man Hilfe bekommt"],
+  [15,"","benötigen","to need/ require","потребувати","ihtiyaç duymak","потребува / му треба","etwas dringend brauchen"],
+  [16,"","gerne","gladly / like to","охоче / із задоволенням","memnuniyetle / severek","со задоволство / радо","mit Freude; etwas mit Vergnügen tun"],
+  [17,"das","Klima","climate","клімат","iklim","клима","das typische Wetter über lange Zeit in einer Region"],
+  [18,"das","Zeugnis","certificate / report card","атестат / свідоцтво","karne / sertifika","свидетелство / диплома","das offizielle Dokument mit den Schulnoten"],
+  [19,"der","Pol","pole","полюс","kutup","пол (географски)","der nördlichste oder südlichste Punkt der Erde"],
+  [20,"","tragen","to carry / wear","носити / нести","taşımak / giymek","носи (облека / товар)","Kleidung am Körper haben oder etwas Schweres halten"],
+  [21,"","wohnen","to live / reside","мешкати / жити","ikamet etmek / yaşamak","живее / станува","sein Zuhause in einer Stadt oder Wohnung haben"],
+  [22,"die","Regel","rule","правило","kural","правило","eine Vorschrift, an die man sich halten muss"],
+  [23,"der","Anteil","share/proportion","частка","pay / oran","удел / дел","ein Teil von einem Ganzen (z. B. in Prozent)"],
+  [24,"die","Auswirkungen","effects/impacts","наслідки / вплив","etkiler / sonuçlar","последици / влијанија","die Folgen oder Konsequenzen von einer Sache"],
+  [25,"","allgemein","general/generally","загальний / загалом","genel / genel olarak","општо / генерално","für alle gültig; generell"],
+  [26,"","ungenügend","insufficient / inadequate","недостатньо","yetersiz","недоволно","viel zu wenig; die schlechteste Schulnote (Note 6)"],
+  [27,"der","Bereich","area / field","сфера / ділянка","alan / bölge","област / сектор","ein bestimmtes Gebiet oder eine Abteilung"],
+  [28,"","wiederholen","to repeat","повторювати","tekrarlamak","повторува","etwas noch einmal sagen oder noch einmal lernen"],
+  [29,"der","Zivildienst","civilian service","альтернативна цивільна служба","sivil hizmet","цивилна служба","sozialer Dienst statt Dienst bei der Armee"],
+  [30,"die","Dozentin","female lecturer","викладачка (в університеті)","kadın öğretim görevlisi","професорка / предавачка","eine Lehrerin an einer Hochschule oder Universität"],
+  [31,"","kochen","to cook","готувати їжу / варити","yemek pişirmek","готви","warmes Essen in der Küche zubereiten"],
+  [32,"der","Beitrag","contribution/post","внесок / допис","katkı / paylaşım","придонес / објава","ein Artikel im Internet oder ein Anteil an Geld/Arbeit"],
+  [33,"die","Chancen","chances/opportunities","шанси / можливості","şanslar / fırsatlar","шанси / можности","gute Gelegenheiten für Erfolg (Plural)"],
+  [34,"","gründen","to found/ establish","засновувати","kurmak","основа / формира","eine neue Firma oder einen Verein neu starten"],
+  [35,"","verbessern","to improve","покращувати","geliştirmek / iyileştirmek","подобрува","etwas besser machen oder Fehler korrigieren"],
+  [36,"","aufnehmen","to record / take in / accept","записувати / приймати","kaydetmek / kabul etmek","снима / прима","Ton/Video speichern oder jemanden als Gast empfangen"],
+  [37,"","aussuchen","to choose / select","вибирати","seçmek","избира / одбира","aus mehreren Dingen das Beste wählen"],
+  [38,"","nachholen","to catch up / make up","наздоганяти (пропущене)","telafi etmek","надоместува","etwas Verpasstes später erledigen"],
+  [39,"","berechnen","to calculate","обчислювати / розраховувати","hesaplamak","пресметува","mit Zahlen rechnen; den Preis kalkulieren"],
+  [40,"","gefangen","caught/trapped","спійманий / у пастці","yakalanmış","фатен / заробен","nicht frei; eingeschlossen"],
+  [41,"","fühlen","to feel","відчувати / почуватися","hissetmek","чувствува","eine Emotion oder Temperatur spüren"],
+  [42,"die","Erklärung","explanation","пояснення","açıklama","објаснување","Informationen, damit man etwas besser versteht"],
+  [43,"","besprechen","to discuss","обговорювати","görüşmek / tartışmak","дискутира / разговара","gemeinsam über ein Thema oder Problem reden"],
+  [44,"","verspäten","to be delayed","запізнюватися","gecikmek","доцни","zu spät kommen (nicht pünktlich sein)"],
+  [45,"die","Krawatte","tie","краватка","kravat","вратоврска / кравата","schmales Stoffband am Hemdkragen zum Anzug"],
+  [46,"","begrüßt","greets/welcomed","вітає / привітав","selamlar / karşıladı","поздравува / пречека","sagt „Hallo“ oder „Guten Tag“ zur Ankunft"],
+  [47,"die","Übernachtungsmöglichkeit","overnight accommodation","місце для ночівлі / житло","gece konaklama imkanı","место за преноќување","ein Ort (Hotel, Zimmer), wo man nachts schlafen kann"],
+  [48,"","gratuliere","I congratulate / congratulations","вітаю (зі святом)","tebrik ederim","честитам","ich wünsche alles Gute zum Geburtstag oder Erfolg"],
+  [49,"","durch","through","через / крізь","içinden / vasıtasıyla","низ / преку","von einer Seite hinein und auf der anderen Seite hinaus"],
+  [50,"das","Dorf","village","село","köy","село","ein sehr kleiner Ort auf dem Land (keine Stadt)"],
+  [51,"der","Hauptschulabschluss","lower secondary school certificate","атестат основної середньої школи","ortaokul diploması","диплома од основно средно училиште","Schulzeugnis nach der 9. Klasse in Deutschland"],
+  [52,"der","Volksschulabschluss","primary/elementary school leaving certificate","свідоцтво початкової школи","ilkokul diploması","свидетелство од основно училиште","früherer Abschluss der einfachen Pflichtschule"],
+  [53,"das","Abitur","university entrance qualification","атестат зрілості (для вступу в ВНЗ)","lise bitirme diploması","матура","höchster Schulabschluss am Gymnasium für die Universität"],
+  [54,"der","Realschulabschluss","intermediate secondary school certificate","атестат реальної середньої школи","orta dereceli okul diploması","диплома од средно стручно училиште","mittlerer Schulabschluss nach der 10. Klasse"],
+  [55,"die","Hauptschule","lower secondary school","основна загальна школа","temel ortaokul","основно средно училиште","weiterführende Schule bis zur 9. Klasse"],
+  [56,"","wollen","to want","хотіти","istemek","сака","den festen Wunsch oder die Absicht haben"],
+  [57,"die","Jugendsprache","youth language","молодіжний сленг","gençlik dili","младински жаргон / говор","moderne Wörter, die Teenager untereinander benutzen"],
+  [58,"die","Schulpflicht","compulsory schooling","обов'язкова шкільна освіта","zorunlu eğitim","задолжително образование","das Gesetz, dass alle Kinder in die Schule gehen müssen"],
+  [59,"","mindestens","at least","щонайменше / принаймні","en az / en azından","најмалку / барем","nicht weniger als; wenigstens"],
+  [60,"die","Grundschule","primary school","початкова школа","ilkokul","основно училиште (1-4 одд.)","die erste Schule für Kinder (1. bis 4. Klasse)"],
+  [61,"","ausräumen","to clear out / empty","розвантажувати / звільняти","boşaltmak","празни / расчистува","alles aus einem Schrank oder einer Maschine herausnehmen"],
+  [62,"","ausmachen","to turn off / arrange","вимикати / домовлятися","kapatmak / kararlaştırmak","исклучува / договара","ein Gerät ausschalten oder einen Termin vereinbaren"],
+  [63,"das","Licht","light","світло","ışık","светлина / светло","Helligkeit von einer Lampe oder der Sonne"],
+  [64,"","duschen","to shower","приймати душ","duş almak","се тушира","sich im Bad unter fließendem Wasser waschen"],
+  [65,"die","Feier","party / celebration","свято / вечірка","kutlama / parti","прослава / забава","ein Fest oder eine Party zu einem besonderen Anlass"],
+  [66,"","sauber","clean","чистий","temiz","чисто","ohne Schmutz; frisch geputzt"],
+  [67,"","putzen","to clean","чистити / прибирати","temizlemek","чисти","Schmutz wegmachen; sauber machen"],
+  [68,"","abwaschen","to wash up","мити посуд","bulaşık yıkamak","мие садови","Teller und Gläser mit Wasser und Spülmittel reinigen"],
+  [69,"","ziehen","to pull / move","тягнути / переїжджати","çekmek / taşınmak","влече / се сели","etwas zu sich bewegen oder in eine neue Wohnung gehen"],
+  [70,"","meistens","mostly","здебільшого / переважно","çoğunlukla","најчесто / главно","in den meisten Fällen; fast immer"],
+  [71,"","aushalten","to tolerate / endure","витримувати / терпіти","dayanmak / katlanmak","издржува / трпи","etwas Unangenehmes (Schmerz, Lärm) ertragen"],
+  [72,"","streiten","to argue","сваритися / сперечатися","tartışmak / kavga etmek","се кара / се расправа","mit Worten böse gegeneinander kämpfen"],
+  [73,"","zeigen","to show","показувати","göstermek","покажува","jemandem etwas präsentieren, damit er es sieht"],
+  [74,"","aufpassen","to pay attention / take care","бути уважним / наглядати","dikkat etmek","внимава / пази","konzentriert zuhören oder auf ein Kind achten"],
+  [75,"","anbieten","to offer","пропонувати","teklif etmek / ikram etmek","нуди / понудува","jemandem Hilfe oder Essen zur Verfügung stellen"],
+  [76,"die","Pünktlichkeit","punctuality","пунктуальність","dakiklik","точност","genau zur vereinbarten Uhrzeit da sein"],
+  [77,"die","Höflichkeit","politeness","ввічливість","nezaket / kibarlık","учтивост / љубезност","freundliches und respektvolles Verhalten („bitte“, „danke“)"],
+  [78,"","lächeln","to smile","усміхатися","gülümsemek","се насмевнува","freundlich und leise mit dem Mund lachen"],
+  [79,"","nachfragen","to ask again/inquire","перепитувати / уточнювати","sorup soruşturmak","прашува дополнително","noch einmal um genauere Informationen bitten"],
+  [80,"","kennenlernen","to get to know","знайомитися","tanışmak","се запознава","eine Person oder einen Ort zum ersten Mal treffen"],
+  [81,"die","Erfahrungen","experiences","досвід","deneyimler / tecrübeler","искуства","Erlebnisse, aus denen man im Leben gelernt hat"],
+  [82,"die","Verwandten","relatives","родичі","akrabalar","роднини","Personen aus der eigenen Familie (Tante, Onkel, Cousin)"],
+  [83,"das","Ganze","the whole / entirety","ціле / усе разом","bütün / tamamı","целина / сè заедно","alles zusammen; komplett"],
+  [84,"","furchtbar","terrible/awful","жахливий / страшний","korkunç / berbat","страшно / ужасно","sehr schlimm; schrecklich"],
+  [85,"die","Möglichkeiten","possibilities/options","можливості / варіанти","olanaklar / seçenekler","можности / опции","verschiedene Wege oder Optionen, etwas zu tun"],
+  [86,"","ärgerlich","annoying/angry","прикрий / дратівливий","can sıkıcı / sinir bozucu","лут / непријатен","so, dass man schlechte Laune oder Wut bekommt"],
+  [87,"das","Heimweh","homesickness","туга за домом","sıla hasreti / ev özlemi","носталгија за дома","Traurigkeit, weil man seine Heimat und Familie vermisst"],
+  [88,"","vergehen","to pass (time)","минати (про час)","geçmek (zaman)","поминува (време)","wenn Stunden oder Tage schnell vorbeiziehen"],
+  [89,"","beeilen","to hurry","поспішати","acele etmek","се брза","schnell machen, um keine Zeit zu verlieren"],
+  [90,"das","Wechselgeld","change (money)","решта (здача грошей)","para üstü","кусур (пари)","das Geld, das man an der Kasse zurückbekommt"],
+  [91,"der","Militärdienst","military service","військова служба","askerlik hizmeti","воен рок / воена служба","Ausbildung und Dienst als Soldat bei der Armee"],
+  [92,"","stimmt","is correct / that's right","правильно / вірно","doğru","точно е / така е","das ist richtig; das ist wahr"],
+  [93,"","sprechen","to speak","говорити / розмовляти","konuşmak","зборува","Wörter und Sätze mit der Stimme sagen"],
+  [94,"die","Sprache","language","мова","dil","јазик","das System aus Wörtern eines Landes (z. B. Deutsch)"],
+  [95,"","zuschauen","to watch/look on","спостерігати / дивитися","izlemek / seyretmek","гледа / набљудува","bei einem Spiel oder einer Aktion als Zuschauer hinsehen"],
+  [96,"die","Rezeption","reception","рецепція / стійка реєстрації","resepsiyon","рецепција","der Empfangsschalter im Hotel oder Büro"],
+  [97,"","was","what","що","ne","што","Fragewort nach einer Sache oder einem Ding"],
+  [98,"","wer","who","хто","kim","кој","Fragewort nach einer Person (Nominativ)"],
+  [99,"die","Mitarbeiter","employees / staff","співробітники / персонал","çalışanlar / personel","вработени / колеги","die Personen, die in einer Firma arbeiten"],
+  [100,"der","Handwerker","craftsperson/ tradesperson","майстер / ремісник","zanaatkar / usta","занаетчија / мајстор","jemand, der praktisch mit Werkzeug arbeitet"],
+  [101,"der","Maurer","bricklayer/mason","муляр","duvar ustası","ѕидар","ein Handwerker, der Wände und Häuser aus Steinen baut"],
+  [102,"die","Kantine","canteen / cafeteria","їдальня (на підприємстві)","kantin / yemekhane","кантина / менза во фирма","das Restaurant für Mitarbeiter in einer Firma"],
+  [103,"die","Mensa","university cafeteria","студентська їдальня","üniversite yemekhanesi","студентска менза","das große Restaurant für Studenten an der Universität"],
+  [104,"","spinnen","to spin / be crazy","прясти / божеволіти","saçmalamak / delirmek","тресе глупости / лудува","umgangssprachlich: verrückt sein oder Unsinn reden"],
+  [105,"die","Spinne","spider","павук","örümcek","пајак","ein kleines Tier mit acht Beinen, das ein Netz baut"],
+  [106,"der","Vorschlag","suggestion","пропозиція","öneri / teklif","предлог","eine Idee oder ein Rat, was man gemeinsam tun könnte"],
+  [107,"die","Nachbarin","female neighbor","сусідка","kadın komşu","соседка / комшика","eine Frau, die in der Wohnung nebenan wohnt"],
+  [108,"die","Überstunden","overtime","понаднормові години","fazla mesai","прекувремена работа","Arbeitszeit, die man länger als normal im Beruf bleibt"],
+  [109,"die","Montage","assembly/installation work","монтаж / встановлення","montaj / kurulum","монтажа / местење","das Zusammenbauen von Maschinen oder Möbeln"],
+  [110,"der","Monteur","technician/fitter","монтажник / механік","montajcı / teknisyen","монтер / техничар","ein Fachmann, der Geräte installiert und repariert"],
+  [111,"","traurig","sad","сумний","üzgün","тажен","nicht glücklich; voll Kummer"],
+  [112,"","dazu","to that / about that / in addition","до цього / крім того","buna ek olarak","кон тоа / покрај тоа","außerdem; ergänzend zu dieser Sache"],
+  [113,"","genug","enough","достатньо","yeterli / yeterince","доволно","ausreichend; nicht zu wenig"],
+  [114,"","wieder","again","знову","tekrar / yine","повторно / пак","noch einmal"],
+  [115,"","geschenkt","given as a gift/free","подарований","hediye edilmiş","подарено","kostenlos als Präsent bekommen"],
+  [116,"","erklärt","explained","пояснений / пояснив","açıklanmış / açıkladı","објаснето / објасни","so beschrieben, dass man es versteht (Partizip II)"],
+  [117,"die","Halskette","necklace","намисто / ланцюжок на шию","kolye","ѓердан / ланче","ein Schmuckstück, das man um den Hals trägt"],
+  [118,"","anziehen","to put on/ get dressed","одягати(ся)","giyinmek / giymek","облекува","Kleidung an den Körper legen"],
+  [119,"","besonders","especially / particularly","особливо","özellikle","особено / посебно","mehr als normal; speziell"],
+  [120,"","werfen","to throw","кидати","atmak / fırlatmak","фрла","etwas mit Schwung aus der Hand durch die Luft bewegen"],
+  [121,"","darauf","on it/ onto it / about it","на цьому / на це","bunun üzerine / buna","на тоа","auf diese Sache (z. B. sich freuen auf)"],
+  [122,"das","Pferd","horse","кінь","at","коњ","ein großes Tier, auf dem man reiten kann"],
+  [123,"der","Bleistift","pencil","олівець","kurşun kalem","молив","ein Stift aus Holz mit grauer Mine zum Schreiben"],
+  [124,"","begrüße","I greet/welcome","я вітаю","selamlıyorum","јас поздравувам","1. Person Singular: ich sage „Willkommen“"],
+  [125,"","zeige","I show","я показую","gösteriyorum","јас покажувам","1. Person Singular von zeigen (sichtbar machen)"],
+  [126,"","erzähle","I tell / I narrate","я розповідаю","anlatıyorum","јас раскажувам","1. Person Singular: ich berichte eine Geschichte"],
+  [127,"","fruchtbar","fertile/fruitful","родючий / плідний","verimli / bereketli","плодно / продуктивно","guter Boden für Pflanzen oder sehr erfolgreich"],
+  [128,"","gut geht","is going well","справи йдуть добре","iyi gidiyor","добро оди / добро сум","wenn man gesund und zufrieden ist (es mir ...)"],
+  [129,"die","Familienfeier","family celebration / family party","сімейне свято","aile kutlaması","семејна прослава","ein Fest mit Eltern, Kindern und Verwandten"],
+  [130,"die","Bevölkerung","population","населення","nüfus","население","alle Menschen, die in einem Land oder einer Stadt leben"],
+  [131,"die","Blume","flower","квітка","çiçek","цвет / цвеќе","eine bunte Pflanze im Garten oder in der Vase"],
+  [132,"der","Brief","letter","лист","mektup","писмо","eine geschriebene Nachricht auf Papier im Umschlag"],
+  [133,"der/die","Cousin / Cousine","cousin","двоюрідний брат / сестра","kuzen","братучед / братучетка","der Sohn oder die Tochter von Onkel oder Tante"],
+  [134,"die","Ehe","marriage","шлюб","evlilik","брак","das gesetzliche Zusammenleben von Mann und Frau"],
+  [135,"die","Erinnerung","memory / reminder","спогад / нагадування","hatıra / anı","спомен / потсетување","ein Gedanke an die Vergangenheit im Kopf"],
+  [136,"die","Ferien","holidays/vacation","канікули / відпустка","tatil","распуст / одмор","schulfreie Zeit zum Reisen und Erholen"],
+  [137,"die","Geburt","birth","народження","doğum","раѓање","der Moment, in dem ein Baby auf die Welt kommt"],
+  [138,"der","Haushalt","household","домашнє господарство","ev idaresi / hane","домаќинство","alle Arbeiten in der Wohnung (Kochen, Putzen, Waschen)"],
+  [139,"der","Hund","dog","собака","köpek","куче","ein treues Haustier, das bellt und spazieren geht"],
+  [140,"die","Krankenschwester","nurse","медсестра","hemşire","медицинска сестра","eine Frau, die kranke Menschen im Krankenhaus pflegt"],
+  [141,"die","Leute","people","люди","insanlar","луѓе","mehrere Menschen (nur im Plural)"],
+  [142,"das","Lied","song","пісня","şarkı","песна","Musik mit Text zum Singen"],
+  [143,"die","Mama","mum/mom","мама","anne","мама / мајка","liebevolles Wort für die Mutter"],
+  [144,"die","Mitteilung","message/notification","повідомлення","mesaj / bildirim","известување / порака","eine kurze offizielle Nachricht oder Information"],
+  [145,"die","Mitternacht","midnight","опівночі","gece yarısı","полноќ","genau 24:00 Uhr / 00:00 Uhr in der Nacht"],
+  [146,"der","Osten","east","схід","doğu","исток","die Himmelsrichtung, in der die Sonne aufgeht"],
+  [147,"","Ostern","Easter","Великдень","Paskalya","Велигден","das Frühlingsfest mit bunten Eiern"],
+  [148,"das","Osterfest","Easter festival","свято Великодня","Paskalya bayramı","празникот Велигден","die feierlichen Tage an Ostern"],
+  [149,"der/die","Rentner/in","retired person / pensioner","пенсіонер / пенсіонерка","emekli","пензионер / пензионерка","eine ältere Person, die nicht mehr arbeitet"],
+  [150,"der","Rest","rest/ remainder","залишок / решта","kalan / gerisi","остаток","das, was am Ende übrig bleibt"],
+  [151,"der","Ring","ring","перстень / каблучка","yüzük","прстен","runder Schmuck, den man am Finger trägt"],
+  [152,"die","Schließung","closure/closing","закриття","kapanış / kapatılma","затворање","wenn ein Geschäft oder eine Fabrik für immer zumacht"],
+  [153,"die","Schokolade","chocolate","шоколад","çikolata","чоколадо","eine braune Süßigkeit aus Kakao und Milch"],
+  [154,"das","Schiff","ship","корабель","gemi","брод","ein großes Fahrzeug auf dem Meer oder Fluss"],
+  [155,"","Silvester","New Year's Eve","Новий рік (31 грудня)","Yılbaşı gecesi","Нова Година (31 декември)","der letzte Tag des Jahres (31. Dezember)"],
+  [156,"das","Standesamt","registry office / civil registry office","РАЦС (відділ реєстрації шлюбів)","evlendirme dairesi","матична служба (матично)","das offizielle Amt der Stadt, in dem man heiratet"],
+  [157,"die","Trauung","wedding ceremony","церемонія одруження / вінчання","nikah töreni","венчавка","die offizielle Zeremonie bei einer Hochzeit"],
+  [158,"die","Überraschung","surprise","сюрприз / несподіванка","sürpriz","изненадување","etwas Unerwartetes, über das man sich freut"],
+  [159,"die","Wand","wall","стіна","duvar","ѕид","die feste vertikale Mauer eines Zimmers"],
+  [160,"","Weihnachten","Christmas","Різдво","Noel","Божиќ","das Fest am 24.–26. Dezember mit Geschenken"],
+  [161,"das","Weihnachtsfest","Christmas celebration","свято Різдва","Noel kutlaması","божиќна прослава","die feierlichen Tage zu Weihnachten"],
+  [162,"der","Westen","west","захід","batı","запад","die Himmelsrichtung, in der die Sonne untergeht"],
+  [163,"die","Zukunft","future","майбутнє","gelecek","иднина","die Zeit, die noch vor uns liegt (morgen, nächstes Jahr)"],
+  [164,"","annehmen","to accept / assume","приймати / припускати","kabul etmek / varsaymak","прифаќа / претпоставува","ein Paket/Geschenk akzeptieren oder etwas vermuten"],
+  [165,"","sich bedanken","to thank / express thanks","дякувати","teşekkür etmek","се заблагодарува","„Danke“ sagen für Hilfe oder ein Geschenk"],
+  [166,"","bestehen","to exist/pass / consist","складати (іспит) / існувати","başarmak (sınav) / var olmak","положува (испит) / постои","eine Prüfung erfolgreich schaffen oder existieren"],
+  [167,"","bringen","to bring","приносити","getirmek","донесува","etwas zu einer anderen Person tragen"],
+  [168,"","dazugehören","to belong to it","належати до цього","ait olmak / dahil olmak","припаѓа кон тоа","ein fester Teil von einer Gruppe sein"],
+  [169,"","meinen","to mean/think","мати на увазі / вважати","kastetmek / düşünmek","мисли / смета","seine eigene Meinung sagen oder denken"],
+  [170,"","riechen","to smell","пахнути / нюхати","kokmak / koklamak","мириса","mit der Nase einen Duft wahrnehmen"],
+  [171,"","schenken","to give as a gift","дарувати","hediye etmek","подарува","jemandem kostenlos etwas zur Freude geben"],
+  [172,"","übernachten","to stay overnight","ночувати","gecelemek / gece kalmak","преноќува","die ganze Nacht an einem fremden Ort schlafen"],
+  [173,"","weggehen","to leave / go away","іти геть / виходити","gitmek / ayrılmak","си оди / излегува","einen Ort verlassen oder abends ausgehen"],
+  [174,"","zusammenleben","to live together","жити разом","birlikte yaşamak","живеат заедно","gemeinsam in einer Wohnung wohnen"],
+  [175,"","alleinerziehend","single-parent","який сам виховує дитину","tek ebeveynli","самохран родител","wenn Mutter oder Vater ein Kind ohne Partner großzieht"],
+  [176,"","wem","to whom","кому (давальний відмінок)","kime","кому (датив)","Fragewort nach einer Person im Dativ"],
+  [177,"","wen","whom","кого (знахідний відмінок)","kimi","кого (акузатив)","Fragewort nach einer Person im Akkusativ"],
+  [178,"","wie lange","how long","як довго","ne kadar süre","колку долго","Frage nach der Zeitdauer"],
+  [179,"","wie oft","how often","як часто","ne sıklıkla","колку често","Frage nach der Häufigkeit"],
+  [180,"","dick","thick / fat","товстий","kalın / şişman","дебел","das Gegenteil von dünn"],
+  [181,"","hoch","high / tall","високий","yüksek","висок","weit nach oben (z. B. ein Berg oder Haus)"],
+  [182,"","feucht","damp/humid","вологий","nemli / ıslak","влажно","ein bisschen nass (nicht ganz trocken)"],
+  [183,"","bunt","colorful","різнокольоровий / яскравий","renkli / rengarenk","шарено","mit vielen verschiedenen Farben"],
+  [184,"","weich","soft","м'який","yumuşak","меко","angenehm nachgiebig wie ein Kissen (nicht hart)"],
+  [185,"","hart","hard","твердий / жорсткий","sert / zor","тврдо","fest wie ein Stein (Gegenteil von weich)"],
+  [186,"","sichersten","safest/most certain","найбезпечніший","en güvenli","најбезбедно / најсигурно","Superlativ von sicher (ganz ohne Gefahr)"],
+  [187,"","wertvoll","valuable","цінний / коштовний","değerli / kıymetli","вредно / скапоцено","sehr teuer oder von großer Bedeutung"],
+  [188,"","ruhiger","quieter / calmer","спокійніший / тихіший","daha sakin / daha sessiz","помирно / потивко","Komparativ von ruhig (weniger Lärm oder Stress)"],
+  [189,"","wenigsten","least/fewest","найменше","en az","најмалку","Superlativ von wenig (die kleinste Menge)"],
+  [190,"","feinsten","finest / most delicate","найтонший / найкращий","en ince / en kaliteli","најфино / најквалитетно","Superlativ von fein (sehr dünn oder edel)"],
+  [191,"","tapfersten","bravest","найхоробріший","en cesur","најхрабро","Superlativ von tapfer (mit dem größten Mut)"],
+  [192,"","giftig","poisonous / toxic","отруйний / токсичний","zehirli","отровно","gefährlich für die Gesundheit bei Essen oder Kontakt"],
+  [193,"","geschickter","more skilled / more skillful","вправніший / спритніший","daha becerikli / yetenekli","повешто / поумешно","Komparativ von geschickt (besser mit den Händen)"],
+  [194,"","deutlich","clear / clearly","чіткий / виразно","net / açıkça","јасно / разбирливо","gut zu hören, zu lesen oder zu verstehen"],
+  [195,"der","Traummann","dream man / ideal man","чоловік мрії","hayalindeki erkek","маж од соништата","der perfekte, ideale Partner"],
+  [196,"","getroffen","met/hit","зустрів (від treffen)","buluştu / karşılaştı","сретна (Partizip II)","Partizip II von treffen (jemanden gesehen haben)"],
+  [197,"","erinnere","remember/remind (1st person)","я пам'ятаю / нагадую","hatırlıyorum","се сеќавам","1. Person Singular: ich habe etwas noch im Gedächtnis"],
+  [198,"","wünschst","wish (2nd person singular)","ти бажаєш","diliyorsun / istiyorsun","посакуваш (ти)","2. Person Singular (du) von wünschen"],
+  [199,"","durstig","thirsty","спраглий (хоче пити)","susamış","жеден","wenn man dringend Wasser trinken möchte"],
+  [200,"","gehört","belongs / heard","належить / почув","ait / duydu","припаѓа / слушнато","ist das Eigentum von jemandem (+ Dativ) oder Partizip von hören"],
+  [201,"","gerade","just/straight/ currently","прямо / щойно / зараз","şimdi / düz","токму сега / право","genau in diesem Moment oder in direkter Linie"],
+  [202,"","vorrätig","in stock","в наявності (на складі)","stokta / mevcut","на залиха / достапно","im Geschäft oder Lager sofort verfügbar"],
+  [203,"","Sondergrößen","special sizes","спеціальні розміри","özel bedenler","специјални величини","Kleidergrößen, die besonders groß oder klein sind"],
+  [204,"die","Bestellung","order","замовлення","sipariş","нарачка","der Auftrag, eine Ware im Internet oder Restaurant zu kaufen"],
+  [205,"der","Sommerschlussverkauf","summer sale","літній розпродаж","yaz sonu indirimi","летен попуст / распродажба","große Rabatt-Aktion am Ende des Sommers"],
+  [206,"","Sonderpreisen","special prices","спеціальні ціни","özel fiyatlar","специјални цени (попуст)","reduzierte, besonders günstige Preise (Dativ Plural)"],
+  [207,"","passende","suitable / matching","відповідний / підходящий","uygun / uyan","соодветна / што одговара","genau richtig in Größe, Farbe oder Situation"],
+  [208,"","folgende","following","наступний","aşağıdaki / sonraki","следниот / следната","das, was direkt danach kommt"],
+  [209,"","laufen","to walk / run","бігти / ходити пішки","koşmak / yürümek","трча / оди пеш","schnell zu Fuß gehen oder rennen"],
+  [210,"","reiten","to ride","їздити верхи","ata binmek","јава (коњ)","auf dem Rücken eines Pferdes sitzen und sich bewegen"],
+  [211,"der","Flohmarkt","flea market","блошиний ринок / барахолка","bit pazarı","бит-пазар (пазар за половни работи)","ein Markt im Freien für gebrauchte Sachen"],
+  [212,"","gebraucht","used/second-hand","вживаний (б/у)","ikinci el / kullanılmış","користено / половно","nicht mehr neu; schon von jemandem benutzt"],
+  [213,"die","Standgebühr","stall fee / stand fee","плата за місце на ринку","tezgah / stand ücreti","надомест за тезга","das Geld, das man für einen Verkaufstisch auf dem Markt zahlt"],
+  [214,"die","Herrenabteilung","men's department","чоловічий відділ","erkek reyonu","машки оддел","der Bereich im Kaufhaus mit Kleidung für Männer"],
+  [215,"","rauschende","rustling/roaring / lavish","гучний / пишний (свято)","görkemli / coşkulu","величествена / бучна (забава)","sehr groß, laut und intensiv (z. B. ein großes Fest)"],
+  [216,"die","Auswahl","selection/choice","вибір / асортимент","seçim / seçenek","избор / асортиман","viele verschiedene Dinge, zwischen denen man wählen kann"],
+  [217,"","überhaupt","at all / generally","взагалі","hiç / genel olarak","воопшто","im Allgemeinen oder als Verstärkung (gar nicht)"],
+  [218,"","übermorgen","the day after tomorrow","післязавтра","öbür gün","задутре","der Tag nach morgen (in zwei Tagen)"],
+  [219,"","schwanger","pregnant","вагітна","hamile","бремена","wenn eine Frau ein Baby im Bauch erwartet"],
+  [220,"","günstigen","favorable / inexpensive","вигідний / недорогий","uygun fiyatlı / hesaplı","поволни / евтини","billig; mit einem guten Preis"],
+  [221,"","unbedingt","absolutely / definitely","обов'язково / неодмінно","kesinlikle / mutlaka","задолжително / дефинитивно","auf jeden Fall; ganz sicher"],
+  [222,"der","Grund","reason / ground","причина / підстава","sebep / neden","причина / основа","die Ursache, warum man etwas macht (Singular)"],
+  [223,"die","Beratung","advice/consultation","консультація / порада","danışma / tavsiye","советување / консултација","ein Gespräch, in dem ein Experte Tipps und Hilfe gibt"],
+  [224,"das","Fußballturnier","football/soccer tournament","футбольний турнір","futbol turnuvası","фудбалски турнир","ein Wettbewerb mit mehreren Fußballmannschaften"],
+  [225,"die","Mannschaften","teams","команди","takımlar","екипи / тимови","Gruppen von Spielern im Sport (Plural)"],
+  [226,"der","Stadtteil","district/neighborhood","район міста","semt / mahalle","градска населба / кварт","ein bestimmtes Viertel oder Gebiet einer Stadt"],
+  [227,"","vorher","before / beforehand","раніше / перед тим","önceden / daha önce","претходно / пред тоа","zuvor; vor diesem Zeitpunkt"],
+  [228,"die","Läden","shops/stores","магазини / крамниці","mağazalar / dükkanlar","продавници / дуќани","Geschäfte, in denen man Waren einkaufen kann (Plural)"],
+  [229,"","länger","longer","довше","daha uzun","подолго","Komparativ von lang (mehr Zeit oder mehr Strecke)"],
+  [230,"","verschiedenen","different/various","різні / різноманітні","farklı / çeşitli","различни","nicht gleich; unterschiedlich"],
+  [231,"das","Programm","program","програма","program","програма","der Plan einer Veranstaltung oder im Fernsehen"],
+  [232,"","beliebte","popular","популярний / улюблений","popüler / sevilen","популарна / омилена","von sehr vielen Menschen gemocht"],
+  [233,"die","Weststadt","western part of the city","західний район міста","şehrin batı yakası","западниот дел од градот","der Stadtteil, der im Westen liegt"],
+  [234,"","statt","instead of","замість","yerine","наместо","als Ersatz für etwas anderes"],
+  [235,"der","Höhepunkt","highlight/climax","кульмінація / головний момент","zirve / en önemli an","врв / кулминација","der beste und spannendste Moment eines Festes"],
 
   // ROOM POSTER WORDS (#236 - #281)
-  [236,"der","Stuhl","chair","стілець","sandalye"],
-  [237,"die","Leiter","ladder","драбина","merdiven"],
-  [238,"der","Schrank","cupboard / wardrobe","шафа","dolap"],
-  [239,"die","Farbe","paint / color","фарба / колір","boya / renk"],
-  [240,"der","Pinsel","paintbrush","пензель","boya fırçası"],
-  [241,"der","Tisch","table","стіл","masa"],
-  [242,"die","Lampe","lamp","лампа","lamba"],
-  [243,"das","Buch","book","книга","kitap"],
-  [244,"der","Fernseher","television / TV","телевізор","televizyon"],
-  [245,"der","Teppich","carpet / rug","килим","halı"],
-  [246,"das","Sofa","sofa / couch","диван","kanepe / koltuk"],
-  [247,"das","Bild","picture / painting","картина / фотографія","resim / tablo"],
-  [248,"das","Bücherregal","bookshelf","книжкова полиця","kitaplık"],
-  [249,"das","Sieb","sieve / strainer","сито / друшляк","süzgeç / elek"],
-  [250,"das","Spülmittel","dish soap / washing-up liquid","засіб для миття посуду","bulaşık deterjanı"],
-  [251,"die","Teller","plates (plural)","тарілки","tabaklar"],
-  [252,"der","Müll","trash / garbage / rubbish","сміття","çöp"],
-  [253,"die","Gabel","fork","виделка","çatal"],
-  [254,"das","Salz","salt","сіль","tuz"],
-  [255,"die","Gläser","glasses (plural)","склянки / келихи","bardaklar"],
-  [256,"die","Küche","kitchen","кухня","mutfak"],
-  [257,"der","Küchenschrank","kitchen cupboard / cabinet","кухонна шафа","mutfak dolabı"],
-  [258,"die","Spülmaschine","dishwasher","посудомийна машина","bulaşık makinesi"],
-  [259,"das","Waschbecken","sink / washbasin","раковина / умивальник","lavabo / eviye"],
-  [260,"der","Herd","stove / cooker","плита (кухонна)","ocak / fırın"],
-  [261,"die","Pflanze","plant","рослина / вазон","bitki"],
-  [262,"die","Flaschen","bottles (plural)","пляшки","şişeler"],
-  [263,"der","Ofen","oven","піч / духовка","fırın / soba"],
-  [264,"die","Kaffeemaschine","coffee machine","кавоварка / кавомашина","kahve makinesi"],
-  [265,"der","Wasserkocher","electric kettle","електрочайник","su ısıtıcısı (kettle)"],
-  [266,"der","Kühlschrank","refrigerator / fridge","холодильник","buzdolabı"],
-  [267,"der","Wasserhahn","faucet / tap","водопровідний кран","musluk"],
-  [268,"das","Kinderzimmer","children's room / nursery","дитяча кімната","çocuk odası"],
-  [269,"die","Spielzeuge","toys (plural)","іграшки","oyuncaklar"],
-  [270,"die","Magnetwand","magnetic board","магнітна дошка","mıknatıslı pano"],
-  [271,"der","Computer","computer","комп'ютер","bilgisayar"],
-  [272,"der","Vorhang","curtain / drape","штора / завіса","perde (kalın)"],
-  [273,"der","Ball","ball","м'яч","top"],
-  [274,"die","Matratze","mattress","матрац","yatak / şilte"],
-  [275,"das","Fenster","window","вікно","pencere"],
-  [276,"die","Gardine","net curtain / curtain","гардина / тюль","tül perde"],
-  [277,"das","Bett","bed","ліжко","yatak"],
-  [278,"der","Computertisch","computer desk","комп'ютерний стіл","bilgisayar masası"],
-  [279,"das","Kissen","pillow / cushion","подушка","yastık"],
-  [280,"die","Decke","blanket / ceiling","ковдра / стеля","battaniye / tavan"],
-  [281,"die","Heizung","heating / radiator","опалення / батарея","kalorifer / ısıtma"],
+  [236,"der","Stuhl","chair","стілець","sandalye","стол (за седење)","ein Möbelstück mit vier Beinen und Lehne zum Sitzen"],
+  [237,"die","Leiter","ladder","драбина","merdiven","скала (подвижна)","ein Gerät mit Stufen zum Hinaufklettern beim Renovieren"],
+  [238,"der","Schrank","cupboard / wardrobe","шафа","dolap","орман / плакар","ein großes hohes Möbelstück mit Türen für Kleidung oder Geschirr"],
+  [239,"die","Farbe","paint / color","фарба / колір","boya / renk","боја","flüssiges Material zum Streichen der Wand oder Rot/Blau/Grün"],
+  [240,"der","Pinsel","paintbrush","пензель","boya fırçası","четка за боење","ein Werkzeug mit Haaren zum Malen oder Streichen"],
+  [241,"der","Tisch","table","стіл","masa","маса","ein Möbelstück mit einer flachen Platte zum Essen oder Arbeiten"],
+  [242,"die","Lampe","lamp","лампа","lamba","ламба / светилка","ein elektrisches Gerät, das im Zimmer Licht macht"],
+  [243,"das","Buch","book","книга","kitap","книга","viele bedruckte Seiten Papier zum Lesen"],
+  [244,"der","Fernseher","television / TV","телевізор","televizyon","телевизор","ein Gerät mit Bildschirm für Filme und Nachrichten"],
+  [245,"der","Teppich","carpet / rug","килим","halı","тепих / килим","ein weicher Stoff, der auf dem Fußboden liegt"],
+  [246,"das","Sofa","sofa / couch","диван","kanepe / koltuk","софа / кауч / гарнитура","ein breites, weiches Sitzmöbel für mehrere Personen im Wohnzimmer"],
+  [247,"das","Bild","picture / painting","картина / фотографія","resim / tablo","слика","ein Foto oder Gemälde an der Wand"],
+  [248,"das","Bücherregal","bookshelf","книжкова полиця","kitaplık","полица за книги","ein offenes Möbelstück, in dem viele Bücher stehen"],
+  [249,"das","Sieb","sieve / strainer","сито / друшляк","süzgeç / elek","цедалка / сито","ein Küchengerät mit vielen kleinen Löchern zum Abgießen"],
+  [250,"das","Spülmittel","dish soap / washing-up liquid","засіб для миття посуду","bulaşık deterjanı","сјај / детергент за садови","flüssige Seife zum Abwaschen des Geschirrs"],
+  [251,"die","Teller","plates (plural)","тарілки","tabaklar","чинии","flaches rundes Geschirr, von dem man isst (Plural)"],
+  [252,"der","Müll","trash / garbage / rubbish","сміття","çöp","ѓубре / отпад","Abfall und Dinge, die man wegwirft"],
+  [253,"die","Gabel","fork","виделка","çatal","виљушка","ein Besteckteil mit Spitzen zum Essen"],
+  [254,"das","Salz","salt","сіль","tuz","сол","ein weißes Gewürz für die Suppe und das Essen"],
+  [255,"die","Gläser","glasses (plural)","склянки / келихи","bardaklar","чаши","Gefäße aus Glas, aus denen man Wasser oder Saft trinkt"],
+  [256,"die","Küche","kitchen","кухня","mutfak","кујна","der Raum in der Wohnung, in dem man kocht"],
+  [257,"der","Küchenschrank","kitchen cupboard / cabinet","кухонна шафа","mutfak dolabı","кујнски елемент / шкаф","ein Schrank speziell für Töpfe und Teller in der Küche"],
+  [258,"die","Spülmaschine","dishwasher","посудомийна машина","bulaşık makinesi","машина за миење садови","ein elektrisches Gerät, das Geschirr automatisch wäscht"],
+  [259,"das","Waschbecken","sink / washbasin","раковина / умивальник","lavabo / eviye","мијалник / лавабо","die Schüssel unter dem Wasserhahn zum Händewaschen"],
+  [260,"der","Herd","stove / cooker","плита (кухонна)","ocak / fırın","шпорет","das Küchengerät mit heißen Platten zum Kochen"],
+  [261,"die","Pflanze","plant","рослина / вазон","bitki","растение / цвеќе во саксија","etwas Grünes, das in der Erde wächst und Wasser braucht"],
+  [262,"die","Flaschen","bottles (plural)","пляшки","şişeler","шишиња","hohe Gefäße aus Glas oder Plastik für Getränke (Plural)"],
+  [263,"der","Ofen","oven","піч / духовка","fırın / soba","рерна / печка","das heiße Gerät zum Backen von Pizza oder Kuchen"],
+  [264,"die","Kaffeemaschine","coffee machine","кавоварка / кавомашина","kahve makinesi","кафемат / машина за кафе","ein Gerät, das frischen heißen Kaffee kocht"],
+  [265,"der","Wasserkocher","electric kettle","електрочайник","su ısıtıcısı (kettle)","електричен бокал за вода","ein elektrisches Gerät, das Wasser sehr schnell heiß macht"],
+  [266,"der","Kühlschrank","refrigerator / fridge","холодильник","buzdolabı","фрижидер","ein kalter Schrank in der Küche, der Lebensmittel frisch hält"],
+  [267,"der","Wasserhahn","faucet / tap","водопровідний кран","musluk","чешма / славина","das Metallrohr am Waschbecken, aus dem Wasser fließt"],
+  [268,"das","Kinderzimmer","children's room / nursery","дитяча кімната","çocuk odası","детска соба","das Zimmer in der Wohnung, in dem die Kinder schlafen und spielen"],
+  [269,"die","Spielzeuge","toys (plural)","іграшки","oyuncaklar","играчки","Dinge wie Puppen oder Autos, mit denen Kinder spielen"],
+  [270,"die","Magnetwand","magnetic board","магнітна дошка","mıknatıslı pano","магнетна табла","eine Tafel aus Metall für Notizen mit Magneten"],
+  [271,"der","Computer","computer","комп'ютер","bilgisayar","компјутер","ein elektronischer Rechner mit Bildschirm und Tastatur"],
+  [272,"der","Vorhang","curtain / drape","штора / завіса","perde (kalın)","завеса (дебела)","ein dicker Stoff vor dem Fenster gegen Sonne und Blicke"],
+  [273,"der","Ball","ball","м'яч","top","топка","ein rundes Spielzeug zum Werfen oder Fußballspielen"],
+  [274,"die","Matratze","mattress","матрац","yatak / şilte","душек","das dicke Polster im Bett, auf dem man liegt"],
+  [275,"das","Fenster","window","вікно","pencere","прозорец","die Öffnung aus Glas in der Wand für Licht und Luft"],
+  [276,"die","Gardine","net curtain / curtain","гардина / тюль","tül perde","завеса (тенка / перде)","ein dünner, heller Vorhang direkt vor dem Fenster"],
+  [277,"das","Bett","bed","ліжко","yatak","кревет","das Möbelstück, in dem man nachts schläft"],
+  [278,"der","Computertisch","computer desk","комп'ютерний стіл","bilgisayar masası","компјутерска маса / биро","ein Schreibtisch speziell für den Computer"],
+  [279,"das","Kissen","pillow / cushion","подушка","yastık","перница","ein weiches Polster für den Kopf im Bett oder auf dem Sofa"],
+  [280,"die","Decke","blanket / ceiling","ковдра / стеля","battaniye / tavan","ќебе / таван","ein warmer Stoff zum Zudecken im Bett oder der obere Teil des Zimmers"],
+  [281,"die","Heizung","heating / radiator","опалення / батарея","kalorifer / ısıtma","парно греење / радијатор","das Gerät an der Wand, das das Zimmer im Winter warm macht"],
 
-  // NEW WECHSELPRÄPOSITIONEN WORKSHEET WORDS (#282 - #322)
-  [282,"die","Tür","door","двері","kapı"],
-  [283,"die","Hausschuhe","slippers (plural)","домашні капці","ev terlikleri"],
-  [284,"der","Ausweis","ID card / identity card","посвідчення особи / документ","kimlik kartı"],
-  [285,"die","Tasche","bag / pocket","сумка / кишеня","çanta / cep"],
-  [286,"der","Balkon","balcony","балкон","balkon"],
-  [287,"die","Tafel","blackboard / board","класна дошка","yazı tahtası"],
-  [288,"die","Zeitung","newspaper","газета","gazete"],
-  [289,"die","Haltestelle","bus / tram stop","зупинка транспорту","durak"],
-  [290,"die","Post","post office / mail","пошта","postane / posta"],
-  [291,"die","Bäckerei","bakery","пекарня / булочна","fırın (ekmek)"],
-  [292,"die","Bank","bank / bench","банк / лавка","banka / bank"],
-  [293,"der","Briefkasten","mailbox / letterbox","поштова скринька","posta kutusu"],
-  [294,"der","Schlüssel","key","ключ","anahtar"],
-  [295,"der","Toaster","toaster","тостер","ekmek kızartma makinesi"],
-  [296,"der","Kugelschreiber","ballpoint pen","кулькова ручка","tükenmez kalem"],
-  [297,"die","Dusche","shower","душ","duş"],
-  [298,"der","Boden","floor / ground","підлога / земля","zemin / yer"],
-  [299,"die","Tasse","cup","чашка","fincan / kupa"],
-  [300,"der","Löffel","spoon","ложка","kaşık"],
-  [301,"das","Regal","shelf","полиця","raf"],
-  [302,"die","Schere","scissors","ножиці","makas"],
-  [303,"die","Brille","glasses / spectacles","окуляри","gözlük"],
-  [304,"die","Uhr","clock / watch","годинник","saat"],
-  [305,"das","Bügeleisen","iron (for clothes)","праска","ütü"],
-  [306,"der","Sessel","armchair","крісло","koltuk"],
-  [307,"die","Garage","garage","гараж","garaj"],
-  [308,"der","Mantel","coat","пальто","palto / kaban"],
-  [309,"die","Kommode","chest of drawers / dresser","комод","şifonyer / çekmeceli dolap"],
-  [310,"die","Waschmaschine","washing machine","пральна машина","çamaşır makinesi"],
-  [311,"","legen / liegen","to lay (Wohin/Akk) / to lie (Wo/Dat)","класти (Куди?) / лежати (Де?)","koymak (yatay) / durmak (yatay)"],
-  [312,"","stellen / stehen","to place upright (Wohin/Akk) / to stand (Wo/Dat)","ставити (Куди?) / стояти (Де?)","dik koymak / ayakta durmak"],
-  [313,"","setzen / sitzen","to sit down (Wohin/Akk) / to sit (Wo/Dat)","сідати (Куди?) / сидіти (Де?)","oturtmak / oturmak"],
-  [314,"","hängen","to hang (Wohin=Akk / Wo=Dat)","вішати (Куди?) / висіти (Де?)","asmak / asılı durmak"],
-  [315,"","an","on (vertical surface: wall/board/door)","на (вертикальній поверхні) / біля","bitişiğinde / üzerinde (dikey: duvar)"],
-  [316,"","auf","on (horizontal surface: table/sofa/floor)","на (горизонтальній поверхні)","üzerinde (yatay: masa)"],
-  [317,"","hinter","behind","позаду / за","arkasında"],
-  [318,"","in","in / inside / into","в / всередині","içinde / içine"],
-  [319,"","neben","next to / beside","поруч з / біля","yanında"],
-  [320,"","über","over / above","над","üstünde (temassız)"],
-  [321,"","unter","under / beneath","під","altında"],
-  [322,"","vor / zwischen","in front of / between","перед / між","önünde / arasında"]
+  // WECHSELPRÄPOSITIONEN WORKSHEET WORDS (#282 - #322)
+  [282,"die","Tür","door","двері","kapı","врата","der bewegliche Eingang in ein Zimmer oder Haus"],
+  [283,"die","Hausschuhe","slippers (plural)","домашні капці","ev terlikleri","домашни папучи / топлинки","bequeme Schuhe, die man nur in der Wohnung trägt"],
+  [284,"der","Ausweis","ID card / identity card","посвідчення особи / документ","kimlik kartı","лична карта / документ","ein offizielles Dokument mit Foto und Namen der Person"],
+  [285,"die","Tasche","bag / pocket","сумка / кишеня","çanta / cep","торба / чанта / џеб","ein Behälter zum Tragen von Sachen beim Einkaufen oder Unterwegssein"],
+  [286,"der","Balkon","balcony","балкон","balkon","балкон / тераса","eine kleine Plattform draußen an der Wohnung im oberen Stock"],
+  [287,"die","Tafel","blackboard / board","класна дошка","yazı tahtası","училишна табла","die große Fläche an der Wand im Klassenzimmer zum Anschreiben"],
+  [288,"die","Zeitung","newspaper","газета","gazete","весник","gedruckte Blätter aus Papier mit aktuellen Nachrichten"],
+  [289,"die","Haltestelle","bus / tram stop","зупинка транспорту","durak","автобуска постојка / станица","der Ort an der Straße, wo der Bus oder die Straßenbahn hält"],
+  [290,"die","Post","post office / mail","пошта","postane / posta","пошта","das Amt für Briefe und Pakete"],
+  [291,"die","Bäckerei","bakery","пекарня / булочна","fırın (ekmek)","пекара / фурна","das Geschäft, in dem man frisches Brot und Brötchen kauft"],
+  [292,"die","Bank","bank / bench","банк / лавка","banka / bank","банка / клупа","ein Institut für Geld oder ein langer Sitz im Park"],
+  [293,"der","Briefkasten","mailbox / letterbox","поштова скринька","posta kutusu","поштенско сандаче","der Kasten an der Haustür, in den die Post Briefe wirft"],
+  [294,"der","Schlüssel","key","ключ","anahtar","клуч","ein Gegenstand aus Metall zum Aufschließen der Tür"],
+  [295,"der","Toaster","toaster","тостер","ekmek kızartma makinesi","тостер","ein kleines Küchengerät, das Brotscheiben röstet"],
+  [296,"der","Kugelschreiber","ballpoint pen","кулькова ручка","tükenmez kalem","хемиско пенкало","ein Stift mit Tinte zum Schreiben (kurz: der Kuli)"],
+  [297,"die","Dusche","shower","душ","duş","туш / туш-кабина","der Platz im Badezimmer, wo Wasser von oben kommt"],
+  [298,"der","Boden","floor / ground","підлога / земля","zemin / yer","под / земја","die Fläche unten im Zimmer, auf der man steht und geht"],
+  [299,"die","Tasse","cup","чашка","fincan / kupa","шолја / филџан","ein kleines Gefäß mit Henkel für heißen Kaffee oder Tee"],
+  [300,"der","Löffel","spoon","ложка","kaşık","лажица","ein rundes Besteckteil, mit dem man Suppe isst"],
+  [301,"das","Regal","shelf","полиця","raf","полица / рафт","ein offenes Möbelstück mit Brettern für Bücher oder Dinge"],
+  [302,"die","Schere","scissors","ножиці","makas","ножици","ein Werkzeug mit zwei Klingen zum Schneiden von Papier"],
+  [303,"die","Brille","glasses / spectacles","окуляри","gözlük","очила / наочари","Gläser auf der Nase, damit man besser sehen kann"],
+  [304,"die","Uhr","clock / watch","годинник","saat","часовник / саат","ein Gerät, das die genaue Stunde und Minute zeigt"],
+  [305,"das","Bügeleisen","iron (for clothes)","праска","ütü","пегла","ein heißes Gerät, mit dem man Hemden und Kleidung glatt macht"],
+  [306,"der","Sessel","armchair","крісло","koltuk","фотелја","ein sehr bequemer, weicher Stuhl mit Armlehnen für eine Person"],
+  [307,"die","Garage","garage","гараж","garaj","гаража","ein kleiner Raum oder ein Gebäude zum Parken für das Auto"],
+  [308,"der","Mantel","coat","пальто","palto / kaban","палто / капут","eine lange, warme Jacke für den Winter"],
+  [309,"die","Kommode","chest of drawers / dresser","комод","şifonyer / çekmeceli dolap","комода (со фиоки)","ein halbhoher Schrank mit mehreren Schubladen"],
+  [310,"die","Waschmaschine","washing machine","пральна машина","çamaşır makinesi","машина за перење алишта","das große Gerät im Bad oder in der Küche, das Kleidung wäscht"],
+  [311,"","legen / liegen","to lay (Wohin/Akk) / to lie (Wo/Dat)","класти (Куди?) / лежати (Де?)","koymak (yatay) / durmak (yatay)","става хоризонтално / лежи","etwas flach/horizontal platzieren (Akk) vs. flach an einem Ort sein (Dat)"],
+  [312,"","stellen / stehen","to place upright (Wohin/Akk) / to stand (Wo/Dat)","ставити (Куди?) / стояти (Де?)","dik koymak / ayakta durmak","поставува исправено / стои","etwas aufrecht platzieren (Akk) vs. aufrecht an einem Ort sein (Dat)"],
+  [313,"","setzen / sitzen","to sit down (Wohin/Akk) / to sit (Wo/Dat)","сідати (Куди?) / сидіти (Де?)","oturtmak / oturmak","седнува (акција) / седи","sich auf einen Platz bewegen (Akk) vs. auf einem Platz sein (Dat)"],
+  [314,"","hängen","to hang (Wohin=Akk / Wo=Dat)","вішати (Куди?) / висіти (Де?)","asmak / asılı durmak","закачува (на ѕид) / виси","etwas oben befestigen (Akk) oder an der Wand befestigt sein (Dat)"],
+  [315,"","an","on (vertical surface: wall/board/door)","на (вертикальній поверхні) / біля","bitişiğinde / üzerinde (dikey)","на (вертикална површина) / до","Präposition für Kontakt an einer vertikalen Seite (Wand, Tür, Fenster)"],
+  [316,"","auf","on (horizontal surface: table/sofa/floor)","на (горизонтальній поверхні)","üzerinde (yatay: masa)","на (хоризонтална површина)","Präposition für Kontakt oben auf einer flachen Seite (Tisch, Boden)"],
+  [317,"","hinter","behind","позаду / за","arkasında","зад / позади","Präposition auf der Rückseite von etwas (Gegenteil von vor)"],
+  [318,"","in","in / inside / into","в / всередині","içinde / içine","во / внатре во","Präposition im Inneren von einem Raum oder Schrank"],
+  [319,"","neben","next to / beside","поруч з / біля","yanında","до / покрај","Präposition direkt an der linken oder rechten Seite"],
+  [320,"","über","over / above","над","üstünde (temassız)","над","Präposition höher als etwas anderes (ohne Kontakt)"],
+  [321,"","unter","under / beneath","під","altında","под","Präposition tiefer als etwas anderes (Gegenteil von über/auf)"],
+  [322,"","vor / zwischen","in front of / between","перед / між","önünde / arasında","пред / помеѓу","Präposition an der Vorderseite bzw. in der Mitte von zwei Dingen"]
 ];
 
-// 9 Spatial Prepositions Visual Matrix (From Berliner Platz 2 Mouse Poster)
 const NINE_PREPOSITIONS = [
-  { prep: "an", icon: "🧀🐭", en: "on (vertical side)", uk: "на (вертикально) / біля", tr: "bitişiğinde (dikey)", exWo: "Das Bild hängt an der Wand.", exWohin: "Ich hänge das Bild an die Wand." },
-  { prep: "in", icon: "🧀🕳️", en: "in / inside", uk: "в / всередині", tr: "içinde / içine", exWo: "Der Saft steht im (in dem) Kühlschrank.", exWohin: "Leg den Schlüssel in den Briefkasten." },
-  { prep: "über", icon: "🐭⬆️🧀", en: "above / over", uk: "над", tr: "üstünde (temassız)", exWo: "Das Regal hängt über dem Bett.", exWohin: "Wer hat das Regal über das Bett gehängt?" },
-  { prep: "auf", icon: "🐭⬇️🧀", en: "on top of (horizontal)", uk: "на (зверху)", tr: "üzerinde (yatay)", exWo: "Der Schlüssel liegt auf dem Tisch.", exWohin: "Ich lege den Schlüssel auf den Tisch." },
-  { prep: "neben", icon: "🐭↔️🧀", en: "next to / beside", uk: "поруч з / біля", tr: "yanında", exWo: "Sandra sitzt neben ihrer Freundin.", exWohin: "Ich stelle das Bett rechts neben das Fenster." },
-  { prep: "vor", icon: "🐭🛡️🧀", en: "in front of", uk: "перед", tr: "önünde", exWo: "Bitte warten Sie vor der Tür.", exWohin: "Bitte stell das Auto vor das Haus." },
-  { prep: "zwischen", icon: "🧀🐭🥫", en: "between", uk: "між", tr: "arasında", exWo: "Der Teppich liegt zwischen dem Bett und der Kommode.", exWohin: "Laura legt den Teppich zwischen das Bett und die Kommode." },
-  { prep: "hinter", icon: "🧀👀🐭", en: "behind", uk: "позаду / за", tr: "arkasında", exWo: "Der Supermarkt ist hinter der Post.", exWohin: "Die Maus läuft hinter den Schrank." },
-  { prep: "unter", icon: "🧀⬇️🐭", en: "under / beneath", uk: "під", tr: "altında", exWo: "Die Hausschuhe sind unter dem Tisch.", exWohin: "Warum hast du die Zeitung unter das Bett gelegt?" }
+  { prep: "an", icon: "🧀🐭", en: "on (vertical side)", de: "vertikaler Kontakt (Wand/Tür)", uk: "на (вертикально) / біля", tr: "bitişiğinde (dikey)", mk: "на (вертикално) / до", exWo: "Das Bild hängt an der Wand.", exWohin: "Ich hänge das Bild an die Wand." },
+  { prep: "in", icon: "🧀🕳️", en: "in / inside", de: "im Inneren (Raum/Schrank)", uk: "в / всередині", tr: "içinde / içine", mk: "во / внатре", exWo: "Der Saft steht im (in dem) Kühlschrank.", exWohin: "Leg den Schlüssel in den Briefkasten." },
+  { prep: "über", icon: "🐭⬆️🧀", en: "above / over", de: "oberhalb (ohne Kontakt)", uk: "над", tr: "üstünde (temassız)", mk: "над (без допир)", exWo: "Das Regal hängt über dem Bett.", exWohin: "Wer hat das Regal über das Bett gehängt?" },
+  { prep: "auf", icon: "🐭⬇️🧀", en: "on top of (horizontal)", de: "oben drauf (horizontal)", uk: "на (зверху)", tr: "üzerinde (yatay)", mk: "на (одозгора)", exWo: "Der Schlüssel liegt auf dem Tisch.", exWohin: "Ich lege den Schlüssel auf den Tisch." },
+  { prep: "neben", icon: "🐭↔️🧀", en: "next to / beside", de: "seitlich links oder rechts", uk: "поруч з / біля", tr: "yanında", mk: "до / покрај", exWo: "Sandra sitzt neben ihrer Freundin.", exWohin: "Ich stelle das Bett rechts neben das Fenster." },
+  { prep: "vor", icon: "🐭🛡️🧀", en: "in front of", de: "an der Vorderseite", uk: "перед", tr: "önünde", mk: "пред", exWo: "Bitte warten Sie vor der Tür.", exWohin: "Bitte stell das Auto vor das Haus." },
+  { prep: "zwischen", icon: "🧀🐭🥫", en: "between", de: "in der Mitte von zwei Dingen", uk: "між", tr: "arasında", mk: "помеѓу", exWo: "Der Teppich liegt zwischen dem Bett und der Kommode.", exWohin: "Laura legt den Teppich zwischen das Bett und die Kommode." },
+  { prep: "hinter", icon: "🧀👀🐭", en: "behind", de: "an der Rückseite", uk: "позаду / за", tr: "arkasında", mk: "зад / позади", exWo: "Der Supermarkt ist hinter der Post.", exWohin: "Die Maus läuft hinter den Schrank." },
+  { prep: "unter", icon: "🧀⬇️🐭", en: "under / beneath", de: "unterhalb / darunter", uk: "під", tr: "altında", mk: "под", exWo: "Die Hausschuhe sind unter dem Tisch.", exWohin: "Warum hast du die Zeitung unter das Bett gelegt?" }
 ];
 
-// Intelligent 3-Step Wechselpräpositionen Drills (Directly from your 5 Worksheets!)
 const WECHSEL_WORKSHEET_DRILLS = [
   {
     sentence: "Das habe ich gestern in ___ Zeitung gelesen.",
@@ -899,8 +985,10 @@ const WECHSEL_WORKSHEET_DRILLS = [
     trapWarning: true,
     explain: {
       en: "Worksheet Trap #1: Reading happens in a static place (Wo? = Dativ). Since it is 'die Zeitung', Dativ feminine is 'in der Zeitung' (not 'die'!).",
+      de: "Falle #1: „lesen“ passiert an einem festen Ort (Wo? = Dativ). Da es „die Zeitung“ heißt, wird daraus im Dativ „in der Zeitung“!",
       uk: "Пастка з листка #1: Читання відбувається на місці (Де? = Wo? = Dativ). Оскільки 'die Zeitung' жіночого роду, у Dativ стає 'in der Zeitung'!",
-      tr: "Çalışma Kağıdı Tuzağı #1: Okuma eylemi sabit bir yerde gerçekleşir (Wo? = Dativ). 'die Zeitung' Dativ halde 'in der Zeitung' olur!"
+      tr: "Çalışma Kağıdı Tuzağı #1: Okuma eylemi sabit bir yerde gerçekleşir (Wo? = Dativ). 'die Zeitung' Dativ halde 'in der Zeitung' olur!",
+      mk: "Замка #1: Читањето се одвива на фиксно место (Каде? = Wo? = Dativ). Бидејќи е 'die Zeitung', во Dativ станува 'in der Zeitung'!"
     }
   },
   {
@@ -910,8 +998,10 @@ const WECHSEL_WORKSHEET_DRILLS = [
     trapWarning: true,
     explain: {
       en: "Worksheet Trap #2: Christin is performing an action onto the wall (Wohin? = Akkusativ). Therefore: 'an die Wand' (whereas 'Das Bild hängt an der Wand' is Wo?/Dativ).",
+      de: "Falle #2: Christin bewegt das Bild aktiv zur Wand (Wohin? = Akkusativ). Deshalb heißt es: „an die Wand“!",
       uk: "Пастка з листка #2: Крістін вішає картину на стіну (Куди? = Wohin? = Akkusativ). Тому: 'an die Wand'!",
-      tr: "Çalışma Kağıdı Tuzağı #2: Christin resmi duvara asıyor (Wohin? = Hareket = Akkusativ). Bu yüzden 'an die Wand' olur!"
+      tr: "Çalışma Kağıdı Tuzağı #2: Christin resmi duvara asıyor (Wohin? = Hareket = Akkusativ). Bu yüzden 'an die Wand' olur!",
+      mk: "Замка #2: Кристин активно ја закачува сликата на ѕидот (Каде/Накаде? = Wohin? = Akkusativ). Затоа е: 'an die Wand'!"
     }
   },
   {
@@ -921,8 +1011,10 @@ const WECHSEL_WORKSHEET_DRILLS = [
     trapWarning: true,
     explain: {
       en: "Worksheet Trap #3: 'liegen' is static position (Wo? = Dativ). 'der Tisch' in Dativ becomes 'unter dem Tisch' (with -m, not -n!).",
+      de: "Falle #3: „liegen“ ist eine feste Position (Wo? = Dativ). „der Tisch“ wird im Dativ zu „unter dem Tisch“ (mit -m!).",
       uk: "Пастка з листка #3: 'liegen' (лежати) — це спокій (Wo? = Dativ). 'der Tisch' у Dativ стає 'unter dem Tisch' (з літерою -m)!",
-      tr: "Çalışma Kağıdı Tuzağı #3: 'liegen' sabit konumdur (Wo? = Dativ). 'der Tisch' Dativ halde 'unter dem Tisch' (-m ile) olur!"
+      tr: "Çalışma Kağıdı Tuzağı #3: 'liegen' sabit konumdur (Wo? = Dativ). 'der Tisch' Dativ halde 'unter dem Tisch' (-m ile) olur!",
+      mk: "Замка #3: 'liegen' (лежи) означува мирување (Wo? = Dativ). 'der Tisch' во Dativ станува 'unter dem Tisch' (со -m, а не -n!)."
     }
   },
   {
@@ -932,8 +1024,10 @@ const WECHSEL_WORKSHEET_DRILLS = [
     trapWarning: true,
     explain: {
       en: "Worksheet Trap #4: 'legen / gelegt' is movement onto the cupboard (Wohin? = Akkusativ). 'der Schrank' in Akkusativ becomes 'auf den Schrank' (with -n!).",
+      de: "Falle #4: „gelegt“ ist eine Bewegung (Wohin? = Akkusativ). „der Schrank“ wird im Akkusativ zu „auf den Schrank“ (mit -n!).",
       uk: "Пастка з листка #4: 'gelegt' (поклав) — це рух (Wohin? = Akkusativ). 'der Schrank' в Akkusativ стає 'auf den Schrank' (з -n)!",
-      tr: "Çalışma Kağıdı Tuzağı #4: 'gelegt' (koydu) yönelmedir (Wohin? = Akkusativ). 'der Schrank' Akkusativ halde 'auf den Schrank' (-n ile) olur!"
+      tr: "Çalışma Kağıdı Tuzağı #4: 'gelegt' (koydu) yönelmedir (Wohin? = Akkusativ). 'der Schrank' Akkusativ halde 'auf den Schrank' (-n ile) olur!",
+      mk: "Замка #4: 'gelegt' (стави) е движење (Wohin? = Akkusativ). 'der Schrank' во Akkusativ станува 'auf den Schrank' (со -n!)."
     }
   },
   {
@@ -943,8 +1037,10 @@ const WECHSEL_WORKSHEET_DRILLS = [
     trapWarning: true,
     explain: {
       en: "Worksheet Trap #5: 'stellen / gestellt' is movement (Wohin? = Akkusativ). 'der Kühlschrank' becomes 'auf den Kühlschrank'.",
+      de: "Falle #5: „gestellt“ beschreibt eine aktive Platzierung (Wohin? = Akkusativ). „der Kühlschrank“ -> „auf den Kühlschrank“.",
       uk: "Пастка з листка #5: 'gestellt' (поставив) — це рух (Wohin? = Akkusativ). 'der Kühlschrank' стає 'auf den Kühlschrank'.",
-      tr: "Çalışma Kağıdı Tuzağı #5: 'gestellt' hareket bildirir (Wohin? = Akkusativ). 'der Kühlschrank' -> 'auf den Kühlschrank' olur."
+      tr: "Çalışma Kağıdı Tuzağı #5: 'gestellt' hareket bildirir (Wohin? = Akkusativ). 'der Kühlschrank' -> 'auf den Kühlschrank' olur.",
+      mk: "Замка #5: 'gestellt' (постави) е движење (Wohin? = Akkusativ). 'der Kühlschrank' станува 'auf den Kühlschrank'."
     }
   },
   {
@@ -954,8 +1050,10 @@ const WECHSEL_WORKSHEET_DRILLS = [
     trapWarning: true,
     explain: {
       en: "Worksheet Trap #6: In German, you sit 'auf einem Stuhl', but 'IN einem Sessel' (because an armchair surrounds you on the sides!).",
+      de: "Falle #6: Auf Deutsch sitzt man „auf einem Stuhl“, aber „IN einem Sessel“!",
       uk: "Пастка з листка #6: У німецькій мові сидять 'auf dem Stuhl' (на стільці), але 'IN meinem Sessel' (у кріслі)!",
-      tr: "Çalışma Kağıdı Tuzağı #6: Almancada sandalyenin üstünde ('auf dem Stuhl'), ama koltuğun İÇİNDE ('in meinem Sessel') oturulur!"
+      tr: "Çalışma Kağıdı Tuzağı #6: Almancada sandalyenin üstünde ('auf dem Stuhl'), ama koltuğun İÇİNDE ('in meinem Sessel') oturulur!",
+      mk: "Замка #6: На германски се седи 'auf dem Stuhl' (на стол), но 'IN meinem Sessel' (во фотелја)!"
     }
   },
   {
@@ -965,8 +1063,10 @@ const WECHSEL_WORKSHEET_DRILLS = [
     trapWarning: true,
     explain: {
       en: "Worksheet Trap #7: Do not repeat 'zwischen' after 'und'! Just write the Dativ article for 'die Kommode' -> 'zwischen dem Bett und der Kommode'.",
+      de: "Falle #7: Nach „und“ wird „zwischen“ nicht wiederholt! Nur der Dativ-Artikel von „die Kommode“ -> „der Kommode“.",
       uk: "Пастка з листка #7: Не повторюйте слово 'zwischen' після 'und'! Потрібен лише артикль Dativ від 'die Kommode' -> 'der Kommode'.",
-      tr: "Çalışma Kağıdı Tuzağı #7: 'und' kelimesinden sonra 'zwischen' tekrar yazılmaz! Sadece 'die Kommode' için Dativ artikel yazılır -> 'der Kommode'."
+      tr: "Çalışma Kağıdı Tuzağı #7: 'und' kelimesinden sonra 'zwischen' tekrar yazılmaz! Sadece 'die Kommode' için Dativ artikel yazılır -> 'der Kommode'.",
+      mk: "Замка #7: Не го повторувај зборот 'zwischen' по 'und'! Напиши го само членот во Dativ за 'die Kommode' -> 'der Kommode'."
     }
   },
   {
@@ -976,8 +1076,10 @@ const WECHSEL_WORKSHEET_DRILLS = [
     trapWarning: true,
     explain: {
       en: "Worksheet Trap #8: 'legt' = Wohin? (Akkusativ). Don't repeat 'zwischen' after 'und'—just write the Akkusativ article for 'die Kommode' -> 'die'.",
+      de: "Falle #8: „legt“ = Wohin? (Akkusativ). Nach „und“ steht nur der Akkusativ-Artikel von „die Kommode“ -> „die“.",
       uk: "Пастка з листка #8: 'legt' = Куди? (Akkusativ). Після 'und' пишемо лише артикль Akkusativ для 'die Kommode' -> 'die'.",
-      tr: "Çalışma Kağıdı Tuzağı #8: 'legt' = Wohin? (Akkusativ). 'und' sonrasında sadece 'die Kommode' için Akkusativ artikel yazılır -> 'die'."
+      tr: "Çalışma Kağıdı Tuzağı #8: 'legt' = Wohin? (Akkusativ). 'und' sonrasında sadece 'die Kommode' için Akkusativ artikel yazılır -> 'die'.",
+      mk: "Замка #8: 'legt' = Каде/Накаде? (Akkusativ). По 'und' напиши го само членот во Akkusativ за 'die Kommode' -> 'die'."
     }
   },
   {
@@ -987,8 +1089,10 @@ const WECHSEL_WORKSHEET_DRILLS = [
     trapWarning: false,
     explain: {
       en: "warten = static location (Wo? = Dativ). 'die Tür' in Dativ becomes 'vor der Tür'.",
+      de: "„warten“ = fester Ort (Wo? = Dativ). „die Tür“ wird im Dativ zu „vor der Tür“.",
       uk: "warten (чекати) = місце (Wo? = Dativ). 'die Tür' у Dativ стає 'vor der Tür'.",
-      tr: "warten (beklemek) = sabit konum (Wo? = Dativ). 'die Tür' Dativ halde 'vor der Tür' olur."
+      tr: "warten (beklemek) = sabit konum (Wo? = Dativ). 'die Tür' Dativ halde 'vor der Tür' olur.",
+      mk: "warten (чека) = мирување (Wo? = Dativ). 'die Tür' во Dativ станува 'vor der Tür'."
     }
   },
   {
@@ -998,8 +1102,10 @@ const WECHSEL_WORKSHEET_DRILLS = [
     trapWarning: false,
     explain: {
       en: "werfen = throwing movement into the trash (Wohin? = Akkusativ). 'der Müll' -> 'in den Müll'.",
+      de: "„werfen“ = Bewegung (Wohin? = Akkusativ). „der Müll“ wird im Akkusativ zu „in den Müll“.",
       uk: "werfen (кидати) = рух кудись (Wohin? = Akkusativ). 'der Müll' -> 'in den Müll'.",
-      tr: "werfen (atmak) = hareket (Wohin? = Akkusativ). 'der Müll' -> 'in den Müll' olur."
+      tr: "werfen (atmak) = hareket (Wohin? = Akkusativ). 'der Müll' -> 'in den Müll' olur.",
+      mk: "werfen (фрла) = движење (Wohin? = Akkusativ). 'der Müll' станува 'in den Müll'."
     }
   },
   {
@@ -1009,8 +1115,10 @@ const WECHSEL_WORKSHEET_DRILLS = [
     trapWarning: false,
     explain: {
       en: "stellen = movement (Wohin? = Akkusativ). 'das Haus' in Akkusativ stays 'vor das Haus'.",
+      de: "„stellen“ = Bewegung (Wohin? = Akkusativ). „das Haus“ bleibt im Akkusativ „vor das Haus“.",
       uk: "stellen (ставити) = рух (Wohin? = Akkusativ). 'das Haus' в Akkusativ залишається 'vor das Haus'.",
-      tr: "stellen = hareket (Wohin? = Akkusativ). 'das Haus' Akkusativ halde 'vor das Haus' olarak kalır."
+      tr: "stellen = hareket (Wohin? = Akkusativ). 'das Haus' Akkusativ halde 'vor das Haus' olarak kalır.",
+      mk: "stellen (поставува) = движење (Wohin? = Akkusativ). 'das Haus' во Akkusativ останува 'vor das Haus'."
     }
   },
   {
@@ -1020,13 +1128,14 @@ const WECHSEL_WORKSHEET_DRILLS = [
     trapWarning: false,
     explain: {
       en: "legen = action/movement (Wohin? = Akkusativ). 'der Briefkasten' -> 'in den Briefkasten'.",
+      de: "„legen“ = Bewegung (Wohin? = Akkusativ). „der Briefkasten“ -> „in den Briefkasten“.",
       uk: "legen (класти) = рух (Wohin? = Akkusativ). 'der Briefkasten' -> 'in den Briefkasten'.",
-      tr: "legen (koymak) = hareket (Wohin? = Akkusativ). 'der Briefkasten' -> 'in den Briefkasten'."
+      tr: "legen (koymak) = hareket (Wohin? = Akkusativ). 'der Briefkasten' -> 'in den Briefkasten'.",
+      mk: "legen (става) = движење (Wohin? = Akkusativ). 'der Briefkasten' -> 'in den Briefkasten'."
     }
   }
 ];
 
-// Position vs. Direction Verb Pair Drills (Sheet 5: Richtungsverben und Positionsverben)
 const VERB_PAIR_DRILLS = [
   { sentence: "Der Schlüssel _____ auf dem Tisch. (Wo? = Dativ, horizontal)", answer: "liegt", options: ["liegt", "legt", "steht"], explain: "Static horizontal position (Wo? + auf dem Tisch) = liegen -> liegt." },
   { sentence: "Ich _____ den Schlüssel auf den Tisch. (Wohin? = Akkusativ, horizontal)", answer: "lege", options: ["lege", "liege", "stelle"], explain: "Active placement horizontally (Wohin? + auf den Tisch) = legen -> lege." },
@@ -1036,7 +1145,17 @@ const VERB_PAIR_DRILLS = [
   { sentence: "Leg dich auf das Sofa oder _____ dich in den Sessel! (Wohin? = Akkusativ)", answer: "setz", options: ["setz", "sitz", "steh"], explain: "Movement into sitting position (sich setzen + Akkusativ) -> setz dich!" }
 ];
 
-const STORAGE_KEY = "memodeutsch_v6_state";
+// ============================================================================
+// PERMANENT STORAGE KEY & AUTO-MIGRATION ENGINE
+// ============================================================================
+const STORAGE_KEY = "MEMODEUTSCH_MASTER_PROGRESS";
+const LEGACY_KEYS = [
+  "memodeutsch_v6_state",
+  "memodeutsch_v5_trilingual",
+  "memodeutsch_v4_state",
+  "memodeutsch_v2_progress"
+];
+
 let nativeLang = "en";
 
 let appState = {
@@ -1044,11 +1163,13 @@ let appState = {
   nativeLang: "en",
   streak: 0,
   lastStudyDate: null,
+  recentWordIds: [],   // Anti-repeat cooldown buffer so 5-min sessions never repeat the same words!
+  recentDrillIdx: [],  // Anti-repeat cooldown buffer for Wechselpräpositionen drills
   progress: {}
 };
 
-const VOCAB_DECK = RAW_TRILINGUAL_GERMAN.map(row => {
-  const [id, art, word, en, uk, tr] = row;
+const VOCAB_DECK = RAW_MULTILINGUAL_GERMAN.map(row => {
+  const [id, art, word, en, uk, tr, mk, de] = row;
   const hasValidArticle = ["der", "die", "das", "der/die"].includes(art);
   let sent = `Im Alltag ist „{0}“ sehr wichtig.`;
   if (id >= 236 && id <= 248) sent = `Im Wohnzimmer steht ${hasValidArticle ? art : ''} {0}.`;
@@ -1061,7 +1182,7 @@ const VOCAB_DECK = RAW_TRILINGUAL_GERMAN.map(row => {
   return {
     id, article: art, hasValidArticle, word,
     fullGerman: hasValidArticle ? `${art} ${word}` : word,
-    meanings: { en, uk, tr },
+    meanings: { en, de, uk, tr, mk },
     sentenceTemplate: sent
   };
 });
@@ -1073,8 +1194,10 @@ function getMeaning(item, lang = nativeLang) {
 function getLocalizedMnemonic(item, lang = nativeLang) {
   const m = getMeaning(item, lang);
   const full = item.fullGerman;
+  if (lang === "de") return `Bedeutung: „${full}“ = ${m}. Sprechen Sie das Wort laut mit Artikel aus.`;
   if (lang === "uk") return `Запам'ятайте: "${full}" = ${m}. Проговоріть це слово вголос разом з артиклем.`;
   if (lang === "tr") return `Unutmayın: "${full}" = ${m}. Bu kelimeyi artikeliyle birlikte sesli söyleyin.`;
+  if (lang === "mk") return `Запомни: „${full}“ = ${m}. Изговори го зборот гласно заедно со членот.`;
   return `Anchor "${full}" = ${m} in a vivid mental scene inside your apartment.`;
 }
 
@@ -1087,13 +1210,64 @@ function getDefaultProgress() {
   };
 }
 
+function normalizeWordProgressRecord(w) {
+  const def = getDefaultProgress();
+  return {
+    ...def,
+    ...w,
+    failedCount: w.failedCount ?? w.incorrect ?? 0,
+    vectors: {
+      ...def.vectors,
+      ...(w.vectors || {}),
+      production: w.vectors?.production ?? (w.seen > 0 ? Math.round(((w.correct || 0) / w.seen) * 100) : 0),
+      meaning: w.vectors?.meaning ?? (w.seen > 0 ? Math.round(((w.correct || 0) / w.seen) * 100) : 0)
+    }
+  };
+}
+
 function loadAppState() {
   try {
-    const raw = localStorage.getItem(STORAGE_KEY) || localStorage.getItem("memodeutsch_v5_trilingual");
-    if (raw) {
-      appState = { ...appState, ...JSON.parse(raw) };
-      nativeLang = appState.nativeLang || "en";
+    let mergedProgress = {};
+    let bestStreak = 0;
+    let latestStudyDate = null;
+
+    LEGACY_KEYS.slice().reverse().forEach(oldKey => {
+      const rawOld = localStorage.getItem(oldKey);
+      if (rawOld) {
+        try {
+          const parsedOld = JSON.parse(rawOld);
+          if (parsedOld.streak && parsedOld.streak > bestStreak) bestStreak = parsedOld.streak;
+          if (parsedOld.lastStudyDate) latestStudyDate = parsedOld.lastStudyDate;
+          const oldWordsObj = parsedOld.progress || parsedOld.words || {};
+          Object.keys(oldWordsObj).forEach(wordId => {
+            const w = oldWordsObj[wordId];
+            if (w && w.seen > 0) mergedProgress[wordId] = normalizeWordProgressRecord(w);
+          });
+        } catch (e) {}
+      }
+    });
+
+    const rawMaster = localStorage.getItem(STORAGE_KEY);
+    if (rawMaster) {
+      const parsedMaster = JSON.parse(rawMaster);
+      appState = { ...appState, ...parsedMaster };
+      if (parsedMaster.progress) {
+        Object.keys(parsedMaster.progress).forEach(wordId => {
+          const w = parsedMaster.progress[wordId];
+          if (!mergedProgress[wordId] || (w.seen >= (mergedProgress[wordId].seen || 0))) {
+            mergedProgress[wordId] = normalizeWordProgressRecord(w);
+          }
+        });
+      }
     }
+
+    appState.progress = mergedProgress;
+    if (!Array.isArray(appState.recentWordIds)) appState.recentWordIds = [];
+    if (!Array.isArray(appState.recentDrillIdx)) appState.recentDrillIdx = [];
+    if (bestStreak > (appState.streak || 0)) appState.streak = bestStreak;
+    if (!appState.lastStudyDate && latestStudyDate) appState.lastStudyDate = latestStudyDate;
+    nativeLang = appState.nativeLang || "en";
+    saveAppState();
   } catch (e) {}
   applyTheme();
   updateLanguageButtons();
@@ -1133,7 +1307,7 @@ function isDueToday(item, nowMs = Date.now()) {
 }
 
 // ============================================================================
-// 3. LIVE NATIVE LANGUAGE SWITCHING (EN / UK / TR)
+// 3. LIVE NATIVE LANGUAGE SWITCHING (EN / DE / UK / TR / MK)
 // ============================================================================
 function switchNativeLanguage(lang) {
   nativeLang = lang;
@@ -1147,14 +1321,14 @@ function switchNativeLanguage(lang) {
 }
 
 function updateLanguageButtons() {
-  ["en", "uk", "tr"].forEach(l => {
+  ["en", "de", "uk", "tr", "mk"].forEach(l => {
     const btn = document.getElementById(`lang-btn-${l}`);
     if (btn) btn.classList.toggle("active", l === nativeLang);
   });
 }
 
 function applyLocalizationToStaticUI() {
-  const t = UI_STRINGS[nativeLang];
+  const t = UI_STRINGS[nativeLang] || UI_STRINGS.en;
   document.getElementById("app-main-sub").textContent = t.subtitle;
   document.getElementById("ui-today-header").textContent = t.todayHeader;
   document.getElementById("ui-q1-label").textContent = t.q1;
@@ -1182,51 +1356,150 @@ function applyLocalizationToStaticUI() {
   document.getElementById("nav-lbl-set").textContent = t.navSet;
 }
 
+function renderGermanKeyboardBar() {
+  return `
+    <div class="kb-toolbar">
+      <button type="button" class="kb-key art-der" onclick="insertAtCursor('der ')">der</button>
+      <button type="button" class="kb-key art-die" onclick="insertAtCursor('die ')">die</button>
+      <button type="button" class="kb-key art-das" onclick="insertAtCursor('das ')">das</button>
+      <button type="button" class="kb-key" onclick="insertAtCursor('ä')">ä</button>
+      <button type="button" class="kb-key" onclick="insertAtCursor('ö')">ö</button>
+      <button type="button" class="kb-key" onclick="insertAtCursor('ü')">ü</button>
+      <button type="button" class="kb-key" onclick="insertAtCursor('ß')">ß</button>
+    </div>
+  `;
+}
+
+function insertAtCursor(text) {
+  const inp = document.getElementById("answer-input");
+  if (!inp) return;
+  const start = inp.selectionStart ?? inp.value.length;
+  const end = inp.selectionEnd ?? inp.value.length;
+  inp.value = inp.value.slice(0, start) + text + inp.value.slice(end);
+  inp.focus();
+  const newPos = start + text.length;
+  inp.setSelectionRange(newPos, newPos);
+}
+
 // ============================================================================
-// 4. INTELLIGENT SESSION ENGINE (INCLUDING 3-STEP WECHSELPRÄPOSITIONEN COACH)
+// 4. SMART ANTI-REPEAT SESSION BUILDER (FIXES "SAME WORDS EVERY DAY" BUG!)
 // ============================================================================
 let activeSession = null;
 let questionStartTime = 0;
 let currentHintLevel = 0;
 
+// Fisher-Yates unbiased shuffle
+function shuffleArray(arr) {
+  const copy = arr.slice();
+  for (let i = copy.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [copy[i], copy[j]] = [copy[j], copy[i]];
+  }
+  return copy;
+}
+
+function pickModalityForWord(item) {
+  const p = getWordProg(item.id);
+  // Rotate between direct German production and contextual sentence cloze
+  if (p.seen > 0 && p.rotationStep % 3 === 2) {
+    return "SENTENCE_CLOZE";
+  }
+  return "PROD_NATIVE_TO_DE";
+}
+
 function startSession(mode = "production") {
   const now = Date.now();
+  const recentSet = new Set(appState.recentWordIds || []);
   let queue = [];
 
   if (mode === "wechsel_coach") {
-    queue = WECHSEL_WORKSHEET_DRILLS.map(drill => ({
+    queue = shuffleArray(WECHSEL_WORKSHEET_DRILLS).map(drill => ({
       type: "WECHSEL_3STEP",
       drill,
-      subStep: 1 // Step 1: Wo vs Wohin -> Step 2: Base Gender -> Step 3: Final Answer
+      subStep: 1
     }));
   } else if (mode === "worksheet_mistakes") {
-    // Only the specific traps caught on your 5 handwritten worksheets!
-    queue = WECHSEL_WORKSHEET_DRILLS.filter(d => d.trapWarning).map(drill => ({
+    queue = shuffleArray(WECHSEL_WORKSHEET_DRILLS.filter(d => d.trapWarning)).map(drill => ({
       type: "WECHSEL_3STEP",
       drill,
       subStep: 1
     }));
   } else if (mode === "verb_pairs") {
-    queue = VERB_PAIR_DRILLS.map(vp => ({ type: "VERB_PAIR", vp }));
+    queue = shuffleArray(VERB_PAIR_DRILLS).map(vp => ({ type: "VERB_PAIR", vp }));
   } else if (mode === "classroom_new") {
-    const newWords = VOCAB_DECK.filter(d => d.id >= 236).sort((a, b) => getWordProg(a.id).seen - getWordProg(b.id).seen);
-    queue = newWords.slice(0, 14).map(item => ({ type: "PROD_NATIVE_TO_DE", item }));
+    // Shuffle within least-seen tiers for Room & Preposition words (#236-322)
+    const roomPool = shuffleArray(VOCAB_DECK.filter(d => d.id >= 236));
+    const notRecent = roomPool.filter(d => !recentSet.has(d.id));
+    const finalRoom = (notRecent.length >= 14 ? notRecent : roomPool)
+      .sort((a, b) => getWordProg(a.id).seen - getWordProg(b.id).seen)
+      .slice(0, 14);
+    recordRecentWords(finalRoom.map(d => d.id));
+    queue = shuffleArray(finalRoom).map(item => ({ type: pickModalityForWord(item), item }));
   } else if (mode === "chronic_intervention") {
-    let chronics = VOCAB_DECK.filter(isChronicWeak);
-    if (!chronics.length) chronics = [VOCAB_DECK.find(d => d.id === 288), VOCAB_DECK.find(d => d.id === 309), VOCAB_DECK.find(d => d.id === 258), VOCAB_DECK.find(d => d.id === 202)].filter(Boolean);
-    queue = chronics.slice(0, 6).map(item => ({ type: "PROD_NATIVE_TO_DE", item }));
-  } else {
-    const chronics = VOCAB_DECK.filter(isChronicWeak).slice(0, 3);
-    const due = VOCAB_DECK.filter(d => isDueToday(d, now) && !chronics.includes(d)).slice(0, 4);
-    const unseen = VOCAB_DECK.filter(d => getWordProg(d.id).seen === 0 && d.id >= 282).slice(0, 3);
-    const combined = [...chronics, ...due, ...unseen];
-    if (combined.length < 10) {
-      VOCAB_DECK.forEach(d => { if (combined.length < 10 && !combined.includes(d)) combined.push(d); });
+    let chronics = shuffleArray(VOCAB_DECK.filter(isChronicWeak));
+    if (!chronics.length) {
+      chronics = shuffleArray(VOCAB_DECK).slice(0, 6);
     }
-    queue = combined.map(item => ({ type: "PROD_NATIVE_TO_DE", item }));
-    // Interleave 2 Wechselpräpositionen 3-step drills into every daily session!
-    queue.splice(3, 0, { type: "WECHSEL_3STEP", drill: WECHSEL_WORKSHEET_DRILLS[0], subStep: 1 });
-    queue.splice(7, 0, { type: "WECHSEL_3STEP", drill: WECHSEL_WORKSHEET_DRILLS[1], subStep: 1 });
+    queue = chronics.slice(0, 8).map(item => ({ type: "PROD_NATIVE_TO_DE", item }));
+  } else {
+    // ========================================================================
+    // SMART 5-MINUTE DAILY TRAINING QUEUE (10 DYNAMIC WORDS + 2 DYNAMIC DRILLS)
+    // ========================================================================
+    const selected = [];
+    const selectedIds = new Set();
+
+    const addCandidates = (pool, maxCount) => {
+      // Prefer words not in the recent cooldown buffer first
+      const fresh = pool.filter(d => !recentSet.has(d.id) && !selectedIds.has(d.id));
+      const fallback = pool.filter(d => recentSet.has(d.id) && !selectedIds.has(d.id));
+      const ordered = [...fresh, ...fallback];
+      for (const item of ordered) {
+        if (selected.length >= 10 || maxCount <= 0) break;
+        selected.push(item);
+        selectedIds.add(item.id);
+        maxCount--;
+      }
+    };
+
+    // Tier 1: Due & Overdue words (shuffled, sorted by lowest retrievability / oldest review)
+    const duePool = shuffleArray(VOCAB_DECK.filter(d => isDueToday(d, now)))
+      .sort((a, b) => getRetrievability(getWordProg(a.id), now) - getRetrievability(getWordProg(b.id), now));
+    addCandidates(duePool, 4);
+
+    // Tier 2: Chronic Weak words (shuffled so you don't repeat the exact same 3 every session)
+    const weakPool = shuffleArray(VOCAB_DECK.filter(isChronicWeak))
+      .sort((a, b) => (getWordProg(a.id).lastReviewed || 0) - (getWordProg(b.id).lastReviewed || 0));
+    addCandidates(weakPool, 2);
+
+    // Tier 3: Unseen words across ALL 322 entries (shuffled across PDF #1-235, Rooms #236-281, Prep #282-322)
+    const unseenPool = shuffleArray(VOCAB_DECK.filter(d => getWordProg(d.id).seen === 0));
+    addCandidates(unseenPool, 4);
+
+    // Tier 4: If still under 10 words, fill with least-recently-reviewed words (shuffled)
+    if (selected.length < 10) {
+      const remainingPool = shuffleArray(VOCAB_DECK.filter(d => !selectedIds.has(d.id)))
+        .sort((a, b) => (getWordProg(a.id).lastReviewed || 0) - (getWordProg(b.id).lastReviewed || 0));
+      addCandidates(remainingPool, 10 - selected.length);
+    }
+
+    // Save selected word IDs into recent cooldown buffer (keeps last 30 words)
+    recordRecentWords(selected.map(d => d.id));
+
+    // Shuffle final 10 words and assign varied question modalities
+    queue = shuffleArray(selected).map(item => ({
+      type: pickModalityForWord(item),
+      item
+    }));
+
+    // Pick 2 non-repeating Wechselpräpositionen drills dynamically instead of [0] and [1]!
+    const drillIndices = shuffleArray(WECHSEL_WORKSHEET_DRILLS.map((_, i) => i));
+    const freshDrills = drillIndices.filter(i => !(appState.recentDrillIdx || []).includes(i));
+    const chosenDrillIdx = (freshDrills.length >= 2 ? freshDrills : drillIndices).slice(0, 2);
+    appState.recentDrillIdx = [...(appState.recentDrillIdx || []), ...chosenDrillIdx].slice(-8);
+    saveAppState();
+
+    queue.splice(3, 0, { type: "WECHSEL_3STEP", drill: WECHSEL_WORKSHEET_DRILLS[chosenDrillIdx[0]], subStep: 1 });
+    queue.splice(7, 0, { type: "WECHSEL_3STEP", drill: WECHSEL_WORKSHEET_DRILLS[chosenDrillIdx[1]], subStep: 1 });
   }
 
   activeSession = { mode, queue, index: 0, correct: 0, total: 0 };
@@ -1235,13 +1508,18 @@ function startSession(mode = "production") {
   renderSessionStep();
 }
 
+function recordRecentWords(ids) {
+  appState.recentWordIds = [...(appState.recentWordIds || []), ...ids].slice(-35);
+  saveAppState();
+}
+
 function renderSessionStep() {
   if (!activeSession || activeSession.index >= activeSession.queue.length) {
     renderSessionComplete();
     return;
   }
 
-  const t = UI_STRINGS[nativeLang];
+  const t = UI_STRINGS[nativeLang] || UI_STRINGS.en;
   const entry = activeSession.queue[activeSession.index];
   currentHintLevel = 0;
   questionStartTime = performance.now();
@@ -1255,7 +1533,7 @@ function renderSessionStep() {
   fStage.style.display = "none";
   qStage.style.display = "block";
 
-  // 1. INTELLIGENT 3-STEP WECHSELPRÄPOSITIONEN COACH (Matches your handwritten worksheet formula!)
+  // 1. INTELLIGENT 3-STEP WECHSELPRÄPOSITIONEN COACH
   if (entry.type === "WECHSEL_3STEP") {
     const d = entry.drill;
     document.getElementById("session-mode-label").textContent = "🧭 Wechselpräpositionen";
@@ -1321,7 +1599,7 @@ function renderSessionStep() {
     }
   }
 
-  // 2. POSITION VS. DIRECTION VERB PAIRS (legen/liegen, stellen/stehen, setzen/sitzen)
+  // 2. POSITION VS. DIRECTION VERB PAIRS
   if (entry.type === "VERB_PAIR") {
     const vp = entry.vp;
     document.getElementById("session-mode-label").textContent = "🔄 Verb Compass";
@@ -1334,14 +1612,33 @@ function renderSessionStep() {
     return;
   }
 
-  // 3. STANDARD NATIVE (EN / UK / TR) -> GERMAN PRODUCTION
+  // 3. SENTENCE CLOZE COMPLETION
   const item = entry.item;
-  const flag = nativeLang === "uk" ? "🇺🇦" : (nativeLang === "tr" ? "🇹🇷" : "🇬🇧");
+  if (entry.type === "SENTENCE_CLOZE") {
+    document.getElementById("session-mode-label").textContent = `🇩🇪 Cloze (#${item.id})`;
+    qStage.innerHTML = `
+      <div class="prompt-sub">${t.clozePrompt} <strong>“${escapeHtml(getMeaning(item))}”</strong></div>
+      <div class="prompt-word" style="font-size:1.35rem;">„${item.sentenceTemplate.replace("{0}", "________")}“</div>
+      ${renderGraduatedHintBox(item)}
+      ${renderGermanKeyboardBar()}
+      <form onsubmit="submitStandardAnswer(event)">
+        <input type="text" id="answer-input" class="text-input" placeholder="Deutsch..." autocomplete="off" autocapitalize="none" required />
+        <button type="submit" class="btn btn-primary">${t.submitBtn}</button>
+      </form>
+    `;
+    focusInput();
+    return;
+  }
+
+  // 4. STANDARD NATIVE (EN / DE / UK / TR / MK) -> GERMAN PRODUCTION
+  const flagMap = { en: "🇬🇧", de: "🇩🇪", uk: "🇺🇦", tr: "🇹🇷", mk: "🇲🇰" };
+  const flag = flagMap[nativeLang] || "🇬🇧";
   document.getElementById("session-mode-label").textContent = `${flag} → 🇩🇪 (#${item.id})`;
   qStage.innerHTML = `
     <div class="prompt-word">${escapeHtml(getMeaning(item))}</div>
     <div class="prompt-sub">${t.producePrompt}</div>
     ${renderGraduatedHintBox(item)}
+    ${renderGermanKeyboardBar()}
     <form onsubmit="submitStandardAnswer(event)">
       <input type="text" id="answer-input" class="text-input" placeholder="${item.hasValidArticle ? 'der / die / das ...' : 'Deutsch...'}" autocomplete="off" autocapitalize="none" required />
       <button type="submit" class="btn btn-primary">${t.submitBtn}</button>
@@ -1386,7 +1683,7 @@ function handleWechselStep3(e) {
   const fullSentence = d.sentence.replace("___", d.answer);
   speakGerman(fullSentence);
 
-  const t = UI_STRINGS[nativeLang];
+  const t = UI_STRINGS[nativeLang] || UI_STRINGS.en;
   const qStage = document.getElementById("question-stage");
   const fStage = document.getElementById("feedback-stage");
   qStage.style.display = "none";
@@ -1422,12 +1719,12 @@ function handleVerbPairAnswer(chosen) {
     <span class="badge ${isCorrect ? 'badge-success' : 'badge-danger'}">${isCorrect ? '🟢 ✓' : `🔴 → ${vp.answer}`}</span>
     <div class="prompt-word" style="font-size:1.35rem;">„${vp.sentence.replace("_____", `<strong>${vp.answer}</strong>`)}“</div>
     <div class="mnemonic-box">${vp.explain}</div>
-    <button class="btn btn-primary" style="margin-top:12px;" onclick="nextSessionStep()">${UI_STRINGS[nativeLang].continueBtn}</button>
+    <button class="btn btn-primary" style="margin-top:12px;" onclick="nextSessionStep()">${(UI_STRINGS[nativeLang] || UI_STRINGS.en).continueBtn}</button>
   `;
 }
 
 function renderGraduatedHintBox(item) {
-  const t = UI_STRINGS[nativeLang];
+  const t = UI_STRINGS[nativeLang] || UI_STRINGS.en;
   const w = item.word;
   const artPrefix = item.hasValidArticle ? item.article + " " : "";
   let cue = "_".repeat(Math.max(5, w.length));
@@ -1438,7 +1735,7 @@ function renderGraduatedHintBox(item) {
 
   return `
     <div class="hint-bar">
-      <span id="hint-cue-text">L${currentHintLevel}/4: <strong>${cue}</strong></span>
+      <span id="hint-cue-text" style="overflow-wrap:anywhere;">L${currentHintLevel}/4: <strong>${cue}</strong></span>
       <button type="button" class="btn btn-secondary btn-sm" onclick="requestGraduatedHint()">
         ${t.hintBtn} (${currentHintLevel}/4)
       </button>
@@ -1483,7 +1780,7 @@ function submitStandardAnswer(e) {
   let articleNote = null;
   if (u === fullG || u === cleanW) {
     isCorrect = true;
-    if (item.hasValidArticle && u === cleanW) {
+    if (item.hasValidArticle && u === cleanW && entry.type === "PROD_NATIVE_TO_DE") {
       articleNote = `${item.fullGerman} (${item.article}!)`;
     }
   }
@@ -1493,6 +1790,7 @@ function submitStandardAnswer(e) {
   const now = Date.now();
   p.seen++;
   p.lastReviewed = now;
+  p.rotationStep = (p.rotationStep || 0) + 1;
   if (isCorrect) {
     p.correct++; p.streak++; activeSession.correct++;
     p.vectors.production = Math.min(100, p.vectors.production + (currentHintLevel > 0 ? 12 : 25));
@@ -1505,7 +1803,7 @@ function submitStandardAnswer(e) {
   activeSession.total++;
   saveAppState();
 
-  const t = UI_STRINGS[nativeLang];
+  const t = UI_STRINGS[nativeLang] || UI_STRINGS.en;
   speakGerman(item.fullGerman);
   const qStage = document.getElementById("question-stage");
   const fStage = document.getElementById("feedback-stage");
@@ -1540,7 +1838,7 @@ function endSessionEarly() {
 }
 
 function renderSessionComplete() {
-  const t = UI_STRINGS[nativeLang];
+  const t = UI_STRINGS[nativeLang] || UI_STRINGS.en;
   const qStage = document.getElementById("question-stage");
   const fStage = document.getElementById("feedback-stage");
   qStage.style.display = "none";
@@ -1558,7 +1856,7 @@ function renderSessionComplete() {
 // 5. DASHBOARD, 9-MOUSE MATRIX, HEATMAP & 322-WORD EXPLORER
 // ============================================================================
 function refreshDashboard() {
-  const t = UI_STRINGS[nativeLang];
+  const t = UI_STRINGS[nativeLang] || UI_STRINGS.en;
   const now = Date.now();
   const forgetting = VOCAB_DECK.filter(isChronicWeak);
   const due = VOCAB_DECK.filter(d => isDueToday(d, now));
@@ -1640,8 +1938,10 @@ function renderVocabList() {
     !q ||
     item.word.toLowerCase().includes(q) ||
     item.meanings.en.toLowerCase().includes(q) ||
+    item.meanings.de.toLowerCase().includes(q) ||
     item.meanings.uk.toLowerCase().includes(q) ||
     item.meanings.tr.toLowerCase().includes(q) ||
+    item.meanings.mk.toLowerCase().includes(q) ||
     String(item.id) === q.replace("#", "")
   );
   document.getElementById("vocab-count-badge").textContent = `${filtered.length}`;
@@ -1662,18 +1962,22 @@ function renderVocabList() {
 function openWordModal(id) {
   const item = VOCAB_DECK.find(d => d.id === id);
   if (!item) return;
-  const t = UI_STRINGS[nativeLang];
+  const t = UI_STRINGS[nativeLang] || UI_STRINGS.en;
   document.getElementById("word-modal-content").innerHTML = `
     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
       <span class="badge badge-primary">#${item.id}</span>
       <button class="btn btn-secondary btn-sm" onclick="closeWordModal()">✕</button>
     </div>
-    <div style="font-size:1.65rem; font-weight:800;">${formatGermanWithColor(item)}</div>
+    <div style="font-size:1.65rem; font-weight:800; word-break:break-word;">${formatGermanWithColor(item)}</div>
     <div style="font-size:1.1rem; font-weight:700; color:var(--primary); margin:4px 0 10px;">
       ${escapeHtml(getMeaning(item))}
     </div>
-    <div style="font-size:0.8rem; color:var(--text-secondary); margin-bottom:12px;">
-      🇬🇧 ${escapeHtml(item.meanings.en)} · 🇺🇦 ${escapeHtml(item.meanings.uk)} · 🇹🇷 ${escapeHtml(item.meanings.tr)}
+    <div style="font-size:0.8rem; color:var(--text-secondary); margin-bottom:12px; line-height:1.5;">
+      🇬🇧 ${escapeHtml(item.meanings.en)}<br/>
+      🇩🇪 ${escapeHtml(item.meanings.de)}<br/>
+      🇺🇦 ${escapeHtml(item.meanings.uk)}<br/>
+      🇹🇷 ${escapeHtml(item.meanings.tr)}<br/>
+      🇲🇰 ${escapeHtml(item.meanings.mk)}
     </div>
     <button class="audio-pill" onclick="speakGerman('${escapeQuotes(item.fullGerman)}')" style="margin-bottom:12px;">${t.listenBtn}</button>
     <div class="mnemonic-box"><strong>${t.memoryScene}</strong><br/>${escapeHtml(getLocalizedMnemonic(item))}</div>
@@ -1696,8 +2000,50 @@ function speakGerman(text) {
   window.speechSynthesis.speak(u);
 }
 
+// 1-Tap Service Worker Cache Buster (Never Lose Progress!)
+async function forceUpdateAppCache() {
+  saveAppState();
+  if ("serviceWorker" in navigator) {
+    const regs = await navigator.serviceWorker.getRegistrations();
+    for (const r of regs) await r.unregister();
+  }
+  if ("caches" in window) {
+    const keys = await caches.keys();
+    for (const k of keys) await caches.delete(k);
+  }
+  window.location.reload(true);
+}
+
+function copySyncCode() {
+  const encoded = encodeURIComponent(JSON.stringify(appState));
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(encoded);
+    alert("Sync Code copied to clipboard!");
+  } else {
+    prompt("Copy Sync Code:", encoded);
+  }
+}
+
+function pasteSyncCode() {
+  const raw = prompt("Paste Sync Code:");
+  if (!raw) return;
+  try {
+    const parsed = JSON.parse(decodeURIComponent(raw.trim()));
+    if (parsed && parsed.progress) {
+      appState = { ...appState, ...parsed };
+      saveAppState();
+      applyTheme();
+      refreshDashboard();
+      alert("Progress restored!");
+    }
+  } catch (e) {
+    alert("Invalid Sync Code.");
+  }
+}
+
 function createFriendChallenge() {
-  const ids = VOCAB_DECK.slice(281, 291).map(d => d.id).join("-");
+  const shuffled = shuffleArray(VOCAB_DECK).slice(0, 10);
+  const ids = shuffled.map(d => d.id).join("-");
   const code = `MD-${ids}`;
   const url = window.location.href.split("?")[0] + "?challenge=" + encodeURIComponent(code);
   if (navigator.share) navigator.share({ title: "MemoDeutsch", text: `Code: ${code}`, url }).catch(() => {});
@@ -1770,6 +2116,7 @@ function resetAllProgress() {
   if (!confirm("Reset?")) return;
   localStorage.removeItem(STORAGE_KEY);
   appState.progress = {};
+  appState.recentWordIds = [];
   refreshDashboard();
 }
 
@@ -1777,6 +2124,9 @@ window.addEventListener("DOMContentLoaded", () => {
   loadAppState();
   applyLocalizationToStaticUI();
   refreshDashboard();
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("./sw.js").then(reg => reg.update()).catch(() => {});
+  }
   const c = new URLSearchParams(window.location.search).get("challenge");
   if (c) setTimeout(() => promptAcceptChallenge(c), 300);
 });
